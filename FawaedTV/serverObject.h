@@ -7,7 +7,11 @@
 //
 
 #import <Foundation/Foundation.h>
+#import "AFNetworking.h"
+#import "seriesObject.h"
 
-@interface serverObject : NSObject
 
+@interface serverObject : AFHTTPSessionManager
++(instancetype)sharedServerObj;
+-(void)getAllLecturerOfSeries:(seriesObject *)seriesObj WithCompleation:(void(^)(NSMutableArray *result))compleation;
 @end
