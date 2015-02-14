@@ -7,8 +7,13 @@
 //
 
 #import <Foundation/Foundation.h>
+#import "TBXML.h"
 
 @interface yearObject : NSObject
-    @property (nonatomic)        int      yearID;
-    @property (nonatomic,strong) NSArray  *yearSeriesArray;
+    @property (nonatomic)        int            yearID;
+    @property (nonatomic,strong) NSString       *yearTitle;
+    @property (nonatomic,strong) NSMutableArray *yearSeriesArray;
+
++(instancetype)processXML:(TBXML *)xmlObject;
++(NSMutableArray *)proccessXMLFromAllYearsRequest:(TBXML *)xmlObject;
 @end

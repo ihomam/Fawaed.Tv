@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="6254" systemVersion="14C109" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES">
+    <dependencies>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="6247"/>
+    </dependencies>
+    <objects>
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="browseNavC"/>
+        <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
+        <view contentMode="scaleToFill" id="iN0-l3-epB" customClass="viNavigiationBarContent">
+            <rect key="frame" x="0.0" y="0.0" width="300" height="32"/>
+            <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+            <subviews>
+                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="FawaedTV" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumFontSize="15" translatesAutoresizingMaskIntoConstraints="NO" id="e0m-jl-huR">
+                    <rect key="frame" x="0.0" y="0.0" width="300" height="16"/>
+                    <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                    <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                    <nil key="highlightedColor"/>
+                </label>
+                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="odT-2Q-wKf">
+                    <rect key="frame" x="0.0" y="16" width="300" height="1"/>
+                    <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+                    <constraints>
+                        <constraint firstAttribute="height" constant="1" id="ipu-7L-dzz"/>
+                    </constraints>
+                </view>
+                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="WYt-aJ-jCm">
+                    <rect key="frame" x="0.0" y="17" width="300" height="15"/>
+                    <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                    <color key="textColor" red="0.0" green="0.47843137250000001" blue="1" alpha="1" colorSpace="calibratedRGB"/>
+                    <nil key="highlightedColor"/>
+                </label>
+            </subviews>
+            <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+            <constraints>
+                <constraint firstItem="WYt-aJ-jCm" firstAttribute="top" secondItem="odT-2Q-wKf" secondAttribute="bottom" id="CBp-i7-lrl"/>
+                <constraint firstAttribute="trailing" secondItem="WYt-aJ-jCm" secondAttribute="trailing" id="Flg-Vj-giU"/>
+                <constraint firstAttribute="trailing" secondItem="e0m-jl-huR" secondAttribute="trailing" id="GcN-4L-NeQ"/>
+                <constraint firstItem="WYt-aJ-jCm" firstAttribute="leading" secondItem="iN0-l3-epB" secondAttribute="leading" id="W6P-jb-Qxb"/>
+                <constraint firstItem="e0m-jl-huR" firstAttribute="top" secondItem="iN0-l3-epB" secondAttribute="top" id="YHI-eO-o0c"/>
+                <constraint firstAttribute="trailing" secondItem="odT-2Q-wKf" secondAttribute="trailing" id="Z6C-7Q-VdR"/>
+                <constraint firstAttribute="bottom" secondItem="WYt-aJ-jCm" secondAttribute="bottom" id="Zqp-sw-JYM"/>
+                <constraint firstItem="e0m-jl-huR" firstAttribute="leading" secondItem="iN0-l3-epB" secondAttribute="leading" id="fQa-ja-rVQ"/>
+                <constraint firstAttribute="centerY" secondItem="odT-2Q-wKf" secondAttribute="centerY" id="k35-VZ-Vof"/>
+                <constraint firstAttribute="centerX" secondItem="odT-2Q-wKf" secondAttribute="centerX" id="v1D-nM-MGm"/>
+                <constraint firstItem="odT-2Q-wKf" firstAttribute="leading" secondItem="iN0-l3-epB" secondAttribute="leading" id="vG9-7b-Zws"/>
+                <constraint firstItem="odT-2Q-wKf" firstAttribute="top" secondItem="e0m-jl-huR" secondAttribute="bottom" id="xcn-rs-brc"/>
+            </constraints>
+            <freeformSimulatedSizeMetrics key="simulatedDestinationMetrics"/>
+            <connections>
+                <outlet property="laDetails" destination="WYt-aJ-jCm" id="Co4-dk-myX"/>
+                <outlet property="laTitle" destination="e0m-jl-huR" id="8uN-fr-bkM"/>
+            </connections>
+            <point key="canvasLocation" x="192" y="5"/>
+        </view>
+    </objects>
+</document>

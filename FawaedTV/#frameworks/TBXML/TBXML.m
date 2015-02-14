@@ -314,7 +314,7 @@
 }
 
 + (NSString*) textForElement:(TBXMLElement*)aXMLElement {
-	if (nil == aXMLElement->text) return @"";
+	if (nil == aXMLElement->text) return @" ";
 	return [NSString stringWithCString:&aXMLElement->text[0] encoding:NSUTF8StringEncoding];
 }
 
@@ -335,6 +335,8 @@
 }
 
 + (NSString*) valueOfAttributeNamed:(NSString *)aName forElement:(TBXMLElement*)aXMLElement {
+    if (!aXMLElement)
+        return @"";
 	const char * name = [aName cStringUsingEncoding:NSUTF8StringEncoding];
 	NSString * value = nil;
 	TBXMLAttribute * attribute = aXMLElement->firstAttribute;
@@ -370,7 +372,7 @@
             if (attribute->value[0])
                 value = [NSString stringWithCString:&attribute->value[0] encoding:NSUTF8StringEncoding];
             else
-                value = [NSString stringWithString:@""];
+                value = @"";
             
 			break;
 		}
