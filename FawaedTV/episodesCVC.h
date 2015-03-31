@@ -7,6 +7,7 @@
 //
 
 #import <UIKit/UIKit.h>
+
 @class seriesObject;
 @class bookmarkObj;
 @interface episodesCVC : UICollectionViewController

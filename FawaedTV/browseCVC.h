@@ -7,6 +7,7 @@
 //
 
 #import <UIKit/UIKit.h>
+
 typedef NS_ENUM(NSInteger, sourcetype) {
     dataSourceTypePrograms,
     dataSourceTypeCategories,
@@ -14,6 +15,6 @@ typedef NS_ENUM(NSInteger, sourcetype) {
     dataSourceTypeYears
 };
 
-@interface browseCVC : UICollectionViewController 
+@interface browseCVC : UICollectionViewController
     @property (nonatomic) sourcetype dataSourceType;
 @end

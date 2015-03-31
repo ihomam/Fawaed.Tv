@@ -11,8 +11,8 @@
 
 @interface lecturerObject : NSObject
     @property (nonatomic)        int            lecturerID;
-    @property (nonatomic,strong) NSString       *lecturerImgLink;
     @property (nonatomic,strong) NSString       *lecturerTitle;
+    @property (nonatomic,strong) NSString       *lecturerImgLink;
     @property (nonatomic,strong) NSMutableArray *lecturerSeriesArray;
 
 +(NSMutableArray *)proccessXMLFromAlllecturersRequest:(TBXML *)xmlObject;

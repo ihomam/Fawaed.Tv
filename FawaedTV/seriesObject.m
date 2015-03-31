@@ -61,12 +61,12 @@
                              episodeObject *epObj   = [episodeObject new];
                              epObj.episodeSeriesID  = self.seriesID;
                              epObj.episodeTitle     = [TBXML textForElement:elmItemTitle error:&error];
-                             epObj.episodeImageLink = [TBXML valueOfAttributeNamed:@"url" forElement:elmItemImg error:&error];
+                             epObj.episodeLinkImage = [TBXML valueOfAttributeNamed:@"url" forElement:elmItemImg error:&error];
                              epObj.episodeLink      = [TBXML textForElement:elmItemLink error:&error];
-                             epObj.episodeWatchLink = [TBXML textForElement:elmItemWatch error:&error];
-                             epObj.episodeListenLink= [TBXML textForElement:elmItemListen error:&error];
-                             epObj.episodeMp3Link   = [TBXML textForElement:elmItemMp3 error:&error];
-                             epObj.episodeAviLink   = [TBXML textForElement:elmItemAvi error:&error];
+                             epObj.episodeLinkWatch = [TBXML textForElement:elmItemWatch error:&error];
+                             epObj.episodeLinkListen= [TBXML textForElement:elmItemListen error:&error];
+                             epObj.episodeLinkMp3   = [TBXML textForElement:elmItemMp3 error:&error];
+                             epObj.episodeLinkAvi   = [TBXML textForElement:elmItemAvi error:&error];
                              epObj.episodeLecturer  = [TBXML textForElement:elmItemTeache error:&error];
                              
                              NSRange backSlashRange = [epObj.episodeLink rangeOfString:@"/" options:NSBackwardsSearch];

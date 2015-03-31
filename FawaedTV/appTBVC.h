@@ -7,7 +7,12 @@
 //
 
 #import <UIKit/UIKit.h>
-
+typedef NS_ENUM(NSUInteger, playerType) {
+    playerTypeAudioOnline,
+    playerTypeAudioLocal,
+    playerTypeVideoOnline,
+    playerTypeVideoLocal
+};
 @interface appTBVC : UITabBarController
--(void)setPlayerTabWithVc:(UIViewController *)vc;
+-(void)buildFilePlayerForObject:(id)mediaObj forType:(playerType)type;
 @end

@@ -9,6 +9,5 @@
 #import <UIKit/UIKit.h>
 
 @interface browseNavC : UINavigationController
-
 -(void)updateNavigationBarWithTitle:(NSString *)title andDetail:(NSString *)detail;
 @end

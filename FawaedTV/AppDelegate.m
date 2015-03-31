@@ -7,9 +7,12 @@
 //
 
 #import "AppDelegate.h"
+#import "databaseManager.h"
+#import "downloadManager.h"
 
 @interface AppDelegate ()
-
+@property (nonatomic,strong) databaseManager *dbObj;
+@property (nonatomic,strong) downloadManager *downloadManager;
 @end
 
 @implementation AppDelegate
@@ -17,6 +20,8 @@
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
     // Override point for customization after application launch.
+    self.dbObj              = [databaseManager sharedDatabaseObj];
+    self.downloadManager    = [downloadManager sharedDownloadObj];
     return YES;
 }
 

@@ -13,14 +13,15 @@ typedef enum : NSUInteger {
     cellCategory,
     cellLecturer,
     cellYear,
+    cellEpisode,
+    cellLocalFile
 } cellName;
-typedef void(^cellClicked)(cellName);
 
 @interface browseMenuTVC : UITableViewController
 
 @property (nonatomic, copy) void (^cellClickedCompletion)(cellName cellType, UIImage *imgTypeIcon) ;
 @property (nonatomic, copy) void (^tapClick)();
 
--(void)addSelfToVCAndAnimate:(UIViewController *)vc;
+-(void)addSelfToVCAndAnimate:(UIViewController *)vc withCellNumber:(int)number;
 -(void)hideCellsForRemovingVC;
 @end

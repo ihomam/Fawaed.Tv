@@ -7,7 +7,7 @@
 //
 
 #import "browseCVC.h"
-#import "serverObject.h"
+#import "serverManager.h"
 #import "generalCVCCell.h"
 #import "UIImageView+activity.h"
 
@@ -20,9 +20,8 @@
 
 // VCs
 #import "episodesCVC.h"
-#import "browseNavC.h"
 #import "browseMenuTVC.h"
-
+#import "browseNavC.h"
 
 @interface browseCVC ()<UISearchBarDelegate>
     @property (nonatomic,strong) NSMutableArray     *dataSource;
@@ -112,6 +111,7 @@
 - (NSInteger)collectionView:(UICollectionView *)collectionView numberOfItemsInSection:(NSInteger)section {
     return self.dataSource.count;
 }
+
 - (UICollectionViewCell *)collectionView:(UICollectionView *)collectionView cellForItemAtIndexPath:(NSIndexPath *)indexPath {
 
     generalCVCCell *cell;
@@ -269,10 +269,20 @@ minimumInteritemSpacingForSectionAtIndex:(NSInteger)section{
 
 #pragma mark <UICollectionViewDelegate>
 -(void)collectionView:(UICollectionView *)collectionView didSelectItemAtIndexPath:(NSIndexPath *)indexPath{
+    episodesCVC *vc = [self.storyboard instantiateViewControllerWithIdentifier:@"episodesCVC"];
     if (self.dataSourceType == dataSourceTypePrograms) {
-        episodesCVC *vc = [self.storyboard instantiateViewControllerWithIdentifier:@"episodesCVC"];
         vc.selObjSeries = [self.dataSource objectAtIndex:indexPath.row];
         [self.navigationController pushViewController:vc animated:YES];
+    }else if (self.dataSourceType == dataSourceTypeCategories){
+        categoryObject *cObj =    [self.dataSource objectAtIndex:indexPath.row];
+        [[serverManager sharedServerObj]getAllSeriesOfCategory:cObj WithCompleation:^(categoryObject *result) {
+            vc.selObjSeries = result;
+            [self.navigationController pushViewController:vc animated:YES];
+        }];
+    }else if (self.dataSourceType == dataSourceTypeLecturers){
+        id data =    [self.dataSource objectAtIndex:indexPath.row];
+    }else{
+        id data =    [self.dataSource objectAtIndex:indexPath.row];
     }
 }
 
@@ -281,33 +291,35 @@ minimumInteritemSpacingForSectionAtIndex:(NSInteger)section{
     [self addRefreshControl];
     [self startRefreshControl];
     dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_HIGH, 0), ^{
-        [[serverObject sharedServerObj]getWholeSchemaObjectWithCompleation:^(BOOL finishedSuccessfully,
+        [[serverManager sharedServerObj]getWholeSchemaObjectWithCompleation:^(BOOL finishedSuccessfully,
                                                                              NSMutableArray *resultOfSeries,
                                                                              NSMutableArray *resultOfCategories,
                                                                              NSMutableArray *resultOfYears,
                                                                              NSMutableArray *resultOfLecturers) {
             
-            switch (self.dataSourceType) {
-                case dataSourceTypePrograms:
-                    self.dataSource = resultOfSeries;
-                    break;
-                case dataSourceTypeCategories:
-                    self.dataSource = resultOfCategories;
-                    break;
-                case dataSourceTypeYears:
-                    self.dataSource = resultOfYears;
-                    break;
-                case dataSourceTypeLecturers:
-                    self.dataSource = resultOfLecturers;
-                    break;
-                default:
-                    self.dataSource = resultOfSeries;
-                    break;
+            if (finishedSuccessfully) {
+                switch (self.dataSourceType) {
+                    case dataSourceTypePrograms:
+                        self.dataSource = resultOfSeries;
+                        break;
+                    case dataSourceTypeCategories:
+                        self.dataSource = resultOfCategories;
+                        break;
+                    case dataSourceTypeYears:
+                        self.dataSource = resultOfYears;
+                        break;
+                    case dataSourceTypeLecturers:
+                        self.dataSource = resultOfLecturers;
+                        break;
+                    default:
+                        self.dataSource = resultOfSeries;
+                        break;
+                }
+                self.dataSourceDictionary = @{[NSString stringWithFormat:@"%ld",(long)dataSourceTypeCategories]:resultOfCategories,
+                                              [NSString stringWithFormat:@"%ld",(long)dataSourceTypeLecturers]:resultOfLecturers,
+                                              [NSString stringWithFormat:@"%ld",(long)dataSourceTypePrograms]:resultOfSeries,
+                                              [NSString stringWithFormat:@"%ld",(long)dataSourceTypeYears]:resultOfYears};
             }
-            self.dataSourceDictionary = @{[NSString stringWithFormat:@"%ld",(long)dataSourceTypeCategories]:resultOfCategories,
-                                          [NSString stringWithFormat:@"%ld",(long)dataSourceTypeLecturers]:resultOfLecturers,
-                                          [NSString stringWithFormat:@"%ld",(long)dataSourceTypePrograms]:resultOfSeries,
-                                          [NSString stringWithFormat:@"%ld",(long)dataSourceTypeYears]:resultOfYears};
             dispatch_async(dispatch_get_main_queue(), ^{
                 if (self.dataSource)self.btnFilter.enabled = YES;
                 [self.refreshControl endRefreshing];
@@ -482,7 +494,7 @@ minimumInteritemSpacingForSectionAtIndex:(NSInteger)section{
         
     }
     if (![self.vcBrowseMenu.view isDescendantOfView:self.view]) {
-        [self.vcBrowseMenu addSelfToVCAndAnimate:self];
+        [self.vcBrowseMenu addSelfToVCAndAnimate:self withCellNumber:4];
         self.tapGesture = [[UITapGestureRecognizer alloc]initWithTarget:self action:@selector(collectionViewTappedWhileMenuIsVisible)];
         [self.collectionView addGestureRecognizer:self.tapGesture];
     }else{

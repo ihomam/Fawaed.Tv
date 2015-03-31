@@ -10,10 +10,10 @@
 #import "TBXML.h"
 
 @interface categoryObject : NSObject
-@property (nonatomic)        int            categoryID;
-@property (nonatomic,strong) NSString       *categoryImgLink;
-@property (nonatomic,strong) NSString       *categoryTitle;
-@property (nonatomic,strong) NSMutableArray *categorySeriesArray;
+    @property (nonatomic)        int            categoryID;
+    @property (nonatomic,strong) NSString       *categoryTitle;
+    @property (nonatomic,strong) NSString       *categoryImgLink;
+    @property (nonatomic,strong) NSMutableArray *categorySeriesArray;
 
 +(instancetype)processXML:(TBXML *)xmlObject;
 +(NSMutableArray *)proccessXMLFromAllCategoriesRequest:(TBXML *)xmlObject;

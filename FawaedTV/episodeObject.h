@@ -7,16 +7,35 @@
 //
 
 #import <Foundation/Foundation.h>
-
 @interface episodeObject : NSObject
     @property (nonatomic)        int      episodeID;
     @property (nonatomic)        int      episodeSeriesID;
     @property (nonatomic,strong) NSString *episodeTitle;
     @property (nonatomic,strong) NSString *episodeLecturer;
     @property (nonatomic,strong) NSString *episodeLink;
-    @property (nonatomic,strong) NSString *episodeImageLink;
-    @property (nonatomic,strong) NSString *episodeWatchLink;
-    @property (nonatomic,strong) NSString *episodeListenLink;
-    @property (nonatomic,strong) NSString *episodeAviLink;
-    @property (nonatomic,strong) NSString *episodeMp3Link;
+    @property (nonatomic,strong) NSString *episodeLinkImage;
+    @property (nonatomic,strong) NSString *episodeLinkWatch;
+    @property (nonatomic,strong) NSString *episodeLinkListen;
+    @property (nonatomic,strong) NSString *episodeLinkAvi;
+    @property (nonatomic,strong) NSString *episodeLinkMp3;
+    @property (nonatomic,strong) NSString *episodeLinkMp3Local; // link path for downloaded mp3 file
+    @property (nonatomic,strong) NSString *episodeLinkAviLocal; // link path for downloaded AVI file
+
+-(BOOL)checkIfMp3FileInLocalFolder;
+@end
+
+typedef NS_ENUM(NSUInteger, downloadStatus) {
+    downloadStatusBasic, // it means there is no download going on. we use this no send nil episodeDownloadObject to ddProgressBtn object.
+    downloadStatusInitiating,
+    downloadStatusDownloading,
+    downloadStatusCanceled,
+    downloadStatusFinished,
+};
+@interface episodeDownloadObject : NSObject
+    @property (nonatomic,strong)    episodeObject               *episodeObj;
+    @property (nonatomic)           NSProgress                  *episodeDownloadProgress;
+    @property (nonatomic)           downloadStatus              episodeDownloadCurrentStatus;
+    @property (nonatomic)           NSError                     *episodeDownloadError;
+    @property (nonatomic,strong)    NSURLSessionDownloadTask    *episodeDownloadTask;
+    @property (nonatomic,copy)                                  void(^episodeDownloadBlock)();
 @end

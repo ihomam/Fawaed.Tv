@@ -10,4 +10,9 @@
 
 @implementation generalCVCCell
 
+-(void)setBounds:(CGRect)bounds{
+    [super setBounds:bounds];
+    self.contentView.bounds = bounds;
+}
+
 @end

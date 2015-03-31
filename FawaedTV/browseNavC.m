@@ -13,10 +13,9 @@
 #import "viNavigiationBarContent.h"
 
 #import "episodesCVC.h"
-
+#import "bookmarkObj.h"
 @interface browseNavC ()<UINavigationControllerDelegate>
-@property (nonatomic,strong) viNavigiationBarContent *viNavBar;
-@property (nonatomic,strong) UIBarButtonItem         *btnBookmark;
+    @property (nonatomic,strong) viNavigiationBarContent *viNavBar;
 @end
 
 @implementation browseNavC
@@ -41,26 +40,15 @@
         _viNavBar = [[[NSBundle mainBundle]loadNibNamed:@"viBrowseTopMenu" owner:self options:Nil]objectAtIndex:0];
     return _viNavBar;
 }
--(UIBarButtonItem *)btnBookmark{
-    if (!_btnBookmark) {
-        UIButton *btnBookMark   = [UIButton buttonWithType:UIButtonTypeCustom];
-        UIImage *imgBtnBmark    = [UIImage imageNamed:@"btnBookmark"];
-        [btnBookMark setTitle:@"menu" forState:UIControlStateNormal];
-        [btnBookMark setFrame:CGRectMake(0, 0, imgBtnBmark.size.width, imgBtnBmark.size.height)];
-        [btnBookMark setImage:imgBtnBmark forState:UIControlStateNormal];
-        [btnBookMark addTarget:self action:@selector(addToBookmarks) forControlEvents:UIControlEventTouchUpInside];
-        _btnBookmark = [[UIBarButtonItem alloc]initWithCustomView:btnBookMark];
-    }
-    return _btnBookmark;
-}
+
 #pragma mark - actions 
 -(void)updateNavigationBarWithTitle:(NSString *)title andDetail:(NSString *)detail{
-    self.viNavBar.laTitle.text      = title;
-    self.viNavBar.laDetails.text    = detail;
+    dispatch_async(dispatch_get_main_queue(), ^{        
+        self.viNavBar.laTitle.text      = title;
+        self.viNavBar.laDetails.text    = detail;
+    });
 }
--(void)addToBookmarks{
-    NSLog(@"%@",((episodesCVC *)self.topViewController).bookmarkObject);
-}
+
 #pragma mark - prepareVC
 -(void)prepareUI{
 
@@ -102,34 +90,35 @@
     self.viNavBar.laTitle.text      = NSLocalizedString(@"FawaedTv", Nil);
     self.viNavBar.laDetails.text    = NSLocalizedString(@"Programs", Nil);
 }
--(UIBarButtonItem *)BookmarkBtnForVC:(UIViewController *)vc{
-    UIButton *btnBookMark   = [UIButton buttonWithType:UIButtonTypeCustom];
-    UIImage *imgBtnBmark    = [UIImage imageNamed:@"btnBookmark"];
-    [btnBookMark setTitle:@"menu" forState:UIControlStateNormal];
-    [btnBookMark setFrame:CGRectMake(0, 0, imgBtnBmark.size.width, imgBtnBmark.size.height)];
-    [btnBookMark setImage:imgBtnBmark forState:UIControlStateNormal];
-    [btnBookMark addTarget:vc action:@selector(addToBookmarks) forControlEvents:UIControlEventTouchUpInside];
 
-    return [[UIBarButtonItem alloc]initWithCustomView:btnBookMark];
-}
 #pragma mark - navigation delegate
-- (void)navigationController:(UINavigationController *)navigationController
-       willShowViewController:(UIViewController *)viewController
-                    animated:(BOOL)animated{
-
-    if (![viewController isKindOfClass:[browseCVC class]]) {
-        viewController.navigationItem.rightBarButtonItem = self.btnBookmark;
-    }
-}
+//- (void)navigationController:(UINavigationController *)navigationController
+//       willShowViewController:(UIViewController *)viewController
+//                    animated:(BOOL)animated{
+//
+//    if (![viewController isKindOfClass:[browseCVC class]]) {
+//        viewController.navigationItem.rightBarButtonItem = self.btnBookmark;
+//    }
+//}
 //- (id <UIViewControllerInteractiveTransitioning>)navigationController:(UINavigationController *)navigationController
 //                          interactionControllerForAnimationController:(id <UIViewControllerAnimatedTransitioning>) animationController{
-//    
+//    return self;
 //}
 //
 //- (id <UIViewControllerAnimatedTransitioning>)navigationController:(UINavigationController *)navigationController
 //                                   animationControllerForOperation:(UINavigationControllerOperation)operation
 //                                                fromViewController:(UIViewController *)fromVC
 //                                                  toViewController:(UIViewController *)toVC{
+//    return self;
+//}
+//- (void)startInteractiveTransition:(id <UIViewControllerContextTransitioning>)transitionContext{
+//    
+//}
+//- (NSTimeInterval)transitionDuration:(id <UIViewControllerContextTransitioning>)transitionContext{
+//    return .3;
+//}
+//// This method can only  be a nop if the transition is interactive and not a percentDriven interactive transition.
+//- (void)animateTransition:(id <UIViewControllerContextTransitioning>)transitionContext{
 //    
 //}
 @end

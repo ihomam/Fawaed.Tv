@@ -7,7 +7,7 @@
 //
 
 #import "episodesCVC.h"
-#import "serverObject.h"
+#import "serverManager.h"
 #import "generalCVCCell.h"
 #import "UIImageView+activity.h"
 #import "browseNavC.h"
@@ -87,7 +87,7 @@
     // setting image
     cell.viImgPic.image     = Nil;
     __weak generalCVCCell *weakCell  = cell;
-    [cell.viImgPic setImageWithURLRequest:[NSURLRequest requestWithURL:[NSURL URLWithString:epObj.episodeImageLink]]
+    [cell.viImgPic setImageWithURLRequest:[NSURLRequest requestWithURL:[NSURL URLWithString:epObj.episodeLinkImage]]
                     withActivityIndicator:YES
                                   success:^(NSURLRequest *request, NSHTTPURLResponse *response, UIImage *image) {
                                       dispatch_async(dispatch_get_main_queue(), ^{
@@ -133,7 +133,7 @@ minimumInteritemSpacingForSectionAtIndex:(NSInteger)section{
 -(void)collectionView:(UICollectionView *)collectionView didSelectItemAtIndexPath:(NSIndexPath *)indexPath{
     episodeTVC *vc = [self.storyboard instantiateViewControllerWithIdentifier:@"episodeTVC"];
     vc.selEpiObj = [self.dataSource objectAtIndex:indexPath.row];
-    [self.navigationController pushViewController:vc animated:YES];    
+    [self.navigationController pushViewController:vc animated:YES];
 }
 #pragma mark - prepareVC
 -(void)prepareDataSourece{
@@ -141,7 +141,7 @@ minimumInteritemSpacingForSectionAtIndex:(NSInteger)section{
     [self addRefreshControl];
     [self startRefreshControl];
     dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_HIGH, 0), ^{
-        [[serverObject sharedServerObj]getAllEpisodesOfSeries:self.selObjSeries WithCompleation:^(seriesObject *result) {
+        [[serverManager sharedServerObj]getAllEpisodesOfSeries:self.selObjSeries WithCompleation:^(seriesObject *result) {
             self.dataSource = result.seriesLectures;
             self.selObjSeries.seriesLecturer = result.seriesLecturer;
             dispatch_async(dispatch_get_main_queue(), ^{
@@ -152,16 +152,11 @@ minimumInteritemSpacingForSectionAtIndex:(NSInteger)section{
         }];
     });
 }
--(void)buildBookmarkObj{
-    self.bookmarkObject                     = [bookmarkObj new];
-    self.bookmarkObject.bookmarkContentID   = self.selObjSeries.seriesID;
-    self.bookmarkObject.bookmarkTitle       = self.selObjSeries.seriesTitle;
-    self.bookmarkObject.bookmarkImageLink   = self.selObjSeries.seriesImageLink;
-    self.bookmarkObject.bookmarkType        = bookmarkTypeSeries;
-}
+
 #pragma mark - prepareUI
 -(void)prepareUI{
     [self updateNavigationBar];
+    [self buildBookmarkBtnBar];
 }
 -(void)updateNavigationBar{
     [((browseNavC *)self.navigationController)updateNavigationBarWithTitle:self.selObjSeries.seriesTitle
@@ -193,8 +188,71 @@ minimumInteritemSpacingForSectionAtIndex:(NSInteger)section{
     [[UIDevice currentDevice] endGeneratingDeviceOrientationNotifications];
     [[NSNotificationCenter defaultCenter] removeObserver:self name:UIDeviceOrientationDidChangeNotification object:nil];
 }
-#pragma mark - bookmarks 
--(void)addToBookmarks{
-    NSLog(@"%d %@ %@",self.selObjSeries.seriesID,self.selObjSeries.seriesTitle,self.selObjSeries.seriesImageLink);
+#pragma mark - bookmarks
+-(void)buildBookmarkObj{
+    self.bookmarkObject                     = [bookmarkObj new];
+    if ([self.selObjSeries isKindOfClass:[seriesObject class]]) {
+        self.bookmarkObject.bookmarkContentID   = self.selObjSeries.seriesID;
+        self.bookmarkObject.bookmarkTitle       = self.selObjSeries.seriesTitle;
+        self.bookmarkObject.bookmarkImageLink   = self.selObjSeries.seriesImageLink;
+        self.bookmarkObject.bookmarkType        = bookmarkTypeSeries;
+    }else{
+        categoryObject *selObjCat = (categoryObject *)self.selObjSeries;
+        self.bookmarkObject.bookmarkContentID   = selObjCat.categoryID;
+        self.bookmarkObject.bookmarkTitle       = selObjCat.categoryTitle;
+        self.bookmarkObject.bookmarkImageLink   = selObjCat.categoryImgLink;
+        self.bookmarkObject.bookmarkType        = bookmarkTypeCategory;
+    }
+    
+}
+-(void)buildBookmarkBtnBar{
+    [self.bookmarkObject isAlreadyAvailableInDBWithCompletion:^(bookmarkObj *obj) {
+        if (obj) {
+            self.bookmarkObject = obj;
+            [self buildForRightNavigationItemAnEmptyBtnBookmark:NO];
+        }else{
+            [self buildForRightNavigationItemAnEmptyBtnBookmark:YES];
+        }
+        
+    }];
+}
+-(void)buildForRightNavigationItemAnEmptyBtnBookmark:(BOOL)empty{
+    UIImage *imgBtnBmark;
+    if (empty) {
+        imgBtnBmark    = [UIImage imageNamed:@"btnBookmark"];
+    }else{
+        imgBtnBmark    = [UIImage imageNamed:@"btnBookmarked"];
+    }
+    UIButton *btnBookMark   = [UIButton buttonWithType:UIButtonTypeCustom];
+    [btnBookMark setTitle:@"menu" forState:UIControlStateNormal];
+    [btnBookMark setFrame:CGRectMake(0, 0, imgBtnBmark.size.width, imgBtnBmark.size.height)];
+    [btnBookMark setImage:imgBtnBmark forState:UIControlStateNormal];
+    [btnBookMark addTarget:self action:@selector(toggleBookmark) forControlEvents:UIControlEventTouchUpInside];
+
+    self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc]initWithCustomView:btnBookMark];
+}
+
+-(void)toggleBookmark{
+    if (self.bookmarkObject.bookmarkID > 0){
+        // .1 this object is already in db and the usr wants to delete it
+        [self.bookmarkObject removeFromDataBase];
+
+        // .2 re prepare the new bookmark obj
+        [self buildBookmarkObj];
+        
+        // .3 update  bookmarrk barbuttonitem
+        [self buildForRightNavigationItemAnEmptyBtnBookmark:YES];
+    }else{
+        // .1 user wants to add this page to bookmarks
+        __weak episodesCVC *weakself = self;
+        
+        // .2 re prepare the new bookmark obj
+        [self.bookmarkObject addToDataBaseWithCompletion:^(bookmarkObj *newObj) {
+            weakself.bookmarkObject = newObj;
+        }];
+        
+        // .3 update  bookmark barbuttonitem
+        [self buildForRightNavigationItemAnEmptyBtnBookmark:NO];
+    }
 }
 @end

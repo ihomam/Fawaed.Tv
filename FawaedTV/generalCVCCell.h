@@ -10,6 +10,7 @@
 
 @interface generalCVCCell : UICollectionViewCell
 @property (weak, nonatomic) IBOutlet UILabel        *laTitle;
+@property (weak, nonatomic) IBOutlet UILabel        *laDescription;
 @property (weak, nonatomic) IBOutlet UIImageView    *viImgPic;
 
 @end
