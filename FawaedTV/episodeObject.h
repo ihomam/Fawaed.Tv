@@ -7,6 +7,8 @@
 //
 
 #import <Foundation/Foundation.h>
+@class fileObject;
+@class bookmarkObj;
 @interface episodeObject : NSObject
     @property (nonatomic)        int      episodeID;
     @property (nonatomic)        int      episodeSeriesID;
@@ -22,7 +24,14 @@
     @property (nonatomic,strong) NSString *episodeLinkAviLocal; // link path for downloaded AVI file
 
 -(BOOL)checkIfMp3FileInLocalFolder;
+-(void)addToDatabase;
+-(void)removeFromDatabase;
++(episodeObject *)episodeObjectForFile:(fileObject *)fObj;
++(episodeObject *)episodeObjectForBookmark:(bookmarkObj *)bObj;
 @end
+
+
+
 
 typedef NS_ENUM(NSUInteger, downloadStatus) {
     downloadStatusBasic, // it means there is no download going on. we use this no send nil episodeDownloadObject to ddProgressBtn object.

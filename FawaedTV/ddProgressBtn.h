@@ -12,5 +12,5 @@
 @interface ddProgressBtn : VBFPopFlatButton
 
 -(void)handelEpDownObj:(episodeDownloadObject *)epDownObj;
-
+-(void)setCheckmark;
 @end

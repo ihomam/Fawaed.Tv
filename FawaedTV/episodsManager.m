@@ -21,6 +21,9 @@
     /// add bookmark for this episode
     [epMan addBookmarkForEpisode:epObj];
     
+    // add the episode object to the db
+    [epObj addToDatabase];
+    
 }
 +(void)episodeDeleted:(episodeObject *)epObj type:(episodeDownloadedFileType)epType{
    
@@ -29,6 +32,9 @@
     [epMan removeBookmarkForEpisode:epObj];
     /// remove the record in the local file name in the local db
     [epMan removeFileForEpisode:epObj type:epType];
+
+    /// remove the episode object from the database
+    [epObj removeFromDatabase];
 }
 
 

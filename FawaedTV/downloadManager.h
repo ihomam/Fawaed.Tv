@@ -8,9 +8,20 @@
 
 
 #import <Foundation/Foundation.h>
+
+@protocol downloadTasksQueueProtocol <NSObject>
+    -(void)startAnotherDownloadTask;
+@end
+@interface downloadTasksQueue : NSObject
+    @property (nonatomic,weak) id<downloadTasksQueueProtocol> delegate;
+@end
+
+//#############################################################################//
+//#############################################################################//
+//#############################################################################//
+
 @class episodeObject;
 @class episodeDownloadObject;
-
 @interface downloadManager : NSObject
 
 +(instancetype)sharedDownloadObj;

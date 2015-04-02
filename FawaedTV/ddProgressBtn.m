@@ -45,5 +45,20 @@
         
     });
 }
+-(void)setCheckmark{
+    [self animateToType:buttonOkType];
+}
+
+- (BOOL)pointInside:(CGPoint)point withEvent:(UIEvent *)event {
+    UIEdgeInsets hitTestEdgeInsets = UIEdgeInsetsMake(-10, -10, -10, -10);
+    if(UIEdgeInsetsEqualToEdgeInsets(hitTestEdgeInsets, UIEdgeInsetsZero) || !self.enabled || self.hidden) {
+        return [super pointInside:point withEvent:event];
+    }
+    
+    CGRect relativeFrame = self.bounds;
+    CGRect hitFrame = UIEdgeInsetsInsetRect(relativeFrame, hitTestEdgeInsets);
+    
+    return CGRectContainsPoint(hitFrame, point);
+}
 
 @end

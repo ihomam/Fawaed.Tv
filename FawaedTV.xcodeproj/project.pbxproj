@@ -58,6 +58,10 @@
 		363C7D4F1A3BB4EE00A28C93 /* lecturerObject.m in Sources */ = {isa = PBXBuildFile; fileRef = 363C7D4E1A3BB4EE00A28C93 /* lecturerObject.m */; };
 		363C7D521A3BB64100A28C93 /* categoryObject.m in Sources */ = {isa = PBXBuildFile; fileRef = 363C7D511A3BB64100A28C93 /* categoryObject.m */; };
 		363C7D551A3BB68500A28C93 /* yearObject.m in Sources */ = {isa = PBXBuildFile; fileRef = 363C7D541A3BB68500A28C93 /* yearObject.m */; };
+		36570A511ACB2F4C0065496D /* categoriesCVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 36570A501ACB2F4C0065496D /* categoriesCVC.m */; };
+		36570A541ACB33F40065496D /* lecturersCVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 36570A531ACB33F40065496D /* lecturersCVC.m */; };
+		36570A571ACB36FA0065496D /* yearsCVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 36570A561ACB36FA0065496D /* yearsCVC.m */; };
+		3674F51E1ACC564000F4A779 /* Entitlements.plist in Resources */ = {isa = PBXBuildFile; fileRef = 3674F51D1ACC564000F4A779 /* Entitlements.plist */; };
 		3683D7A11A89F94B003A8A73 /* AFAudioRouter.m in Sources */ = {isa = PBXBuildFile; fileRef = 3683D79E1A89F94B003A8A73 /* AFAudioRouter.m */; };
 		3683D7A21A89F94B003A8A73 /* AFSoundManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 3683D7A01A89F94B003A8A73 /* AFSoundManager.m */; };
 		3683D7A71A8A0528003A8A73 /* PBYouTubeVideoView.html in Resources */ = {isa = PBXBuildFile; fileRef = 3683D7A41A8A0528003A8A73 /* PBYouTubeVideoView.html */; };
@@ -227,6 +231,13 @@
 		363C7D511A3BB64100A28C93 /* categoryObject.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = categoryObject.m; sourceTree = "<group>"; };
 		363C7D531A3BB68500A28C93 /* yearObject.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = yearObject.h; sourceTree = "<group>"; };
 		363C7D541A3BB68500A28C93 /* yearObject.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = yearObject.m; sourceTree = "<group>"; };
+		36570A4F1ACB2F4C0065496D /* categoriesCVC.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = categoriesCVC.h; sourceTree = "<group>"; };
+		36570A501ACB2F4C0065496D /* categoriesCVC.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = categoriesCVC.m; sourceTree = "<group>"; };
+		36570A521ACB33F40065496D /* lecturersCVC.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = lecturersCVC.h; sourceTree = "<group>"; };
+		36570A531ACB33F40065496D /* lecturersCVC.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = lecturersCVC.m; sourceTree = "<group>"; };
+		36570A551ACB36FA0065496D /* yearsCVC.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = yearsCVC.h; sourceTree = "<group>"; };
+		36570A561ACB36FA0065496D /* yearsCVC.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = yearsCVC.m; sourceTree = "<group>"; };
+		3674F51D1ACC564000F4A779 /* Entitlements.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = Entitlements.plist; sourceTree = "<group>"; };
 		3683D79D1A89F94B003A8A73 /* AFAudioRouter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AFAudioRouter.h; sourceTree = "<group>"; };
 		3683D79E1A89F94B003A8A73 /* AFAudioRouter.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AFAudioRouter.m; sourceTree = "<group>"; };
 		3683D79F1A89F94B003A8A73 /* AFSoundManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AFSoundManager.h; sourceTree = "<group>"; };
@@ -396,6 +407,7 @@
 		363C7CD51A3BA99100A28C93 = {
 			isa = PBXGroup;
 			children = (
+				3674F51D1ACC564000F4A779 /* Entitlements.plist */,
 				36E820F61A8F70FB00B14B3F /* libsqlite3.dylib */,
 				363C7CE01A3BA99100A28C93 /* FawaedTV */,
 				363C7CFA1A3BA99100A28C93 /* FawaedTVTests */,
@@ -688,6 +700,12 @@
 				36C289681A8691E8005357EC /* browseMenuTVC.m */,
 				360F67E11A87E91800C5B119 /* browseCVC.h */,
 				360F67E21A87E91800C5B119 /* browseCVC.m */,
+				36570A4F1ACB2F4C0065496D /* categoriesCVC.h */,
+				36570A501ACB2F4C0065496D /* categoriesCVC.m */,
+				36570A521ACB33F40065496D /* lecturersCVC.h */,
+				36570A531ACB33F40065496D /* lecturersCVC.m */,
+				36570A551ACB36FA0065496D /* yearsCVC.h */,
+				36570A561ACB36FA0065496D /* yearsCVC.m */,
 				368418051A892275007DF93D /* episodesCVC.h */,
 				368418061A892275007DF93D /* episodesCVC.m */,
 				368418081A893CA1007DF93D /* episodeTVC.h */,
@@ -783,6 +801,11 @@
 				TargetAttributes = {
 					363C7CDD1A3BA99100A28C93 = {
 						CreatedOnToolsVersion = 6.1.1;
+						SystemCapabilities = {
+							com.apple.BackgroundModes = {
+								enabled = 1;
+							};
+						};
 					};
 					363C7CF61A3BA99100A28C93 = {
 						CreatedOnToolsVersion = 6.1.1;
@@ -814,6 +837,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				3674F51E1ACC564000F4A779 /* Entitlements.plist in Resources */,
 				363C7CED1A3BA99100A28C93 /* Main.storyboard in Resources */,
 				360BC7371AADFE3B00771697 /* InfoPlist.strings in Resources */,
 				36C2895C1A865F4F005357EC /* viBrowseTopMenu.xib in Resources */,
@@ -866,6 +890,7 @@
 				36A9C78F1A3EE673005A8F8D /* TBXML.m in Sources */,
 				360F67E31A87E91800C5B119 /* browseCVC.m in Sources */,
 				363C7D311A3BAC1A00A28C93 /* AFHTTPRequestOperationManager.m in Sources */,
+				36570A511ACB2F4C0065496D /* categoriesCVC.m in Sources */,
 				360BC7391AADFE3B00771697 /* POPAnimatableProperty.mm in Sources */,
 				36E820F51A8F60DB00B14B3F /* databaseManager.m in Sources */,
 				363C7D351A3BAC1A00A28C93 /* AFURLConnectionOperation.m in Sources */,
@@ -907,6 +932,7 @@
 				363C7D391A3BAC1A00A28C93 /* AFNetworkActivityIndicatorManager.m in Sources */,
 				363C7D091A3BA9BD00A28C93 /* serverManager.m in Sources */,
 				36A5B2611AC949AD009E51B7 /* fileObject.m in Sources */,
+				36570A571ACB36FA0065496D /* yearsCVC.m in Sources */,
 				36A5B25E1AC9405A009E51B7 /* episodsManager.m in Sources */,
 				360BC73D1AADFE3B00771697 /* POPAnimationRuntime.mm in Sources */,
 				360BC73F1AADFE3B00771697 /* POPAnimator.mm in Sources */,
@@ -917,6 +943,7 @@
 				36B3D4271A9CF42F00B6A14A /* downloadManager.m in Sources */,
 				36977C5C1AAF82F10050C0FC /* downloadsTVCCell.m in Sources */,
 				360BC7431AADFE3B00771697 /* POPDecayAnimation.mm in Sources */,
+				36570A541ACB33F40065496D /* lecturersCVC.m in Sources */,
 				3683D7A21A89F94B003A8A73 /* AFSoundManager.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -984,7 +1011,9 @@
 				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
 				CLANG_WARN_UNREACHABLE_CODE = YES;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				"CODE_SIGN_ENTITLEMENTS[sdk=*]" = Entitlements.plist;
+				CODE_SIGN_IDENTITY = "";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "";
 				COPY_PHASE_STRIP = NO;
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
 				GCC_C_LANGUAGE_STANDARD = gnu99;
@@ -1006,7 +1035,7 @@
 					"$(inherited)",
 					/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/include,
 				);
-				IPHONEOS_DEPLOYMENT_TARGET = 8.1;
+				IPHONEOS_DEPLOYMENT_TARGET = 7.0;
 				MTL_ENABLE_DEBUG_INFO = YES;
 				ONLY_ACTIVE_ARCH = YES;
 				OTHER_LDFLAGS = "-lc++";
@@ -1031,7 +1060,9 @@
 				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
 				CLANG_WARN_UNREACHABLE_CODE = YES;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				"CODE_SIGN_ENTITLEMENTS[sdk=*]" = Entitlements.plist;
+				CODE_SIGN_IDENTITY = "";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "";
 				COPY_PHASE_STRIP = YES;
 				ENABLE_NS_ASSERTIONS = NO;
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
@@ -1047,7 +1078,7 @@
 					"$(inherited)",
 					/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/include,
 				);
-				IPHONEOS_DEPLOYMENT_TARGET = 8.1;
+				IPHONEOS_DEPLOYMENT_TARGET = 7.0;
 				MTL_ENABLE_DEBUG_INFO = NO;
 				OTHER_LDFLAGS = "-lc++";
 				SDKROOT = iphoneos;
@@ -1087,6 +1118,8 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				BUNDLE_LOADER = "$(TEST_HOST)";
+				CODE_SIGN_ENTITLEMENTS = Entitlements.plist;
+				"CODE_SIGN_ENTITLEMENTS[sdk=*]" = Entitlements.plist;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(SDKROOT)/Developer/Library/Frameworks",
 					"$(inherited)",
@@ -1106,6 +1139,8 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				BUNDLE_LOADER = "$(TEST_HOST)";
+				CODE_SIGN_ENTITLEMENTS = Entitlements.plist;
+				"CODE_SIGN_ENTITLEMENTS[sdk=*]" = Entitlements.plist;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(SDKROOT)/Developer/Library/Frameworks",
 					"$(inherited)",

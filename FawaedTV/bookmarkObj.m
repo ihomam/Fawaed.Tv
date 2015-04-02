@@ -55,16 +55,16 @@
     return bObj;
 }
 -(void)addToDataBaseWithCompletion:(void(^)(bookmarkObj *newObj))completion;{
-    NSString *sql = [NSString stringWithFormat:@"INSERT INTO bookmark (contentID,contentTitle,contentImgLink,contentType) VALUES (%d,'%@','%@',%lu)",
+    NSString *sql = [NSString stringWithFormat:@"INSERT INTO bookmark (contentID,contentTitle,contentImgLink,contentType) VALUES (%d,'%@','%@',%d)",
                      self.bookmarkContentID,
                      self.bookmarkTitle,
                      self.bookmarkImageLink,
-                     self.bookmarkType];
+                     (int)self.bookmarkType];
     
     [[databaseManager sharedDatabaseObj]excuteUpdate:sql onCompletion:^(BOOL updated) {
         NSLog(@"%d result",updated);
     }];
-    NSString *sqlForaddedObj = [NSString stringWithFormat:@"select * from bookmark where contentID = %d and contentType=%lu",self.bookmarkContentID,self.bookmarkType];
+    NSString *sqlForaddedObj = [NSString stringWithFormat:@"select * from bookmark where contentID = %d and contentType=%d",self.bookmarkContentID,(int)self.bookmarkType];
     [[databaseManager sharedDatabaseObj]excuteQuery:sqlForaddedObj onCompletion:^(FMResultSet *result) {
         if ([result next]) {
             self.bookmarkID = [result intForColumn:@"id"];
@@ -81,7 +81,7 @@
     }];
 }
 -(bookmarkObj *)isAlreadyAvailableInDBWithCompletion:(void(^)(bookmarkObj *obj))completion{
-    NSString *sql = [NSString stringWithFormat:@"select * from bookmark where contentID = %d and contentType = %lu ",self.bookmarkContentID,self.bookmarkType];
+    NSString *sql = [NSString stringWithFormat:@"select * from bookmark where contentID = %d and contentType = %d ",self.bookmarkContentID,(int)self.bookmarkType];
     __block bookmarkObj *newBMObj;
     [[databaseManager sharedDatabaseObj]excuteQuery:sql onCompletion:^(FMResultSet *result) {
         if ([result next]) {

@@ -8,9 +8,6 @@
 
 #import <UIKit/UIKit.h>
 @class episodeObject;
-@class bookmarkObj;
 @interface episodeTVC : UITableViewController
     @property (nonatomic,strong) episodeObject *selEpiObj;
-    @property (nonatomic,strong) bookmarkObj  *bookmarkObject;
-
 @end

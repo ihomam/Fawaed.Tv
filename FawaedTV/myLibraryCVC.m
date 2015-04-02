@@ -14,6 +14,12 @@
 #import "browseNavC.h"
 #import "appTBVC.h"
 
+#import "episodesCVC.h"
+#import "categoriesCVC.h"
+#import "lecturersCVC.h"
+#import "episodeTVC.h"
+#import "yearsCVC.h"
+
 // model objects
 #import "seriesObject.h"
 #import "categoryObject.h"
@@ -48,11 +54,10 @@ typedef NS_ENUM(NSUInteger, libraryFilterType) {
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    
+    self.filterType = libraryFilterTypeLocalFiles;
 }
 - (void)viewWillAppear:(BOOL)animated{
     [super viewWillAppear:animated];
-    self.filterType = libraryFilterTypeLocalFiles;
     [self prepareDataSourece];
     [self prepareUI];
     [self addObserverOfOrientation];
@@ -255,26 +260,83 @@ minimumInteritemSpacingForSectionAtIndex:(NSInteger)section{
 }
 #pragma mark <UICollectionViewDelegate>
 -(void)collectionView:(UICollectionView *)collectionView didSelectItemAtIndexPath:(NSIndexPath *)indexPath{
+    switch (self.filterType) {
+        case libraryFilterTypeLocalFiles:
+            [self tappedFileOnIndexPath:indexPath];
+            break;
+        case libraryFilterTypeCategory:
+            [self tappedCategoryOnIndexPath:indexPath];
+            break;
+        case libraryFilterTypeSeries:
+            [self tappedSeriesOnIndexPath:indexPath];
+            break;
+        case libraryFilterTypeYear:
+            [self tappedYearOnIndexPath:indexPath];
+            break;
+        case libraryFilterTypeLecturer:
+            [self tappedLecturerOnIndexPath:indexPath];
+            break;
+        case libraryFilterTypeEpisode:
+            [self tappedEpisodeOnIndexPath:indexPath];
+            break;
+        default:
+            break;
+    }
+   
+}
+-(void)tappedSeriesOnIndexPath:(NSIndexPath *)indexPath{
+    bookmarkObj *bObj   = [self.dataSource objectAtIndex:indexPath.row];
+    seriesObject *sObj  = [seriesObject new];
+    sObj.seriesID       = bObj.bookmarkContentID;
+    sObj.seriesTitle    = bObj.bookmarkTitle;
+    episodesCVC *vc     = [self.storyboard instantiateViewControllerWithIdentifier:@"episodesCVC"];
+    vc.selObjSeries     = sObj;
+    [self.navigationController pushViewController:vc animated:YES];
+}
+-(void)tappedCategoryOnIndexPath:(NSIndexPath *)indexPath{
+    bookmarkObj *bObj       = [self.dataSource objectAtIndex:indexPath.row];
+    categoryObject *cObj    = [categoryObject new];
+    cObj.categoryID         = bObj.bookmarkContentID;
+    cObj.categoryTitle      = bObj.bookmarkTitle;
+    categoriesCVC *vc       = [self.storyboard instantiateViewControllerWithIdentifier:@"categoriesCVC"];
+    vc.selCatObj            = cObj;
+    [self.navigationController pushViewController:vc animated:YES];
+}
+-(void)tappedLecturerOnIndexPath:(NSIndexPath *)indexPath{
+    bookmarkObj *bObj       = [self.dataSource objectAtIndex:indexPath.row];
+    lecturerObject *lObj    = [lecturerObject new];
+    lObj.lecturerID         = bObj.bookmarkContentID;
+    lObj.lecturerTitle      = bObj.bookmarkTitle;
+    lecturersCVC *vc        = [self.storyboard instantiateViewControllerWithIdentifier:@"lecturersCVC"];
+    vc.selLecObj            = lObj;
+    [self.navigationController pushViewController:vc animated:YES];
+}
+-(void)tappedYearOnIndexPath:(NSIndexPath *)indexPath{
+    bookmarkObj *bObj       = [self.dataSource objectAtIndex:indexPath.row];
+    yearObject *yObj        = [yearObject new];
+    yObj.yearID             = bObj.bookmarkContentID;
+    yObj.yearTitle          = bObj.bookmarkTitle;
+    yearsCVC *vc            = [self.storyboard instantiateViewControllerWithIdentifier:@"yearsCVC"];
+    vc.selYeObj             = yObj;
+    [self.navigationController pushViewController:vc animated:YES];
+}
+-(void)tappedEpisodeOnIndexPath:(NSIndexPath *)indexPath{
+    bookmarkObj *bObj       = [self.dataSource objectAtIndex:indexPath.row];
+    episodeObject *eObj     = [episodeObject episodeObjectForBookmark:bObj];
+    episodeTVC *vc          = [self.storyboard instantiateViewControllerWithIdentifier:@"episodeTVC"];
+    vc.selEpiObj            = eObj;
+    [self.navigationController pushViewController:vc animated:YES];
+}
+-(void)tappedFileOnIndexPath:(NSIndexPath *)indexPath{
     NSString *fileName  = [self.dataSource objectAtIndex:indexPath.row];
     fileObject *fObject = [fileObject getFileObjForFileName:fileName fromList:self.dataSourceFileObjs];
-    bookmarkObj *bObj   = [bookmarkObj getBookmarkForContentID:fObject.fileEpisodeID];
-    episodeObject *epObj= [episodeObject new];
-    epObj.episodeID     = bObj.bookmarkContentID;
-    epObj.episodeTitle  = bObj.bookmarkTitle;
-    epObj.episodeLinkImage = bObj.bookmarkImageLink;
-
-    NSString *filePath  = [NSString stringWithFormat:@"%@/%@",[FCFileManager pathForLibraryDirectory],fileName];
-    epObj.episodeLinkMp3Local = filePath;
+    episodeObject *epObj= [episodeObject episodeObjectForFile:fObject];
     playerType pType    = playerTypeAudioLocal;
-    if (fObject.fileType == fileTypeVideo) {
-        pType    = playerTypeVideoLocal;
-        epObj.episodeLinkAviLocal = filePath;
-        epObj.episodeLinkMp3Local = Nil;
-    }
+    
+    if (fObject.fileType == fileTypeVideo) pType = playerTypeVideoLocal;
     
     [((appTBVC *)self.tabBarController) buildFilePlayerForObject:epObj forType:pType];
 }
-
 #pragma mark - prepareVC
 -(void)prepareDataSourece{
     self.dataSourceDictionary = [bookmarkObj getBookmarksFromDatabase];
@@ -295,6 +357,7 @@ minimumInteritemSpacingForSectionAtIndex:(NSInteger)section{
         self.btnFilter.enabled = NO;
     
     [self updateNavigationBar];
+    [self.btnFilter setImage:[browseMenuTVC menuIconForID:self.filterType]];
 }
 -(void)updateNavigationBar{
     // update navigation title name

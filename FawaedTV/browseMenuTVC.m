@@ -116,30 +116,34 @@ static int rowHeight = 44;
 }
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath{
     browseMenuTVCCell *cell = [tableView dequeueReusableCellWithIdentifier:@"Cell"];
-    switch (indexPath.row) {
-        case 0:
-            cell.img.image = [UIImage imageNamed:@"tv"];
-            break;
-        case 1:
-            cell.img.image = [UIImage imageNamed:@"folder"];
-            break;
-        case 2:
-            cell.img.image = [UIImage imageNamed:@"user"];
-            break;
-        case 3:
-            cell.img.image = [UIImage imageNamed:@"calendar"];
-            break;
-        case 4:
-            cell.img.image = [UIImage imageNamed:@"episode"];
-            break;
-        case 5:
-            cell.img.image = [UIImage imageNamed:@"file"];
-            break;
-        default:
-            cell.img.image = [UIImage imageNamed:@"tv"];
-            break;
-    }
+    cell.img.image =  [browseMenuTVC menuIconForID:(int)indexPath.row];
     return cell;
 }
-
++(UIImage *)menuIconForID:(int)iconID{
+    UIImage *icon;
+    switch (iconID) {
+        case 0:
+            icon = [UIImage imageNamed:@"tv"];
+            break;
+        case 1:
+            icon = [UIImage imageNamed:@"folder"];
+            break;
+        case 2:
+            icon = [UIImage imageNamed:@"user"];
+            break;
+        case 3:
+            icon = [UIImage imageNamed:@"calendar"];
+            break;
+        case 4:
+            icon = [UIImage imageNamed:@"episode"];
+            break;
+        case 5:
+            icon = [UIImage imageNamed:@"file"];
+            break;
+        default:
+            icon = [UIImage imageNamed:@"tv"];
+            break;
+    }
+    return icon;
+}
 @end

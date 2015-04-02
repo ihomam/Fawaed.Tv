@@ -31,6 +31,8 @@
             [db executeUpdate:@"CREATE TABLE if not exists bookmark (id INTEGER PRIMARY KEY  AUTOINCREMENT  NOT NULL , contentID INTEGER, contentTitle TEXT,  contentImgLink  TEXT, contentType INTEGER)"];
             
             [db executeUpdate:@"CREATE TABLE if not exists localfilesindex (id INTEGER PRIMARY KEY  AUTOINCREMENT  NOT NULL , fileName TEXT, fileSize  TEXT,contentID INTEGER , contentTitle TEXT, contentLecturer TEXT)"];
+
+            [db executeUpdate:@"CREATE TABLE if not exists episode (id INTEGER PRIMARY KEY NOT NULL , seriesID INTEGER, title TEXT,lecturer TEXT ,link TEXT ,linkImage TEXT ,linkWatch TEXT,linkListen  TEXT,linkAvi INTEGER , linkMp3 TEXT)"];
         }];
     });
     

@@ -90,13 +90,15 @@
     epDObj.episodeDownloadBlock = ^{
         [self handleBtn:cell.btnDownloadControl withEDObj:epDObj];
     };
+
     return cell;
 }
 -(void)handleBtn:(ddProgressBtn *)btn withEDObj:(episodeDownloadObject *)epDObj{
     [btn handelEpDownObj:epDObj];
     if (epDObj.episodeDownloadCurrentStatus == downloadStatusFinished) {
+
         dispatch_async(dispatch_get_main_queue(), ^{
-            btn.hidden = YES;
+            [btn setCheckmark];
         });
     }
 }

@@ -1,33 +1,31 @@
 //
-//  episodesCVC.m
+//  yearsCVC.m
 //  FawaedTV
 //
-//  Created by Homam on 2015-02-09.
+//  Created by Homam on 2015-03-31.
 //  Copyright (c) 2015 Homam. All rights reserved.
 //
 
-#import "episodesCVC.h"
+#import "yearsCVC.h"
 #import "serverManager.h"
 #import "generalCVCCell.h"
 #import "UIImageView+activity.h"
 #import "browseNavC.h"
 
-#import "episodeObject.h"
+#import "yearObject.h"
 #import "bookmarkObj.h"
-#import "episodeTVC.h"
+#import "episodesCVC.h"
 
-@interface episodesCVC ()
+@interface yearsCVC ()
     @property (nonatomic,strong) NSMutableArray     *dataSource;
     @property (nonatomic,strong) UIRefreshControl   *refreshControl;
+    @property (nonatomic,strong) bookmarkObj        *bookmarkObject;
 @end
 
-@implementation episodesCVC
+@implementation yearsCVC
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    
-    // Uncomment the following line to preserve selection between presentations
-    // self.clearsSelectionOnViewWillAppear = NO;
     
     [self prepareDataSourece];
 }
@@ -54,17 +52,6 @@
 -(void)refershControlAction{
     [self prepareDataSourece];
 }
-
-/*
-#pragma mark - Navigation
-
-// In a storyboard-based application, you will often want to do a little preparation before navigation
-- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
-    // Get the new view controller using [segue destinationViewController].
-    // Pass the selected object to the new view controller.
-}
-*/
-
 #pragma mark <UICollectionViewDataSource>
 - (NSInteger)numberOfSectionsInCollectionView:(UICollectionView *)collectionView {
     return 1;
@@ -80,13 +67,13 @@
     generalCVCCell *cell = [collectionView dequeueReusableCellWithReuseIdentifier:reuseIdentifier forIndexPath:indexPath];
     
     // Configure the cell
-    episodeObject *epObj    = [self.dataSource objectAtIndex:indexPath.row];
-    cell.laTitle.text       = epObj.episodeTitle;
+    seriesObject *sObj      = [self.dataSource objectAtIndex:indexPath.row];
+    cell.laTitle.text       = sObj.seriesTitle;
     
     // setting image
     cell.viImgPic.image     = Nil;
     __weak generalCVCCell *weakCell  = cell;
-    [cell.viImgPic setImageWithURLRequest:[NSURLRequest requestWithURL:[NSURL URLWithString:epObj.episodeLinkImage]]
+    [cell.viImgPic setImageWithURLRequest:[NSURLRequest requestWithURL:[NSURL URLWithString:sObj.seriesImageLink]]
                     withActivityIndicator:YES
                                   success:^(NSURLRequest *request, NSHTTPURLResponse *response, UIImage *image) {
                                       dispatch_async(dispatch_get_main_queue(), ^{
@@ -110,7 +97,7 @@
     NSInteger cloumnGeneral     = 2;
     if ([UIApplication sharedApplication].statusBarOrientation != UIInterfaceOrientationPortrait){cloumnGeneral = 3;}
     cellSize = CGSizeMake((CVWidth /cloumnGeneral) -10, (CVWidth /cloumnGeneral) -10);
-
+    
     return cellSize;
 }
 - (CGFloat)collectionView:(UICollectionView *)collectionView
@@ -130,8 +117,8 @@ minimumInteritemSpacingForSectionAtIndex:(NSInteger)section{
 }
 #pragma mark <UICollectionViewDelegate>
 -(void)collectionView:(UICollectionView *)collectionView didSelectItemAtIndexPath:(NSIndexPath *)indexPath{
-    episodeTVC *vc = [self.storyboard instantiateViewControllerWithIdentifier:@"episodeTVC"];
-    vc.selEpiObj = [self.dataSource objectAtIndex:indexPath.row];
+    episodesCVC *vc = [self.storyboard instantiateViewControllerWithIdentifier:@"episodesCVC"];
+    vc.selObjSeries = [self.dataSource objectAtIndex:indexPath.row];
     [self.navigationController pushViewController:vc animated:YES];
 }
 #pragma mark - prepareVC
@@ -140,9 +127,9 @@ minimumInteritemSpacingForSectionAtIndex:(NSInteger)section{
     [self addRefreshControl];
     [self startRefreshControl];
     dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_HIGH, 0), ^{
-        [[serverManager sharedServerObj]getAllEpisodesOfSeries:self.selObjSeries WithCompleation:^(seriesObject *result) {
-            self.dataSource = result.seriesLectures;
-            self.selObjSeries.seriesLecturer = result.seriesLecturer;
+        [[serverManager sharedServerObj]getAllSeriesOfYear:self.selYeObj WithCompleation:^(yearObject *result) {
+            self.dataSource = result.yearSeriesArray;
+            self.selYeObj.yearSeriesArray = result.yearSeriesArray;
             dispatch_async(dispatch_get_main_queue(), ^{
                 [self updateNavigationBar];
                 [self.refreshControl endRefreshing];
@@ -158,8 +145,9 @@ minimumInteritemSpacingForSectionAtIndex:(NSInteger)section{
     [self buildBookmarkBtnBar];
 }
 -(void)updateNavigationBar{
-    [((browseNavC *)self.navigationController)updateNavigationBarWithTitle:self.selObjSeries.seriesTitle
-                                                                 andDetail:self.selObjSeries.seriesLecturer];
+    NSString *subTitle = [NSString stringWithFormat:@"%d %@",(int)self.selYeObj.yearSeriesArray.count,NSLocalizedString(@"Series", Nil)];
+    [((browseNavC *)self.navigationController)updateNavigationBarWithTitle:self.selYeObj.yearTitle
+                                                                 andDetail:subTitle];
 }
 -(void)addRefreshControl{
     if (!self.refreshControl) {
@@ -190,10 +178,10 @@ minimumInteritemSpacingForSectionAtIndex:(NSInteger)section{
 #pragma mark - bookmarks
 -(void)buildBookmarkObj{
     self.bookmarkObject                     = [bookmarkObj new];
-    self.bookmarkObject.bookmarkContentID   = self.selObjSeries.seriesID;
-    self.bookmarkObject.bookmarkTitle       = self.selObjSeries.seriesTitle;
-    self.bookmarkObject.bookmarkImageLink   = self.selObjSeries.seriesImageLink;
-    self.bookmarkObject.bookmarkType        = bookmarkTypeSeries;
+    self.bookmarkObject.bookmarkContentID   = self.selYeObj.yearID;
+    self.bookmarkObject.bookmarkTitle       = self.selYeObj.yearTitle;
+    self.bookmarkObject.bookmarkImageLink   = Nil;
+    self.bookmarkObject.bookmarkType        = bookmarkTypeYear;
 }
 -(void)buildBookmarkBtnBar{
     [self.bookmarkObject isAlreadyAvailableInDBWithCompletion:^(bookmarkObj *obj) {
@@ -218,7 +206,7 @@ minimumInteritemSpacingForSectionAtIndex:(NSInteger)section{
     [btnBookMark setFrame:CGRectMake(0, 0, imgBtnBmark.size.width, imgBtnBmark.size.height)];
     [btnBookMark setImage:imgBtnBmark forState:UIControlStateNormal];
     [btnBookMark addTarget:self action:@selector(toggleBookmark) forControlEvents:UIControlEventTouchUpInside];
-
+    
     self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc]initWithCustomView:btnBookMark];
 }
 
@@ -226,7 +214,7 @@ minimumInteritemSpacingForSectionAtIndex:(NSInteger)section{
     if (self.bookmarkObject.bookmarkID > 0){
         // .1 this object is already in db and the usr wants to delete it
         [self.bookmarkObject removeFromDataBase];
-
+        
         // .2 re prepare the new bookmark obj
         [self buildBookmarkObj];
         
@@ -234,7 +222,7 @@ minimumInteritemSpacingForSectionAtIndex:(NSInteger)section{
         [self buildForRightNavigationItemAnEmptyBtnBookmark:YES];
     }else{
         // .1 user wants to add this page to bookmarks
-        __weak episodesCVC *weakself = self;
+        __weak yearsCVC *weakself = self;
         
         // .2 re prepare the new bookmark obj
         [self.bookmarkObject addToDataBaseWithCompletion:^(bookmarkObj *newObj) {

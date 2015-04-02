@@ -24,4 +24,5 @@ typedef enum : NSUInteger {
 
 -(void)addSelfToVCAndAnimate:(UIViewController *)vc withCellNumber:(int)number;
 -(void)hideCellsForRemovingVC;
++(UIImage *)menuIconForID:(int)iconID;
 @end

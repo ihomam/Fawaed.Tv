@@ -9,7 +9,7 @@
 #import "AppDelegate.h"
 #import "databaseManager.h"
 #import "downloadManager.h"
-
+#import "AFSoundManager.h"
 @interface AppDelegate ()
 @property (nonatomic,strong) databaseManager *dbObj;
 @property (nonatomic,strong) downloadManager *downloadManager;
@@ -22,6 +22,7 @@
     // Override point for customization after application launch.
     self.dbObj              = [databaseManager sharedDatabaseObj];
     self.downloadManager    = [downloadManager sharedDownloadObj];
+
     return YES;
 }
 

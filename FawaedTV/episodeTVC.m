@@ -34,6 +34,7 @@
     @property (weak, nonatomic) IBOutlet UIButton           *btnListen;
     @property (weak, nonatomic) IBOutlet UIButton           *btnMp3;
     @property (weak, nonatomic) IBOutlet ddProgressBtn      *btnVBPMp3;
+    @property (nonatomic,strong) bookmarkObj  *bookmarkObject;
 @end
 
 @implementation episodeTVC
@@ -211,6 +212,7 @@
         __weak __block episodeDownloadObject *epDownObj;
         epDownObj = [downloadManager sharedDownloadObj].listOfDownloadedObjs[self.selEpiObj.episodeLinkMp3];
         if (epDownObj){
+            [self handleBtnDownloadProgress:self.btnVBPMp3 andEpDownObja:epDownObj];
             epDownObj.episodeDownloadBlock  = ^(){
                 [self handleBtnDownloadProgress:self.btnVBPMp3 andEpDownObja:epDownObj];
             };
@@ -230,7 +232,7 @@
     if (self.bookmarkObject.bookmarkID > 0){
         // .1 this object is already in db and the usr wants to delete it
         [self.bookmarkObject removeFromDataBase];
-        
+
         // .2 re prepare the new bookmark obj
         [self buildBookmarkObj];
         
@@ -244,6 +246,9 @@
         [self.bookmarkObject addToDataBaseWithCompletion:^(bookmarkObj *newObj) {
             weakself.bookmarkObject = newObj;
         }];
+        
+        // .2.1 add the episode object to db
+        [self.selEpiObj addToDatabase];
         
         // .3 update  bookmark barbuttonitem
         [self buildBookmarkBtnWithEmptyState:NO];
