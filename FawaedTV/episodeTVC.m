@@ -21,20 +21,20 @@
 
 #import "FCFileManager.h"
 #import "episodsManager.h"
+#import "UIImage+BlurredFrame.h"
 
 @interface episodeTVC (){
     CGFloat cellImgSize;
 }
-    @property (weak, nonatomic) IBOutlet UIImageView *viImgEpiPic;
-    @property (weak, nonatomic) IBOutlet UIImageView *viImgYoutube;
-    @property (weak, nonatomic) IBOutlet UIImageView *viImgAvi;
-    @property (weak, nonatomic) IBOutlet UIImageView *viImgListen;
+
     @property (weak, nonatomic) IBOutlet UIButton           *btnYoutube;
     @property (weak, nonatomic) IBOutlet UIButton           *btnAvi;
     @property (weak, nonatomic) IBOutlet UIButton           *btnListen;
     @property (weak, nonatomic) IBOutlet UIButton           *btnMp3;
     @property (weak, nonatomic) IBOutlet ddProgressBtn      *btnVBPMp3;
-    @property (nonatomic,strong) bookmarkObj  *bookmarkObject;
+    @property (weak, nonatomic) IBOutlet ddProgressBtn      *btnVBPAvi;
+    @property (weak, nonatomic) IBOutlet UILabel            *laEpsoideTitle;
+    @property (nonatomic,strong) bookmarkObj                *bookmarkObject;
 @end
 
 @implementation episodeTVC
@@ -49,28 +49,13 @@
     [super viewWillAppear:animated];
     [self updateVCWithObj:self.selEpiObj];
     [self prepareUI];
-    [self addObserverOfOrientation];
-}
--(void)viewWillDisappear:(BOOL)animated{
-    [super viewWillDisappear:animated];
-    [self removeObserverOfOrientation];
-}
-- (void)deviceOrientationDidChange:(NSNotification *)notification {
-    [self prepareCellImgSize];
-    [self.tableView reloadData];
 }
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.
 }
 
-#pragma mark - 
--(CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath{
-    if (indexPath.row == 0) {
-        return cellImgSize;
-    }
-    return 44;
-}
+
 #pragma mark - actions 
 -(void)listenOnline{
     if (self.selEpiObj.episodeLinkListen.length > 0) {
@@ -84,6 +69,23 @@
         [((appTBVC *)self.tabBarController) buildFilePlayerForObject:viID forType:playerTypeVideoOnline];
     }
 }
+- (IBAction)downloadAVI:(id)sender {
+    return;
+//    ////
+//    if (self.btnVBPAvi.currentButtonType == buttonRightTriangleType) {
+//        // means we should play the file not download
+//        NSLog(@"playing the video... hehe");
+//        return;
+//    }
+//    if (self.selEpiObj.episodeLinkAvi.length > 0) {
+//        __weak __block episodeDownloadObject *epDownObj;
+//        epDownObj  = [[downloadManager sharedDownloadObj]downloadThisEpisode:self.selEpiObj soundFile:NO];
+//        if(epDownObj){
+//            [self.btnVBPAvi handelEpDownObj:epDownObj];
+//            epDownObj.episodeDownloadBlock = ^(){[self handleBtnDownloadProgress:self.btnVBPAvi andEpDownObja:epDownObj];};
+//        }
+//    }
+}
 - (IBAction)downloadMp3:(id)sender {
     // @TODO check this code
     if (self.btnVBPMp3.currentButtonType == buttonRightTriangleType ) {
@@ -94,7 +96,6 @@
     }
     
     if (self.selEpiObj.episodeLinkMp3.length > 0){
-        // @TODO if downloaded corecctly add a bookmark
         __weak __block episodeDownloadObject *epDownObj;
         epDownObj  = [[downloadManager sharedDownloadObj]downloadThisEpisode:self.selEpiObj soundFile:YES];
         if(epDownObj){
@@ -106,64 +107,72 @@
 #pragma mark - prepareVC
 -(void)updateVCWithObj:(episodeObject *)epObj{
     [self buildBookmarkObj];
-   __weak episodeTVC *weakSelf  = self;
-    [self.viImgEpiPic setImageWithURLRequest:[NSURLRequest requestWithURL:[NSURL URLWithString:epObj.episodeLinkImage]]
-                    withActivityIndicator:YES
-                                  success:^(NSURLRequest *request, NSHTTPURLResponse *response, UIImage *image) {
-                                      dispatch_async(dispatch_get_main_queue(), ^{
-                                          
-                                          weakSelf.viImgEpiPic.alpha = 0;
-                                          weakSelf.viImgEpiPic.image = image;
-                                          [self prepareCellImgSize];
-                                          [self.tableView reloadData];
-                                          [UIView animateWithDuration:.3 animations:^{
-                                              [self.view updateConstraintsIfNeeded];
-                                              weakSelf.viImgEpiPic.alpha = 1;
-                                          }];
-                                      });
-                                  } failure:Nil];
-    
-    if (epObj.episodeLinkMp3.length == 0){
-        self.btnMp3.alpha = .3;
-        self.btnVBPMp3.alpha = .3;
-    }
-    if (epObj.episodeLinkAvi.length == 0){
-        self.btnAvi.alpha = .3;
-        self.viImgAvi.alpha = .3;
-    }
-    if (self.selEpiObj.episodeLinkListen.length == 0){
-        self.btnListen.alpha = .3;
-        self.viImgListen.alpha = .3;
-    }
-    if (self.selEpiObj.episodeLinkWatch.length == 0){
-        self.btnYoutube.alpha = .3;
-        self.viImgYoutube.alpha = .3;
+    if (!((UIImageView *)self.tableView.backgroundView).image) {
+        __block UIImageView *bg         = [UIImageView new];
+        bg.backgroundColor              = [UIColor darkGrayColor];
+        __weak UIImageView *weakbg      = bg;
+        bg.contentMode                  = UIViewContentModeScaleAspectFill;
+        self.tableView.backgroundView   = bg;
+        [bg setImageWithURLRequest:[NSURLRequest requestWithURL:[NSURL URLWithString:epObj.episodeLinkImage]]
+             withActivityIndicator:YES
+                           success:^(NSURLRequest *request, NSHTTPURLResponse *response, UIImage *image) {
+                               dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_BACKGROUND, 0), ^{
+                                   UIImage *imgBlured = [image applyBlurWithRadius:1.7
+                                                                         tintColor:[UIColor colorWithWhite:.1 alpha:.6]
+                                                             saturationDeltaFactor:1
+                                                                         maskImage:Nil
+                                                                           atFrame:CGRectMake(0, 0, image.size.width, image.size.height)];
+                                   dispatch_async(dispatch_get_main_queue(), ^{
+                                       weakbg.alpha = 0;
+                                       weakbg.image = imgBlured;
+                                       [UIView animateWithDuration:.5 animations:^{
+                                           weakbg.alpha = 1;
+                                       }];
+                                   });
+                               });
+                           } failure:Nil];
     }
 }
 #pragma mark - prepareUI
 -(void)prepareUI{
+    self.tableView.backgroundColor = [UIColor darkGrayColor];
     [self updateNavigationBar];
     [self buildBookmarkBtnBar];
     [self checkForBtnDownloadProgress];
-}
--(void)prepareCellImgSize{
-    cellImgSize = ((self.view.frame.size.width *self.viImgEpiPic.image.size.height)/self.viImgEpiPic.image.size.width);
+    [self prepareBtns];
 }
 
 -(void)updateNavigationBar{
-    [((browseNavC *)self.navigationController)updateNavigationBarWithTitle:self.selEpiObj.episodeTitle
-                                                                 andDetail:self.selEpiObj.episodeLecturer];
+    self.laEpsoideTitle.text = self.selEpiObj.episodeTitle;
+}
+-(void)prepareBtns{
+    self.btnVBPMp3.tintColor = [UIColor whiteColor];
+    self.btnVBPAvi.tintColor = [UIColor whiteColor];
+    
+    if (self.selEpiObj.episodeLinkMp3.length == 0){
+        self.btnMp3.alpha       = .3;
+        self.btnVBPMp3.alpha    = .3;
+    }
+//    if (self.selEpiObj.episodeLinkAvi.length == 0){
+        self.btnAvi.alpha       = .3;
+        self.btnVBPAvi.alpha    = .3;
+//    }
+    if (self.selEpiObj.episodeLinkListen.length == 0){
+        self.btnListen.alpha    = .3;
+    }
+    if (self.selEpiObj.episodeLinkWatch.length == 0){
+        self.btnYoutube.alpha   = .3;
+    }
+    
+    if ([self.selEpiObj checkIfMp3FileInLocalFolder]){
+        [self.btnMp3 setTitle:NSLocalizedString(@" Play audio", Nil) forState:UIControlStateNormal];
+    }
+    
+    if ([self.selEpiObj checkIfAviFileInLocalFolder]){
+        [self.btnAvi setTitle:NSLocalizedString(@" Play video", Nil) forState:UIControlStateNormal];
+    }
 }
 
-#pragma mark - orientations
--(void)addObserverOfOrientation{
-    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(deviceOrientationDidChange:) name:UIDeviceOrientationDidChangeNotification object:nil];
-    [[UIDevice currentDevice] beginGeneratingDeviceOrientationNotifications];
-}
--(void)removeObserverOfOrientation{
-    [[UIDevice currentDevice] endGeneratingDeviceOrientationNotifications];
-    [[NSNotificationCenter defaultCenter] removeObserver:self name:UIDeviceOrientationDidChangeNotification object:nil];
-}
 #pragma mark - bookmarks
 -(void)buildBookmarkObj{
     self.bookmarkObject                     = [bookmarkObj new];
@@ -180,7 +189,6 @@
         }else{
             [self buildBookmarkBtnWithEmptyState:YES];
         }
-        
     }];
 }
 -(void)buildBookmarkBtnWithEmptyState:(BOOL)empty{
@@ -201,6 +209,7 @@
 -(void)checkForBtnDownloadProgress{
     //    @TODO apply for videos
     
+    
     // .0 check if file is  already available in user folder
     if ([self.selEpiObj checkIfMp3FileInLocalFolder]){
         [episodsManager episodeDownloaded:self.selEpiObj type:episodeDownloadedFileAudio];
@@ -218,6 +227,23 @@
             };
         }else{
             [self handleBtnDownloadProgress:self.btnVBPMp3 andEpDownObja:Nil];
+        }
+    }
+    
+    if ([self.selEpiObj checkIfAviFileInLocalFolder]) {
+        [episodsManager episodeDownloaded:self.selEpiObj type:episodeDownloadedFileVideo];
+        [self buildBookmarkBtnWithEmptyState:NO];
+        [self.btnVBPAvi setCurrentButtonType:buttonRightTriangleType];
+    }else{
+        __weak __block episodeDownloadObject *epDownObj;
+        epDownObj = [downloadManager sharedDownloadObj].listOfDownloadedObjs[self.selEpiObj.episodeLinkAvi];
+        if (epDownObj){
+            [self handleBtnDownloadProgress:self.btnVBPAvi andEpDownObja:epDownObj];
+            epDownObj.episodeDownloadBlock  = ^(){
+                [self handleBtnDownloadProgress:self.btnVBPAvi andEpDownObja:epDownObj];
+            };
+        }else{
+            [self handleBtnDownloadProgress:self.btnVBPAvi andEpDownObja:Nil];
         }
     }
 }

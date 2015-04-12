@@ -89,6 +89,14 @@
 }
 
 #pragma mark - actions
+-(IBAction)refershBtnTapped:(id)sender{
+    [self cancelSearching];
+    CGFloat heightStatusBar = [UIApplication sharedApplication].statusBarFrame.size.height;
+    CGFloat heightNaviBar   = self.navigationController.navigationBar.frame.size.height;
+    CGFloat heightRefView   = self.refreshControl.frame.size.height;
+    [self.collectionView setContentOffset:CGPointMake(0, -heightNaviBar-heightStatusBar-heightRefView) animated:YES];
+    [self prepareDataSourece];
+}
 -(void)refershControlAction{
     [self cancelSearching];
     dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(2 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
@@ -389,6 +397,7 @@ minimumInteritemSpacingForSectionAtIndex:(NSInteger)section{
         self.searchBar.hidden               = YES;
         self.searchBar.tintColor            = [UIColor grayColor];
         self.searchBar.barTintColor         = [UIColor grayColor];
+        self.searchBar.autoresizingMask     = UIViewAutoresizingFlexibleLeftMargin | UIViewAutoresizingFlexibleWidth| UIViewAutoresizingFlexibleRightMargin;
     }
     
     if (![self.searchBar isDescendantOfView:self.view]) {
@@ -466,8 +475,11 @@ minimumInteritemSpacingForSectionAtIndex:(NSInteger)section{
     [self.collectionView reloadData];
 }
 - (void)searchBarSearchButtonClicked:(UISearchBar *)searchBar{
-    self.searchBarActive = YES;
+    /// end editing so keyboard get disappeared
     [self.view endEditing:YES];
+    /// calling the above method will set searchBarActive to no, so we should set it back again
+    /// user didn't finish yet
+    self.searchBarActive = YES;
 }
 - (void)searchBarTextDidBeginEditing:(UISearchBar *)searchBar{
     // we used here to set self.searchBarActive = YES

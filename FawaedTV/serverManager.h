@@ -12,6 +12,7 @@
 #import "lecturerObject.h"
 #import "categoryObject.h"
 #import "yearObject.h"
+#import "episodeObject.h"
 
 @interface serverManager : AFHTTPSessionManager
 +(instancetype)sharedServerObj;
@@ -25,4 +26,5 @@
 -(void)getAllSeriesOfLecturer:(lecturerObject *)lecturerObj WithCompleation:(void(^)(lecturerObject *result))compleation;
 -(void)getAllSeriesOfCategory:(categoryObject *)categoryObj WithCompleation:(void(^)(categoryObject *result))compleation;
 -(void)getAllSeriesOfYear:(yearObject *)categoryObj WithCompleation:(void(^)(yearObject *result))compleation;
+-(void)getImageOfEpisode:(episodeObject *)epObj withComletion:(void(^)(UIImage *episodeImage))completion;
 @end

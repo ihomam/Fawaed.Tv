@@ -1,0 +1,66 @@
+
+/* Class = "UIButton"; normalTitle = "Download video"; ObjectID = "20m-wF-UWb"; */
+"20m-wF-UWb.normalTitle" = "تحميل فديو";
+
+/* Class = "UILabel"; text = "Label"; ObjectID = "2Ta-6b-iyO"; */
+"2Ta-6b-iyO.text" = " ";
+
+/* Class = "UIButton"; normalTitle = " Watch on Youtube"; ObjectID = "6JY-le-GXB"; */
+"6JY-le-GXB.normalTitle" = "مشاهدة على اليوتيوب";
+
+/* Class = "UILabel"; text = "Label"; ObjectID = "CEj-ve-php"; */
+"CEj-ve-php.text" = " ";
+
+/* Class = "UILabel"; text = "Label"; ObjectID = "DdL-sJ-9wv"; */
+"DdL-sJ-9wv.text" = " ";
+
+/* Class = "UILabel"; text = "Label"; ObjectID = "EpE-NQ-zUT"; */
+"EpE-NQ-zUT.text" = " ";
+
+/* Class = "UILabel"; text = "Label"; ObjectID = "GGR-JW-rI1"; */
+"GGR-JW-rI1.text" = " ";
+
+/* Class = "UIButton"; normalTitle = "Download audio"; ObjectID = "GlQ-ls-13R"; */
+"GlQ-ls-13R.normalTitle" = "تحميل صوت";
+
+/* Class = "UILabel"; text = "Label"; ObjectID = "JMO-5T-fFd"; */
+"JMO-5T-fFd.text" = " ";
+
+/* Class = "UITabBarItem"; title = "Downloads"; ObjectID = "Mbl-LR-G0h"; */
+"Mbl-LR-G0h.title" = "التنزيلات";
+
+/* Class = "UILabel"; text = "0"; ObjectID = "Qhl-8K-yXt"; */
+"Qhl-8K-yXt.text" = "0";
+
+/* Class = "UILabel"; text = "Label"; ObjectID = "RKa-bw-Szi"; */
+"RKa-bw-Szi.text" = " ";
+
+/* Class = "UILabel"; text = "Label"; ObjectID = "UDz-la-HHT"; */
+"UDz-la-HHT.text" = " ";
+
+/* Class = "UINavigationItem"; title = "Downloads"; ObjectID = "ZWE-n8-Rdw"; */
+"ZWE-n8-Rdw.title" = "التنزيلات";
+
+/* Class = "UILabel"; text = "Label"; ObjectID = "eJA-x7-I9t"; */
+"eJA-x7-I9t.text" = " ";
+
+/* Class = "UITabBarItem"; title = "Library"; ObjectID = "gAJ-FS-12d"; */
+"gAJ-FS-12d.title" = "المكتبة";
+
+/* Class = "UIButton"; normalTitle = " Listen online"; ObjectID = "j1i-jB-11I"; */
+"j1i-jB-11I.normalTitle" = "   استماع مباشر";
+
+/* Class = "UIBarButtonItem"; title = "Cancel All"; ObjectID = "lZd-l7-y32"; */
+"lZd-l7-y32.title" = "الغاء الكل";
+
+/* Class = "UILabel"; text = "Label"; ObjectID = "qsa-bA-eQG"; */
+"qsa-bA-eQG.text" = " ";
+
+/* Class = "UITabBarItem"; title = "Browse"; ObjectID = "uUd-dA-L1k"; */
+"uUd-dA-L1k.title" = "تصفح";
+
+/* Class = "UILabel"; text = "Label"; ObjectID = "uye-VK-q11"; */
+"uye-VK-q11.text" = " ";
+
+/* Class = "UILabel"; text = "Label"; ObjectID = "y6B-bm-p3U"; */
+"y6B-bm-p3U.text" = " ";

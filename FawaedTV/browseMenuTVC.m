@@ -24,6 +24,10 @@ static int rowHeight = 44;
     
     // Uncomment the following line to display an Edit button in the navigation bar for this view controller.
     // self.navigationItem.rightBarButtonItem = self.editButtonItem;
+    self.view.layer.shadowColor = [UIColor blackColor].CGColor;
+    self.view.layer.shadowRadius= 2;
+    self.view.layer.shadowOffset= CGSizeMake(3, 0);
+    self.view.layer.shadowOpacity = 0.5;
 }
 
 - (void)didReceiveMemoryWarning {
@@ -57,10 +61,10 @@ static int rowHeight = 44;
                                                                               constant:vcHeight]];
     
     [vc.navigationController.view addConstraint:[NSLayoutConstraint constraintWithItem:self.view
-                                                                             attribute:NSLayoutAttributeLeading
+                                                                             attribute:NSLayoutAttributeLeft
                                                                              relatedBy:NSLayoutRelationEqual
                                                                                 toItem:vc.navigationController.view
-                                                                             attribute:NSLayoutAttributeLeading
+                                                                             attribute:NSLayoutAttributeLeft
                                                                             multiplier:1.0
                                                                               constant:0]];
     
@@ -123,25 +127,25 @@ static int rowHeight = 44;
     UIImage *icon;
     switch (iconID) {
         case 0:
-            icon = [UIImage imageNamed:@"tv"];
+            icon = [UIImage imageNamed:@"menu-tv"];
             break;
         case 1:
-            icon = [UIImage imageNamed:@"folder"];
+            icon = [UIImage imageNamed:@"menu-folder"];
             break;
         case 2:
-            icon = [UIImage imageNamed:@"user"];
+            icon = [UIImage imageNamed:@"menu-user"];
             break;
         case 3:
-            icon = [UIImage imageNamed:@"calendar"];
+            icon = [UIImage imageNamed:@"menu-calendar"];
             break;
         case 4:
-            icon = [UIImage imageNamed:@"episode"];
+            icon = [UIImage imageNamed:@"menu-episode"];
             break;
         case 5:
-            icon = [UIImage imageNamed:@"file"];
+            icon = [UIImage imageNamed:@"menu-file"];
             break;
         default:
-            icon = [UIImage imageNamed:@"tv"];
+            icon = [UIImage imageNamed:@"menu-tv"];
             break;
     }
     return icon;

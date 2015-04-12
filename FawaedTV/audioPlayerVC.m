@@ -9,15 +9,16 @@
 #import "audioPlayerVC.h"
 #import "AFSoundManager.h"
 #import "episodeObject.h"
+#import "UIImage+BlurredFrame.h"
 
 @interface audioPlayerVC ()
-@property (weak, nonatomic) IBOutlet UISlider *sliTime;
-@property (weak, nonatomic) IBOutlet UILabel *laTimeTotal;
-@property (weak, nonatomic) IBOutlet UILabel *laTimeConsumed;
-@property (weak, nonatomic) IBOutlet UILabel *laTitle;
-@property BOOL canShowSliTimeProgress;
-@property (nonatomic,strong) NSTimer *forwardTimer;
-@property (nonatomic,strong) NSTimer *backwardTimer;
+@property (weak, nonatomic) IBOutlet    UISlider        *sliTime;
+@property (weak, nonatomic) IBOutlet    UILabel         *laTimeTotal;
+@property (weak, nonatomic) IBOutlet    UILabel         *laTimeConsumed;
+@property (weak, nonatomic) IBOutlet    UILabel         *laTitle;
+@property (weak, nonatomic) IBOutlet    UIButton        *btnPlayPause;
+@property (weak, nonatomic) IBOutlet    UIImageView     *imgVEpisodeImg;
+@property                               BOOL            canShowSliTimeProgress;
 @end
 
 @implementation audioPlayerVC
@@ -25,45 +26,44 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     // Do any additional setup after loading the view.
+
     self.canShowSliTimeProgress = YES;
     [self prepareData];
 }
--(void)viewDidAppear:(BOOL)animated{
-    [super viewDidAppear:animated];
-    
-    [[UIApplication sharedApplication] beginReceivingRemoteControlEvents];
-    
-    [self becomeFirstResponder];
+-(void)viewWillAppear:(BOOL)animated{
+    [super viewWillAppear:animated];
+    [self prepareUI];
 }
-- (void)viewWillDisappear:(BOOL)animated{
-    [super viewWillDisappear:animated];
-    
-    [[UIApplication sharedApplication] endReceivingRemoteControlEvents];
-    [self resignFirstResponder];
-}
+
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.
+}
+-(UIStatusBarStyle)preferredStatusBarStyle{
+    return UIStatusBarStyleLightContent;
 }
 #pragma mark - actions
 - (IBAction)stopPlaying:(id)sender {
     AFSoundManagerStatus status = [[AFSoundManager sharedManager] status];
     switch (status) {
-        case AFSoundManagerStatusPlaying:
+        case AFSoundManagerStatusPlaying:{
             [[AFSoundManager sharedManager]pause];
+            [self.btnPlayPause setImage:[UIImage imageNamed:@"player-play"] forState:UIControlStateNormal];
+        }
             break;
-        case AFSoundManagerStatusPaused:
+        case AFSoundManagerStatusPaused:{
             [[AFSoundManager sharedManager]resume];
+            [self.btnPlayPause setImage:[UIImage imageNamed:@"player-pause"] forState:UIControlStateNormal];
+        }
             break;
         default:
-            [self prepareData];
             break;
     }
 }
 - (IBAction)forward:(id)sender {
     
-    NSTimeInterval farword      = [AFSoundManager sharedManager].audioPlayer.currentTime + 5;
-    NSTimeInterval duration     = [AFSoundManager sharedManager].audioPlayer.duration;
+    NSTimeInterval farword      = [AFSoundManager sharedManager].currentTime + 5;
+    NSTimeInterval duration     = [AFSoundManager sharedManager].duration;
     
     if (farword<duration){
         CGFloat section = ((farword * 100) / duration)/100;
@@ -76,8 +76,8 @@
 
 }
 - (IBAction)backward:(id)sender {
-    NSTimeInterval backward     = [AFSoundManager sharedManager].audioPlayer.currentTime - 5;
-    NSTimeInterval duration     = [AFSoundManager sharedManager].audioPlayer.duration;
+    NSTimeInterval backward     = [AFSoundManager sharedManager].currentTime - 5;
+    NSTimeInterval duration     = [AFSoundManager sharedManager].duration;
     if (backward>0){
         CGFloat section = ((backward * 100) / duration)/100;
         dispatch_async(dispatch_get_main_queue(), ^{
@@ -93,36 +93,73 @@
     self.canShowSliTimeProgress = YES;
 }
 #pragma mark - prepare vc
--(void)prepareData{
+-(void)prepareUI{
+    [self.sliTime setThumbImage:[UIImage imageNamed:@"player-dot"] forState:UIControlStateNormal];
+    [self.sliTime setTintColor:[UIColor whiteColor]];
     self.laTitle.text = self.epObj.episodeTitle;
-    NSString *urlToFile = self.epObj.episodeLinkListen;
-    if (self.isGoingToLocalFile) {
-        urlToFile = self.epObj.episodeLinkMp3Local;
-        [[AFSoundManager sharedManager]startPlayingLocalFileWithName:self.epObj.episodeTitle atPath:urlToFile withCompletionBlock:^(int percentage, CGFloat elapsedTime, CGFloat timeRemaining, NSError *error, BOOL finished) {
-            if(self.canShowSliTimeProgress)self.sliTime.value=(float)percentage/100;
-            self.laTimeConsumed.text = stringFromInterval(elapsedTime);
-            
-            NSMutableDictionary *songInfo = [[NSMutableDictionary alloc] init];
-            [songInfo setObject:self.epObj.episodeTitle forKey:MPMediaItemPropertyTitle];
-            [songInfo setObject:self.epObj.episodeLecturer forKey:MPMediaItemPropertyArtist];
-            [songInfo setObject:@([AFSoundManager sharedManager].audioPlayer.duration) forKey:MPMediaItemPropertyPlaybackDuration];
-            [songInfo setObject:@(elapsedTime) forKey:MPNowPlayingInfoPropertyElapsedPlaybackTime];
-//            [songInfo setObject: forKey:MPMediaItemPropertyArtwork];
-            [[MPNowPlayingInfoCenter defaultCenter] setNowPlayingInfo:songInfo];
-        }];
-        
+    if (self.epObj.episodeLinkImageObject) {
+        UIImage *img = self.epObj.episodeLinkImageObject;
+        self.imgVEpisodeImg.image = [img applyBlurWithRadius:1.7
+                                                   tintColor:[UIColor colorWithWhite:.1 alpha:.6]
+                                       saturationDeltaFactor:1
+                                                   maskImage:Nil
+                                                     atFrame:CGRectMake(0, 0, img.size.width, img.size.height)];
     }else{
-        [[AFSoundManager sharedManager]startStreamingRemoteAudioFromURL:urlToFile andBlock:^(int percentage, CGFloat elapsedTime, CGFloat timeRemaining, NSError *error, BOOL finished) {
-            if(self.canShowSliTimeProgress)self.sliTime.value=(float)percentage/100;
-            self.laTimeConsumed.text = stringFromInterval(elapsedTime);
+        [self.epObj getImageObjFromWebservice:^(UIImage *img) {
+            dispatch_async(dispatch_get_main_queue(), ^{
+                self.imgVEpisodeImg.image = [img applyBlurWithRadius:1.7
+                                                           tintColor:[UIColor colorWithWhite:.1 alpha:.6]
+                                               saturationDeltaFactor:1
+                                                           maskImage:Nil
+                                                             atFrame:CGRectMake(0, 0, img.size.width, img.size.height)];
+            });
         }];
     }
-    if([[AFSoundManager sharedManager] status] == AFSoundManagerStatusPlaying)
-        self.laTimeTotal.text   = stringFromInterval([AFSoundManager sharedManager].audioPlayer.duration);
 }
-
-
-NSString *stringFromInterval(NSTimeInterval timeInterval){
+-(void)prepareData{
+    NSString *urlToFile = self.epObj.episodeLinkListen;
+    [AFSoundManager sharedManager].audioPlayer = Nil;
+    [AFSoundManager sharedManager].player = Nil;
+    
+    if (self.isGoingToLocalFile) {
+        urlToFile = self.epObj.episodeLinkMp3Local;
+        [[AFSoundManager sharedManager]startPlayingLocalFileWithName:self.epObj.episodeTitle
+                                                              atPath:urlToFile
+                                                 withCompletionBlock:^(int percentage, CGFloat elapsedTime, CGFloat timeRemaining, NSError *error, BOOL finished) {
+                                                     [self prepareMPMediaController:percentage
+                                                                        elapsedTime:elapsedTime
+                                                                      timeRemaining:timeRemaining
+                                                                              error:error
+                                                                           finished:finished];
+        }];
+    }else{
+        [[AFSoundManager sharedManager]startStreamingRemoteAudioFromURL:urlToFile
+                                                               andBlock:^(int percentage, CGFloat elapsedTime, CGFloat timeRemaining, NSError *error, BOOL finished) {
+                                                                   [self prepareMPMediaController:percentage
+                                                                                      elapsedTime:elapsedTime
+                                                                                    timeRemaining:timeRemaining
+                                                                                            error:error
+                                                                                         finished:finished];
+        }];
+    }
+}
+-(void)prepareMPMediaController:(int)percentage
+                    elapsedTime:(CGFloat)elapsedTime
+                  timeRemaining:(CGFloat)timeRemaining
+                          error:(NSError *)error
+                       finished:(BOOL)finished{
+    if(self.canShowSliTimeProgress)self.sliTime.value=(float)percentage/100;
+    self.laTimeConsumed.text = [self stringFromInterval:elapsedTime];
+    self.laTimeTotal.text = [self stringFromInterval:[AFSoundManager sharedManager].duration];
+    NSMutableDictionary *songInfo = [[NSMutableDictionary alloc] init];
+    [songInfo setObject:self.epObj.episodeTitle forKey:MPMediaItemPropertyTitle];
+    [songInfo setObject:self.epObj.episodeLecturer forKey:MPMediaItemPropertyArtist];
+    [songInfo setObject:@([AFSoundManager sharedManager].duration) forKey:MPMediaItemPropertyPlaybackDuration];
+    [songInfo setObject:@(elapsedTime) forKey:MPNowPlayingInfoPropertyElapsedPlaybackTime];
+    [[MPNowPlayingInfoCenter defaultCenter] setNowPlayingInfo:songInfo];
+}
+-(NSString *)stringFromInterval:(NSTimeInterval)timeInterval{
+    NSString *time;
     static int secondsPerMinute  = 60;
     static int minutesPerHour    = 60;
     static int secondsPerHour    = 3600;
@@ -134,69 +171,11 @@ NSString *stringFromInterval(NSTimeInterval timeInterval){
     int minutes = (ti / secondsPerMinute) % minutesPerHour;
     int seconds = ti % secondsPerMinute;
     
-    NSString *time = [NSString stringWithFormat:@"%.2d",seconds];
+    time        = [NSString stringWithFormat:@"%.2d",seconds];
     if (minutes>0) {time = [NSString stringWithFormat:@"%.2d:%.2d",minutes,seconds];}
     if (hours>0){time = [NSString stringWithFormat:@"%.2d:%.2d:%.2d",hours,minutes,seconds];}
-
+    
     return time;
 }
-- (void)remoteControlReceivedWithEvent:(UIEvent *)event {
-    AFSoundManagerStatus playerStatus =  [[AFSoundManager sharedManager] status];
-    switch (event.subtype) {
-        case UIEventSubtypeRemoteControlTogglePlayPause:{
-            if (playerStatus == AFSoundManagerStatusPlaying) {
-                [[AFSoundManager sharedManager]pause];
-            }else if(playerStatus == AFSoundManagerStatusPaused){
-                [[AFSoundManager sharedManager]resume];
-            }
-        }
-            break;
-        case UIEventSubtypeRemoteControlPlay:
-            [[AFSoundManager sharedManager]resume];
-            break;
-        case UIEventSubtypeRemoteControlPause:
-            [[AFSoundManager sharedManager]pause];
-            break;
-        case UIEventSubtypeRemoteControlNextTrack:
-            [self forward:Nil];
-            break;
-        case UIEventSubtypeRemoteControlPreviousTrack:
-            [self backward:Nil];
-            break;
-        case UIEventSubtypeRemoteControlBeginSeekingForward:
-            [self continuousForward];
-            break;
-        case UIEventSubtypeRemoteControlEndSeekingForward:
-            [self continuousForward];
-            break;
-        case UIEventSubtypeRemoteControlBeginSeekingBackward:
-            [self continuousBackward];
-            break;
-        case UIEventSubtypeRemoteControlEndSeekingBackward:
-            [self continuousBackward];
-            break;
-        default:
-            break;
-    }
-}
--(void)continuousForward{
-    if(!self.forwardTimer){
-        self.forwardTimer = [NSTimer scheduledTimerWithTimeInterval:1 block:^{
-            [self forward:Nil];
-        } repeats:YES];
-    }else{
-        [self.forwardTimer invalidate];
-        self.forwardTimer = Nil;
-    }
-}
 
--(void)continuousBackward{
-    if(!self.backwardTimer){
-        self.backwardTimer = [NSTimer scheduledTimerWithTimeInterval:1 block:^{
-            [self backward:Nil];
-        } repeats:YES];
-    }else{
-        [self.backwardTimer invalidate];
-        self.backwardTimer = Nil;
-    }}
 @end

@@ -11,4 +11,5 @@
 @interface downloadsTVCCell : UITableViewCell
     @property (weak, nonatomic) IBOutlet UILabel         *laTitle;
     @property (weak, nonatomic) IBOutlet ddProgressBtn   *btnDownloadControl;
+    @property (weak, nonatomic) IBOutlet UILabel         *laDownloadDetails;
 @end

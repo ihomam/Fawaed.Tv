@@ -10,6 +10,7 @@
 #import "databaseManager.h"
 #import "fileObject.h"
 #import "bookmarkObj.h"
+#import "serverManager.h"
 
 @implementation episodeObject
 -(BOOL)checkIfMp3FileInLocalFolder{
@@ -18,6 +19,14 @@
     NSString *pathFile  = [NSString stringWithFormat:@"%@/%@",NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES)[0],fileName];
     exist               = [[NSFileManager defaultManager]fileExistsAtPath:pathFile isDirectory:Nil];
     self.episodeLinkMp3Local= pathFile;
+    return exist;
+}
+-(BOOL)checkIfAviFileInLocalFolder{
+    BOOL exist          = NO;
+    NSString *fileName  = [NSString stringWithFormat:@"%d.avi",self.episodeID];
+    NSString *pathFile  = [NSString stringWithFormat:@"%@/%@",NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES)[0],fileName];
+    exist               = [[NSFileManager defaultManager]fileExistsAtPath:pathFile isDirectory:Nil];
+    self.episodeLinkAviLocal= pathFile;
     return exist;
 }
 -(NSString *)episodeLinkMp3Local{
@@ -33,6 +42,25 @@
     path                    = [NSString stringWithFormat:@"%@/%@",NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES)[0],fileName];
     
     return path;
+}
+-(UIImage *)episodeLinkImageObject{
+    BOOL exist          = NO;
+    NSString *fileName  = [NSString stringWithFormat:@"%d",self.episodeID];
+    NSString *pathFile  = [NSString stringWithFormat:@"%@/images/%@",NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES)[0],fileName];
+    exist               = [[NSFileManager defaultManager]fileExistsAtPath:pathFile isDirectory:Nil];
+    if (exist) {
+        _episodeLinkImageObject = [UIImage imageWithContentsOfFile:pathFile];
+        return _episodeLinkImageObject;
+    }
+    
+    return Nil;
+}
+-(void)getImageObjFromWebservice:(void(^)(UIImage *img))completion{
+    [[serverManager sharedServerObj]getImageOfEpisode:self withComletion:^(UIImage *episodeImage) {
+        if (completion) {
+            completion(episodeImage);
+        }
+    }];
 }
 -(void)addToDatabase{
     if ([self episodeExists])
@@ -111,4 +139,41 @@
 @end
 
 @implementation episodeDownloadObject
+-(NSString *)downloadDetails{
+    NSString *details;
+    double speed; int64_t tot,rec;
+    tot = self.episodeDownloadProgress.totalUnitCount;
+    rec = self.episodeDownloadProgress.completedUnitCount;
+    if (self.episodeDownloadStartTime)
+        speed= self.episodeDownloadProgress.completedUnitCount / ([[NSDate date]timeIntervalSince1970]-self.episodeDownloadStartTime);
+    
+    details = [NSString stringWithFormat:@"%@ of %@ - %@",
+               [self formatByte:rec forspeed:NO],
+               [self formatByte:tot forspeed:NO],
+               [self formatByte:speed forspeed:YES]];
+    
+    return details;
+}
+-(NSString *)formatByte:(int64_t)byte forspeed:(BOOL)isSpeedFormat{
+    NSString *formatedByte;
+    if (byte == 0)
+        return formatedByte;
+    
+    if (!isSpeedFormat) {
+        if((byte/1000000) >= 1){
+            formatedByte = [NSString stringWithFormat:@"%.01f MB",(float)byte/1000000];
+        }else if (byte){
+            formatedByte = [NSString stringWithFormat:@"%.01f KB",(float)byte/1000];
+        }
+    }else{
+        if((byte/1000000) >= 1){
+            formatedByte = [NSString stringWithFormat:@"%d MB/Sec",(int)byte/1000000];
+        }else if (byte){
+            formatedByte = [NSString stringWithFormat:@"%d KB/Sec",(int)byte/1000];
+        }
+    }
+
+    
+    return formatedByte;
+}
 @end

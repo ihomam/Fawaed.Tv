@@ -7,7 +7,6 @@
 //
 
 #import "AFAudioRouter.h"
-
 @implementation AFAudioRouter
 
 #define IS_DEBUGGING NO
@@ -28,7 +27,7 @@
         UInt32 doSetProperty = 1;
         AudioSessionSetProperty (kAudioSessionProperty_OverrideCategoryMixWithOthers, sizeof(doSetProperty), &doSetProperty);
         
-        [[AVAudioSession sharedInstance] setDelegate:(id<AVAudioPlayerDelegate>)self];
+        [[AVAudioSession sharedInstance] setDelegate:(id)self];
         [[AVAudioSession sharedInstance] setActive: YES error: nil];
         
         AudioSessionAddPropertyListener (kAudioSessionProperty_AudioRouteChange, onAudioRouteChange, nil);

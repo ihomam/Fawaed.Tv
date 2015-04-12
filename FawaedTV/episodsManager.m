@@ -10,6 +10,7 @@
 #import "bookmarkObj.h"
 #import "fileObject.h"
 #import "FCFileManager.h"
+#import "serverManager.h"
 
 @implementation episodsManager
 +(void)episodeDownloaded:(episodeObject *)epObj type:(episodeDownloadedFileType)epType{
@@ -24,6 +25,10 @@
     // add the episode object to the db
     [epObj addToDatabase];
     
+    /// save episode image in user directory
+    [[serverManager sharedServerObj]getImageOfEpisode:epObj withComletion:^(UIImage *episodeImage) {
+        [self writeImg:episodeImage WithName:[NSString stringWithFormat:@"%d",epObj.episodeID]];
+    }];
 }
 +(void)episodeDeleted:(episodeObject *)epObj type:(episodeDownloadedFileType)epType{
    
@@ -35,6 +40,9 @@
 
     /// remove the episode object from the database
     [epObj removeFromDatabase];
+    
+    /// delete episode image from user directory
+    [self deleteImgWithName:[NSString stringWithFormat:@"%d",epObj.episodeID]];
 }
 
 
@@ -109,5 +117,13 @@
     if (![fObj isAlreadyAvailableInDB]) {
         [fObj addToDataBase];
     }
+}
++(void)writeImg:(UIImage *)img WithName:(NSString *)name{
+    NSString *imgPath = [FCFileManager pathForDocumentsDirectoryWithPath:[NSString stringWithFormat:@"images/%@",name]];
+    [FCFileManager createFileAtPath:imgPath withContent:img];
+}
++(void)deleteImgWithName:(NSString *)name{
+    NSString *imgPath = [FCFileManager pathForDocumentsDirectoryWithPath:[NSString stringWithFormat:@"images/%@",name]];
+    [FCFileManager removeItemAtPath:imgPath];
 }
 @end

@@ -11,6 +11,7 @@
 #import "episodeObject.h"
 #import "audioPlayerVC.h"
 #import "downloadManager.h"
+#import "AFSoundManager.h"
 
 @interface appTBVC ()
 
@@ -41,6 +42,7 @@
 }
 #pragma mark - player
 -(void)buildFilePlayerForObject:(id)mediaObj forType:(playerType)type{
+    [[AFSoundManager sharedManager]stop];
     UIViewController *playerVC;
     switch (type) {
         case playerTypeAudioLocal:{
@@ -73,7 +75,8 @@
         [self setViewControllers:controllers animated:YES];
         NSMutableArray *array = self.tabBar.items.mutableCopy;
         UITabBarItem *newItem = [array objectAtIndex:3];
-        [newItem setImage:[UIImage imageNamed:@"user"]];
+        newItem.image = [UIImage imageNamed:@"tabs-player"];
+        newItem.title = NSLocalizedString(@"Player", Nil);
     }
     [self setSelectedViewController:vc];
 }

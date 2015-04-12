@@ -9,10 +9,15 @@
 #import "AppDelegate.h"
 #import "databaseManager.h"
 #import "downloadManager.h"
+#import "episodsManager.h"
 #import "AFSoundManager.h"
+#import <Fabric/Fabric.h>
+#import <Crashlytics/Crashlytics.h>
+
 @interface AppDelegate ()
 @property (nonatomic,strong) databaseManager *dbObj;
 @property (nonatomic,strong) downloadManager *downloadManager;
+@property (nonatomic,strong) episodsManager  *epManager;
 @end
 
 @implementation AppDelegate
@@ -22,6 +27,10 @@
     // Override point for customization after application launch.
     self.dbObj              = [databaseManager sharedDatabaseObj];
     self.downloadManager    = [downloadManager sharedDownloadObj];
+    self.epManager          = [episodsManager new];
+    
+    [Fabric with:@[CrashlyticsKit]];
+
 
     return YES;
 }

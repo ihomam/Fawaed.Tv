@@ -47,7 +47,10 @@
     self.dataSource = Nil;
     [self.tableView deleteRowsAtIndexPaths:indexPathes withRowAnimation:UITableViewRowAnimationFade];
 }
-- (IBAction)dPBtnTapped:(UIButton *)sender {
+- (IBAction)dPBtnTapped:(ddProgressBtn *)sender {
+    if(sender.currentButtonType == buttonOkType)
+        return;
+    
     // 1. get cell object
     downloadsTVCCell *cell = (downloadsTVCCell *)sender.superview;
     while (![cell isKindOfClass:[downloadsTVCCell class]]) {
@@ -63,7 +66,7 @@
     [self.tableView deleteRowsAtIndexPaths:@[indexpath] withRowAnimation:UITableViewRowAnimationLeft];
     
     // 4. send download this episode to downloadManager so we can cancel
-    [[downloadManager sharedDownloadObj]downloadThisEpisode:epDObj.episodeObj soundFile:YES];
+    [[downloadManager sharedDownloadObj]downloadThisEpisode:epDObj.episodeObj soundFile:epDObj.episodeDownloadType];
 }
 
 #pragma mark - Table view data source
@@ -88,6 +91,7 @@
     // handel btn
     [self handleBtn:cell.btnDownloadControl withEDObj:epDObj];
     epDObj.episodeDownloadBlock = ^{
+        dispatch_async(dispatch_get_main_queue(), ^{cell.laDownloadDetails.text = [epDObj downloadDetails];});
         [self handleBtn:cell.btnDownloadControl withEDObj:epDObj];
     };
 

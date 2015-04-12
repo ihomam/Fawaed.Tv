@@ -207,4 +207,18 @@
         }
     }];
 }
+-(void)getImageOfEpisode:(episodeObject *)epObj withComletion:(void(^)(UIImage *episodeImage))completion{
+    [self GET:epObj.episodeLinkImage
+   parameters:Nil
+      success:^(NSURLSessionDataTask *task, id responseObject) {
+          UIImage *img = [UIImage imageWithData:responseObject];
+          if (completion) {
+              completion(img);
+          }
+    } failure:^(NSURLSessionDataTask *task, NSError *error) {
+        if (completion) {
+            completion(Nil);
+        }
+    }];
+}
 @end

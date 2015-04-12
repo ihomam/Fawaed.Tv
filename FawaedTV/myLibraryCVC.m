@@ -31,6 +31,7 @@
 #import "fileObject.h"
 #import "episodeObject.h"
 #import "episodsManager.h"
+
 typedef NS_ENUM(NSUInteger, libraryFilterType) {
     libraryFilterTypeSeries,
     libraryFilterTypeCategory,
@@ -203,7 +204,7 @@ typedef NS_ENUM(NSUInteger, libraryFilterType) {
     generalCVCCell *cell    = [cv dequeueReusableCellWithReuseIdentifier:reuseIdentifier forIndexPath:indexPath];
     NSString *fileName      = [self.dataSource objectAtIndex:indexPath.row];
     cell.laTitle.text       = fileName;
-    cell.viImgPic.image     = [UIImage imageNamed:@"file"];
+    cell.viImgPic.image     = [UIImage imageNamed:@"menu-file"];
     cell.laDescription.text = @" ";
     fileObject *fObj        = [fileObject getFileObjForFileName:fileName fromList:self.dataSourceFileObjs];
     if (fObj) {

@@ -81,7 +81,8 @@
     epDownObj.episodeDownloadProgress       = Nil;
     epDownObj.episodeDownloadError          = Nil;
     epDownObj.episodeDownloadCurrentStatus  = downloadStatusInitiating;
-    
+    epDownObj.episodeDownloadType           = isSoundFile;
+
     // .1 prepare file name
     NSString *fileName;
     if (isSoundFile) {
@@ -89,20 +90,33 @@
     }else{
         fileName = [NSString stringWithFormat:@"%d.avi",epObj.episodeID];
     }
-    
+    /// @TODO
     // 2. check if the file is already been downloading ... then we needs to stop operation
-    if (self.listOfDownloadedObjs[epDownObj.episodeObj.episodeLinkMp3]) {
-        epDownObj = self.listOfDownloadedObjs[epDownObj.episodeObj.episodeLinkMp3];
+    episodeDownloadObject *epDObjOld;
+    (isSoundFile) ?
+    (epDObjOld = self.listOfDownloadedObjs[epDownObj.episodeObj.episodeLinkMp3]):
+    (epDObjOld = self.listOfDownloadedObjs[epDownObj.episodeObj.episodeLinkAvi]);
+    
+    if (epDObjOld) {
+        epDownObj = epDObjOld;
         epDownObj.episodeDownloadCurrentStatus = downloadStatusCanceled;
         [epDownObj.episodeDownloadTask cancel];
         return epDownObj;
     }
 
     // 4. start downloading
-    self.listOfDownloadedObjs[epDownObj.episodeObj.episodeLinkMp3] = epDownObj;
+    if (isSoundFile) {
+        self.listOfDownloadedObjs[epDownObj.episodeObj.episodeLinkMp3] = epDownObj;
+    }else{
+        self.listOfDownloadedObjs[epDownObj.episodeObj.episodeLinkAvi] = epDownObj;
+    }
     dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
         NSProgress *progress    = Nil;
-        NSURL *urlDownload      = [NSURL URLWithString:epDownObj.episodeObj.episodeLinkMp3];
+        NSURL *urlDownload;
+        (isSoundFile) ?
+        (urlDownload = [NSURL URLWithString:epDownObj.episodeObj.episodeLinkMp3]) :
+        (urlDownload = [NSURL URLWithString:epDownObj.episodeObj.episodeLinkAvi]);
+        
         NSURLRequest *request   = [[NSURLRequest alloc]initWithURL:urlDownload];
 
         NSURLSessionDownloadTask *dt = [self.downloadManager downloadTaskWithRequest:request
@@ -114,13 +128,14 @@
                                                                        dispatch_async(dispatch_get_main_queue(), ^{
                                                                            if (!error) {
                                                                                // :)
-                                                                               // downloaded successfully
                                                                                epDownObj.episodeDownloadCurrentStatus = downloadStatusFinished;
                                                                                episodeDownloadedFileType EDFType;
                                                                                isSoundFile ? (EDFType = episodeDownloadedFileAudio):(EDFType = episodeDownloadedFileVideo);
                                                                                [episodsManager episodeDownloaded:epObj type:EDFType];
                                                                            }else{
-                                                                               [self.listOfDownloadedObjs removeObjectForKey:epDownObj.episodeObj.episodeLinkMp3];
+                                                                               (isSoundFile) ?
+                                                                               ([self.listOfDownloadedObjs removeObjectForKey:epDownObj.episodeObj.episodeLinkMp3]):
+                                                                               ([self.listOfDownloadedObjs removeObjectForKey:epDownObj.episodeObj.episodeLinkAvi]);
                                                                                epDownObj.episodeDownloadCurrentStatus = downloadStatusCanceled;
                                                                                epDownObj.episodeDownloadError = error;
                                                                            }
@@ -136,6 +151,8 @@
                             keyPath:NSStringFromSelector(@selector(fractionCompleted))
                             options:NSKeyValueObservingOptionNew
                               block:^(id observer, id object, NSDictionary *change) {
+                                  if (!epDownObj.episodeDownloadStartTime)
+                                      epDownObj.episodeDownloadStartTime = [[NSDate date]timeIntervalSince1970];
                                   dispatch_async(dispatch_get_main_queue(), ^{
                                       epDownObj.episodeDownloadCurrentStatus = downloadStatusDownloading;
                                       epDownObj.episodeDownloadProgress      = (NSProgress *)object;
@@ -152,29 +169,20 @@
     [[NSNotificationCenter defaultCenter]postNotificationName:@"updateProgressTab" object:Nil];
 }
 -(void)anObjectIsfinishedDownloadingShouldWeEmptyOurDataSource:(episodeDownloadObject *)epDownObj{
-//    // 0 check how many objects we are downloading right now
-//        // downloading only one object
-//        // so empty dataSource anyway
-//    if (self.listOfDownloadedObjs.count == 1){
-//        [self.listOfDownloadedObjs removeObjectForKey:epDownObj.episodeObj.episodeLinkMp3];
-//    }else{
-        // downloading many objects
-        // check if they are all are finished. if yes then empty datasource
-        __block bool shouldDelete;
-        [self.listOfDownloadedObjs enumerateKeysAndObjectsUsingBlock:^(id key, episodeDownloadObject *obj, BOOL *stop) {
-            shouldDelete = YES;
-
-            if (obj.episodeDownloadProgress.fractionCompleted < 1){
-                // we have unfinished business here. stop looping. we'll not empty the datasource
-                // go cintune your work 
-                shouldDelete = NO;
-                *stop = YES;
-            }
-        }];
-        if (shouldDelete) {
-            [self.listOfDownloadedObjs removeAllObjects];
+    __block bool shouldDelete;
+    [self.listOfDownloadedObjs enumerateKeysAndObjectsUsingBlock:^(id key, episodeDownloadObject *obj, BOOL *stop) {
+        shouldDelete = YES;
+        
+        if (obj.episodeDownloadProgress.fractionCompleted < 1){
+            // we have unfinished business here. stop looping. we'll not empty the datasource
+            // go cintune your work
+            shouldDelete = NO;
+            *stop = YES;
         }
-//    }
+    }];
+    if (shouldDelete) {
+        [self.listOfDownloadedObjs removeAllObjects];
+    }
 }
 -(void)startAnotherDownloadTask{
     episodeDownloadObject *edObj = [self.listQueue firstObject];

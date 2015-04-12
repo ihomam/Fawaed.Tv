@@ -40,7 +40,6 @@ typedef NS_ENUM(int, AFSoundManagerType) {
 }
 
 -(void)startPlayingLocalFileWithName:(NSString *)name atPath:(NSString *)path withCompletionBlock:(progressBlock)block {
-    
     [[AVAudioSession sharedInstance] setCategory:AVAudioSessionCategoryPlayback error:nil];
     [[AVAudioSession sharedInstance] setActive:YES error:nil];
     
@@ -64,10 +63,12 @@ typedef NS_ENUM(int, AFSoundManagerType) {
     [_delegate currentPlayingStatusChanged:AFSoundManagerStatusPlaying];
     
     __block int percentage = 0;
-    
+    [_timer invalidate];
     _timer = [NSTimer scheduledTimerWithTimeInterval:1 block:^{
         
         if ((_audioPlayer.duration - _audioPlayer.currentTime) >= 1) {
+            self.duration = _audioPlayer.duration;
+            self.currentTime = _audioPlayer.currentTime;
             
             percentage = (int)((_audioPlayer.currentTime * 100)/_audioPlayer.duration);
             int timeRemaining = _audioPlayer.duration - _audioPlayer.currentTime;
@@ -108,6 +109,9 @@ typedef NS_ENUM(int, AFSoundManagerType) {
         _timer = [NSTimer scheduledTimerWithTimeInterval:1 block:^{
             
             if ((CMTimeGetSeconds(_player.currentItem.duration) - CMTimeGetSeconds(_player.currentItem.currentTime)) != 0) {
+                self.duration =CMTimeGetSeconds(_player.currentItem.duration);
+                self.currentTime = CMTimeGetSeconds(_player.currentItem.currentTime);
+                
                 
                 percentage = (int)((CMTimeGetSeconds(_player.currentItem.currentTime) * 100)/CMTimeGetSeconds(_player.currentItem.duration));
                 int timeRemaining = CMTimeGetSeconds(_player.currentItem.duration) - CMTimeGetSeconds(_player.currentItem.currentTime);
