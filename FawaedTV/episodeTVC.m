@@ -143,6 +143,8 @@
 }
 
 -(void)updateNavigationBar{
+    [((browseNavC *)self.navigationController)updateNavigationBarWithTitle:self.selEpiObj.episodeSeriesTitle
+                                                                 andDetail:self.selEpiObj.episodeLecturer];
     self.laEpsoideTitle.text = self.selEpiObj.episodeTitle;
 }
 -(void)prepareBtns{

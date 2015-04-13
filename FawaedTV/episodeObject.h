@@ -14,6 +14,7 @@
 @interface episodeObject : NSObject
     @property (nonatomic)        int      episodeID;
     @property (nonatomic)        int      episodeSeriesID;
+    @property (nonatomic,strong) NSString *episodeSeriesTitle;
     @property (nonatomic,strong) NSString *episodeTitle;
     @property (nonatomic,strong) NSString *episodeLecturer;
     @property (nonatomic,strong) NSString *episodeLink;

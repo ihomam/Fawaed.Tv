@@ -132,6 +132,7 @@ minimumInteritemSpacingForSectionAtIndex:(NSInteger)section{
 -(void)collectionView:(UICollectionView *)collectionView didSelectItemAtIndexPath:(NSIndexPath *)indexPath{
     episodeTVC *vc = [self.storyboard instantiateViewControllerWithIdentifier:@"episodeTVC"];
     vc.selEpiObj = [self.dataSource objectAtIndex:indexPath.row];
+    vc.selEpiObj.episodeSeriesTitle = self.selObjSeries.seriesTitle;
     [self.navigationController pushViewController:vc animated:YES];
 }
 #pragma mark - prepareVC
