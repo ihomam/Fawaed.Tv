@@ -97,6 +97,7 @@
     [self.sliTime setThumbImage:[UIImage imageNamed:@"player-dot"] forState:UIControlStateNormal];
     [self.sliTime setTintColor:[UIColor whiteColor]];
     self.laTitle.text = self.epObj.episodeTitle;
+    self.laTitle.numberOfLines = 0;
     if (self.epObj.episodeLinkImageObject) {
         UIImage *img = self.epObj.episodeLinkImageObject;
         self.imgVEpisodeImg.image = [img applyBlurWithRadius:1.7

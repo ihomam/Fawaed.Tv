@@ -630,11 +630,21 @@
                                 <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 <nil key="highlightedColor"/>
                             </label>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="JMO-5T-fFd">
-                                <rect key="frame" x="26" y="40" width="548" height="21"/>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="JMO-5T-fFd">
+                                <rect key="frame" x="10" y="40" width="580" height="21"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" relation="greaterThanOrEqual" constant="21" id="7Dn-FX-zer"/>
+                                    <constraint firstAttribute="width" relation="greaterThanOrEqual" constant="300" id="g5m-Rd-1k5"/>
+                                    <constraint firstAttribute="height" relation="greaterThanOrEqual" constant="21" id="rwD-W4-GWU"/>
+                                </constraints>
                                 <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                 <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 <nil key="highlightedColor"/>
+                                <variation key="default">
+                                    <mask key="constraints">
+                                        <exclude reference="7Dn-FX-zer"/>
+                                    </mask>
+                                </variation>
                             </label>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
@@ -654,6 +664,7 @@
                             <constraint firstAttribute="centerX" secondItem="wzf-4K-suD" secondAttribute="centerX" id="ROa-nE-rfQ"/>
                             <constraint firstItem="Qhl-8K-yXt" firstAttribute="left" secondItem="qi2-85-efK" secondAttribute="left" constant="5" id="Riz-D6-QGT"/>
                             <constraint firstItem="JMO-5T-fFd" firstAttribute="left" secondItem="qi2-85-efK" secondAttribute="leftMargin" constant="10" id="SM1-G3-eV0"/>
+                            <constraint firstAttribute="trailing" secondItem="JMO-5T-fFd" secondAttribute="trailing" constant="10" id="WYg-MF-621"/>
                             <constraint firstAttribute="right" secondItem="zZ4-W6-nJ6" secondAttribute="right" id="WZd-pQ-tdk"/>
                             <constraint firstItem="Qhl-8K-yXt" firstAttribute="centerY" secondItem="oUX-Lp-it3" secondAttribute="centerY" id="ZDl-c2-KMP"/>
                             <constraint firstItem="oUX-Lp-it3" firstAttribute="left" secondItem="qi2-85-efK" secondAttribute="left" constant="70" id="bQf-MW-CVy"/>
@@ -662,10 +673,13 @@
                             <constraint firstAttribute="right" secondItem="2WK-p7-MZW" secondAttribute="right" constant="5" id="lCl-hW-cJD"/>
                             <constraint firstItem="2iT-xB-on0" firstAttribute="left" secondItem="wzf-4K-suD" secondAttribute="right" constant="70" id="mvc-Ll-xma"/>
                             <constraint firstItem="2iT-xB-on0" firstAttribute="top" secondItem="wzf-4K-suD" secondAttribute="top" id="ocY-P8-fke"/>
+                            <constraint firstItem="JMO-5T-fFd" firstAttribute="leading" secondItem="qi2-85-efK" secondAttribute="leading" constant="10" id="p5B-EA-SZl"/>
                             <constraint firstAttribute="right" secondItem="oUX-Lp-it3" secondAttribute="right" constant="70" id="saX-cd-5Zs"/>
                         </constraints>
                         <variation key="default">
                             <mask key="constraints">
+                                <exclude reference="4L1-kW-BKw"/>
+                                <exclude reference="SM1-G3-eV0"/>
                                 <exclude reference="80O-bR-Rv5"/>
                                 <exclude reference="9PJ-VN-Lbs"/>
                             </mask>
