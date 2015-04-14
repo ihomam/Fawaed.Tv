@@ -173,6 +173,11 @@
     if ([self.selEpiObj checkIfAviFileInLocalFolder]){
         [self.btnAvi setTitle:NSLocalizedString(@" Play video", Nil) forState:UIControlStateNormal];
     }
+    
+    self.btnAvi.titleLabel.adjustsFontSizeToFitWidth = YES;
+    self.btnMp3.titleLabel.adjustsFontSizeToFitWidth = YES;
+    self.btnAvi.titleLabel.minimumScaleFactor = .8;
+    self.btnMp3.titleLabel.minimumScaleFactor = .8;
 }
 
 #pragma mark - bookmarks
