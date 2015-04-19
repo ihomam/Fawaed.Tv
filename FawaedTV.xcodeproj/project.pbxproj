@@ -7,8 +7,6 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		360B34FC1ADB255A00E16CF9 /* Crashlytics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 360B34FA1ADB255A00E16CF9 /* Crashlytics.framework */; };
-		360B34FD1ADB255A00E16CF9 /* Fabric.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 360B34FB1ADB255A00E16CF9 /* Fabric.framework */; };
 		360B76911A911A1200832CA9 /* myLibraryCVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 360B76901A911A1200832CA9 /* myLibraryCVC.m */; };
 		360BC7371AADFE3B00771697 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 360BC6FF1AADFE3B00771697 /* InfoPlist.strings */; };
 		360BC7381AADFE3B00771697 /* pop-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 360BC7011AADFE3B00771697 /* pop-Info.plist */; };
@@ -116,8 +114,6 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
-		360B34FA1ADB255A00E16CF9 /* Crashlytics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = Crashlytics.framework; sourceTree = SOURCE_ROOT; };
-		360B34FB1ADB255A00E16CF9 /* Fabric.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = Fabric.framework; sourceTree = SOURCE_ROOT; };
 		360B768F1A911A1200832CA9 /* myLibraryCVC.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = myLibraryCVC.h; sourceTree = "<group>"; };
 		360B76901A911A1200832CA9 /* myLibraryCVC.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = myLibraryCVC.m; sourceTree = "<group>"; };
 		360BC7001AADFE3B00771697 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
@@ -327,9 +323,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				360B34FC1ADB255A00E16CF9 /* Crashlytics.framework in Frameworks */,
 				36E820F71A8F70FB00B14B3F /* libsqlite3.dylib in Frameworks */,
-				360B34FD1ADB255A00E16CF9 /* Fabric.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -532,8 +526,6 @@
 		363C7D411A3BAC5300A28C93 /* #Frameworks */ = {
 			isa = PBXGroup;
 			children = (
-				360B34FA1ADB255A00E16CF9 /* Crashlytics.framework */,
-				360B34FB1ADB255A00E16CF9 /* Fabric.framework */,
 				36E820F61A8F70FB00B14B3F /* libsqlite3.dylib */,
 				36EEC5BF1AB9BDD50000D5E8 /* FCFileManager */,
 				36D839221AD81BE300CA9446 /* UImage Categories */,
@@ -884,7 +876,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "./Fabric.framework/run 927ec9da4092fb7a3c5e6fb3df1d6dcc585d9f78 a5ecc373f81f3357b781d6f00c79a0621bd00caaebe4c65859c82b3d88242fdc";
+			shellScript = "";
 		};
 /* End PBXShellScriptBuildPhase section */
 

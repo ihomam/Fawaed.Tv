@@ -213,6 +213,9 @@ typedef NS_ENUM(NSUInteger, libraryFilterType) {
         if (fObj.fileType == fileTypeVideo) [UIImage imageNamed:@"episode"];
     }
 
+    [cell.laTitle setTextAlignment:NSTextAlignmentNatural];
+    [cell.laDescription setTextAlignment:NSTextAlignmentNatural];
+    
     // setting image
     return cell;
 }
