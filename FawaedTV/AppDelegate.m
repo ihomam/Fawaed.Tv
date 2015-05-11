@@ -12,6 +12,10 @@
 #import "episodsManager.h"
 #import "AFSoundManager.h"
 
+#import <Fabric/Fabric.h>
+#import <Crashlytics/Crashlytics.h>
+
+
 @interface AppDelegate ()
 @property (nonatomic,strong) databaseManager *dbObj;
 @property (nonatomic,strong) downloadManager *downloadManager;
@@ -26,7 +30,9 @@
     self.dbObj              = [databaseManager sharedDatabaseObj];
     self.downloadManager    = [downloadManager sharedDownloadObj];
     self.epManager          = [episodsManager new];
-    
+
+    [Fabric with:@[CrashlyticsKit]];
+
 
     return YES;
 }
