@@ -101,6 +101,7 @@
 		36E820F51A8F60DB00B14B3F /* databaseManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 36E820F41A8F60DB00B14B3F /* databaseManager.m */; };
 		36E820F71A8F70FB00B14B3F /* libsqlite3.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 36E820F61A8F70FB00B14B3F /* libsqlite3.dylib */; };
 		36EEC5C21AB9BDD50000D5E8 /* FCFileManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 36EEC5C11AB9BDD50000D5E8 /* FCFileManager.m */; };
+		36F0D0361AE416BE008C5874 /* Entitlements.plist in Resources */ = {isa = PBXBuildFile; fileRef = 36F0D0351AE416BE008C5874 /* Entitlements.plist */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -316,6 +317,7 @@
 		36E820F61A8F70FB00B14B3F /* libsqlite3.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libsqlite3.dylib; path = usr/lib/libsqlite3.dylib; sourceTree = SDKROOT; };
 		36EEC5C01AB9BDD50000D5E8 /* FCFileManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FCFileManager.h; sourceTree = "<group>"; };
 		36EEC5C11AB9BDD50000D5E8 /* FCFileManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FCFileManager.m; sourceTree = "<group>"; };
+		36F0D0351AE416BE008C5874 /* Entitlements.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = Entitlements.plist; sourceTree = SOURCE_ROOT; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -450,6 +452,7 @@
 				363C7CE21A3BA99100A28C93 /* Info.plist */,
 				363C7CE31A3BA99100A28C93 /* main.m */,
 				363C7D451A3BAD6C00A28C93 /* globalVars.h */,
+				36F0D0351AE416BE008C5874 /* Entitlements.plist */,
 			);
 			name = "Supporting Files";
 			sourceTree = "<group>";
@@ -842,6 +845,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				36F0D0361AE416BE008C5874 /* Entitlements.plist in Resources */,
 				363C7CED1A3BA99100A28C93 /* Main.storyboard in Resources */,
 				360BC7371AADFE3B00771697 /* InfoPlist.strings in Resources */,
 				36C2895C1A865F4F005357EC /* viBrowseTopMenu.xib in Resources */,
@@ -1132,7 +1136,8 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
 				CODE_SIGN_ENTITLEMENTS = "";
-				CODE_SIGN_IDENTITY = "";
+				"CODE_SIGN_ENTITLEMENTS[sdk=*]" = Entitlements.plist;
+				CODE_SIGN_IDENTITY = "-";
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(PROJECT_DIR)",
@@ -1153,7 +1158,8 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
 				CODE_SIGN_ENTITLEMENTS = "";
-				CODE_SIGN_IDENTITY = "";
+				"CODE_SIGN_ENTITLEMENTS[sdk=*]" = Entitlements.plist;
+				CODE_SIGN_IDENTITY = "-";
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(PROJECT_DIR)",

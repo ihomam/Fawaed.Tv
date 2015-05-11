@@ -87,15 +87,25 @@
     // Configure the cell...
     __weak episodeDownloadObject *epDObj= [[self.dataSource allValues]objectAtIndex:indexPath.row];
     cell.laTitle.text                   = epDObj.episodeObj.episodeTitle;
-
+    cell.laDownloadDetails.text         = Nil;
     // handel btn
     [self handleBtn:cell.btnDownloadControl withEDObj:epDObj];
-    epDObj.episodeDownloadBlock = ^{
-        dispatch_async(dispatch_get_main_queue(), ^{cell.laDownloadDetails.text = [epDObj downloadDetails];});
-        [self handleBtn:cell.btnDownloadControl withEDObj:epDObj];
-    };
 
     return cell;
+}
+-(void)tableView:(UITableView *)tableView willDisplayCell:(downloadsTVCCell *)cell forRowAtIndexPath:(NSIndexPath *)indexPath{
+    __weak episodeDownloadObject *epDObj= [[self.dataSource allValues]objectAtIndex:indexPath.row];
+    cell.laDownloadDetails.text         = Nil;
+    [self handleBtn:cell.btnDownloadControl withEDObj:epDObj];
+    epDObj.episodeDownloadBlock = ^{
+        cell.laDownloadDetails.text = [epDObj downloadDetails];
+        [self handleBtn:cell.btnDownloadControl withEDObj:epDObj];
+    };
+}
+-(void)tableView:(UITableView *)tableView didEndDisplayingCell:(downloadsTVCCell *)cell forRowAtIndexPath:(NSIndexPath *)indexPath{
+    __weak episodeDownloadObject *epDObj= [[self.dataSource allValues]objectAtIndex:indexPath.row];
+    cell.laDownloadDetails.text         = Nil;
+    epDObj.episodeDownloadBlock = Nil;
 }
 -(void)handleBtn:(ddProgressBtn *)btn withEDObj:(episodeDownloadObject *)epDObj{
     [btn handelEpDownObj:epDObj];

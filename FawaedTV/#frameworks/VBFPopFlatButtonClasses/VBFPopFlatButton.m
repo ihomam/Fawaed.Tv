@@ -410,7 +410,6 @@
     self.layerProgress.opacity      = 1;
     self.layerProgress.lineWidth    = 2;
     [self.layerProgress setPath:processPath.CGPath];
-    
 }
 - (void)addLoadingInidicator{
     [self animateToType:buttonDefaultType];
@@ -437,24 +436,25 @@
         self.layerLoading.position  = center;
         self.layerLoading.anchorPoint= CGPointMake(0.5, 0.5);
     }
+    if (self.layerLoading.animationKeys.count == 0) {
+        CABasicAnimation *strokeAnimation = [CABasicAnimation animationWithKeyPath:@"strokeEnd"];
+        strokeAnimation.fromValue         = @(0);
+        strokeAnimation.toValue           = @(1);
+        strokeAnimation.duration          = 1;
+        strokeAnimation.cumulative        = YES;
+        [self.layerLoading addAnimation:strokeAnimation forKey:@"strokeAnimation"];
+        
+        CABasicAnimation *rotationAnimation = [CABasicAnimation animationWithKeyPath:@"transform.rotation.z"];
+        rotationAnimation.toValue           = [NSNumber numberWithFloat: M_PI];
+        rotationAnimation.duration          = .5;
+        rotationAnimation.cumulative        = YES;
+        rotationAnimation.repeatCount       = HUGE_VALF;
+        [self.layerLoading addAnimation:rotationAnimation forKey:@"rotationAnimation"];
+    }
     self.firstSegment.opacity   = 0;
     self.secondSegment.opacity  = 0;
     self.thirdSegment.opacity   = 0;
     self.layerLoading.opacity   = 1;
-    
-    CABasicAnimation *strokeAnimation = [CABasicAnimation animationWithKeyPath:@"strokeEnd"];
-    strokeAnimation.fromValue         = @(0);
-    strokeAnimation.toValue           = @(1);
-    strokeAnimation.duration          = 1;
-    strokeAnimation.cumulative        = YES;
-    [self.layerLoading addAnimation:strokeAnimation forKey:@"strokeAnimation"];
-    
-    CABasicAnimation *rotationAnimation = [CABasicAnimation animationWithKeyPath:@"transform.rotation.z"];
-    rotationAnimation.toValue           = [NSNumber numberWithFloat: M_PI];
-    rotationAnimation.duration          = .5;
-    rotationAnimation.cumulative        = YES;
-    rotationAnimation.repeatCount       = HUGE_VALF;
-    [self.layerLoading addAnimation:rotationAnimation forKey:@"rotationAnimation"];
 }
 #pragma mark - Deprecated
 
