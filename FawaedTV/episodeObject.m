@@ -141,11 +141,11 @@
 @implementation episodeDownloadObject
 -(NSString *)downloadDetails{
     NSString *details;
-    double speed; int64_t tot,rec;
+    double speed = 0; int64_t tot,rec;
     tot = self.episodeDownloadProgress.totalUnitCount;
     rec = self.episodeDownloadProgress.completedUnitCount;
     if (self.episodeDownloadStartTime)
-        speed= self.episodeDownloadProgress.completedUnitCount / ([[NSDate date]timeIntervalSince1970]-self.episodeDownloadStartTime);
+        speed = self.episodeDownloadProgress.completedUnitCount / ([[NSDate date]timeIntervalSince1970]-self.episodeDownloadStartTime);
     
     details = [NSString stringWithFormat:@"%@ of %@ - %@",
                [self formatByte:rec forspeed:NO],
