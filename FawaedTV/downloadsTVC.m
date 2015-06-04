@@ -102,11 +102,6 @@
         [self handleBtn:cell.btnDownloadControl withEDObj:epDObj];
     };
 }
--(void)tableView:(UITableView *)tableView didEndDisplayingCell:(downloadsTVCCell *)cell forRowAtIndexPath:(NSIndexPath *)indexPath{
-    __weak episodeDownloadObject *epDObj= [[self.dataSource allValues]objectAtIndex:indexPath.row];
-    cell.laDownloadDetails.text         = Nil;
-    epDObj.episodeDownloadBlock = Nil;
-}
 -(void)handleBtn:(ddProgressBtn *)btn withEDObj:(episodeDownloadObject *)epDObj{
     [btn handelEpDownObj:epDObj];
     if (epDObj.episodeDownloadCurrentStatus == downloadStatusFinished) {
