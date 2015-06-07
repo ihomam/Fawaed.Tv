@@ -13,6 +13,7 @@
 +(id)attributeOfItemAtPath:(NSString *)path forKey:(NSString *)key;
 +(id)attributeOfItemAtPath:(NSString *)path forKey:(NSString *)key error:(NSError **)error;
 
+
 +(NSString *)sizeInMBForFileAtPath:(NSString *)path;
 +(NSArray *)listMediaFilesInDocumentsDirectory;
 
@@ -137,6 +138,6 @@
 
 +(BOOL)writeFileAtPath:(NSString *)path content:(NSObject *)content;
 +(BOOL)writeFileAtPath:(NSString *)path content:(NSObject *)content error:(NSError **)error;
-
++(void)addSkipBackupAttributeToItemAtPath:(NSURL *)URL;
 @end
 

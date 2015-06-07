@@ -9,7 +9,7 @@
 #import "databaseManager.h"
 #import "FMDB.h"
 #import "FMDatabaseQueue.h"
-
+#import "FCFileManager.h"
 
 @interface databaseManager()
     @property (nonatomic,strong) FMDatabaseQueue *dbQeue;
@@ -22,9 +22,8 @@
     static dispatch_once_t onceToken;
     
     dispatch_once(&onceToken, ^{
-        _sharedDatabaseObj          = [databaseManager new];
-
-        NSString *dbPath = [NSString stringWithFormat:@"%@/db",NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES)[0]];
+        _sharedDatabaseObj = [databaseManager new];
+        NSString *dbPath   = [NSString stringWithFormat:@"%@/db",NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES)[0]];
         _sharedDatabaseObj.dbQeue   = [FMDatabaseQueue databaseQueueWithPath:dbPath];
         [_sharedDatabaseObj.dbQeue inDatabase:^(FMDatabase *db) {
             
@@ -34,6 +33,7 @@
 
             [db executeUpdate:@"CREATE TABLE if not exists episode (id INTEGER PRIMARY KEY NOT NULL , seriesID INTEGER, title TEXT,lecturer TEXT ,link TEXT ,linkImage TEXT ,linkWatch TEXT,linkListen  TEXT,linkAvi INTEGER , linkMp3 TEXT)"];
         }];
+        [FCFileManager addSkipBackupAttributeToItemAtPath:[NSURL fileURLWithPath:dbPath]];
     });
     
     

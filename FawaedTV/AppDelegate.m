@@ -15,7 +15,6 @@
 #import <Fabric/Fabric.h>
 #import <Crashlytics/Crashlytics.h>
 
-
 @interface AppDelegate ()
 @property (nonatomic,strong) databaseManager *dbObj;
 @property (nonatomic,strong) downloadManager *downloadManager;

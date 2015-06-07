@@ -25,6 +25,15 @@
     // add the episode object to the db
     [epObj addToDatabase];
     
+    // add skip backup attribute to icloud backup mechanism
+    NSURL *fileUrl;
+    if (epType == episodeDownloadedFileAudio) {
+        fileUrl = [NSURL fileURLWithPath:epObj.episodeLinkMp3Local];
+    }else{
+        fileUrl = [NSURL fileURLWithPath:epObj.episodeLinkAviLocal];
+    }
+    [FCFileManager addSkipBackupAttributeToItemAtPath:fileUrl];
+    
     /// save episode image in user directory
     [[serverManager sharedServerObj]getImageOfEpisode:epObj withComletion:^(UIImage *episodeImage) {
         [self writeImg:episodeImage WithName:[NSString stringWithFormat:@"%d",epObj.episodeID]];
@@ -121,9 +130,11 @@
 +(void)writeImg:(UIImage *)img WithName:(NSString *)name{
     NSString *imgPath = [FCFileManager pathForDocumentsDirectoryWithPath:[NSString stringWithFormat:@"images/%@",name]];
     [FCFileManager createFileAtPath:imgPath withContent:img];
+    [FCFileManager addSkipBackupAttributeToItemAtPath:[NSURL fileURLWithPath:imgPath]];
 }
 +(void)deleteImgWithName:(NSString *)name{
     NSString *imgPath = [FCFileManager pathForDocumentsDirectoryWithPath:[NSString stringWithFormat:@"images/%@",name]];
     [FCFileManager removeItemAtPath:imgPath];
+    
 }
 @end

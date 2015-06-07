@@ -19,7 +19,6 @@
 #import "downloadManager.h"
 #import "ddProgressBtn.h"
 
-#import "FCFileManager.h"
 #import "episodsManager.h"
 #import "UIImage+BlurredFrame.h"
 

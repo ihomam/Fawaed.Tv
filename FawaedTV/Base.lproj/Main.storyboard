@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="7531" systemVersion="14D131" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" initialViewController="JgA-Nd-pOf">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="7531" systemVersion="14D136" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" initialViewController="JgA-Nd-pOf">
     <dependencies>
         <deployment identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="7520"/>
@@ -379,7 +379,7 @@
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="Dnz-UQ-ETO" id="DZm-yJ-jJb">
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
-                                                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Vkx-ha-3VI">
+                                                <view hidden="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Vkx-ha-3VI">
                                                     <rect key="frame" x="5" y="0.0" width="285" height="60"/>
                                                     <subviews>
                                                         <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="right" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="20m-wF-UWb">
@@ -420,26 +420,16 @@
                                                         </mask>
                                                     </variation>
                                                 </view>
-                                                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="pPZ-ly-pna">
+                                                <view hidden="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="pPZ-ly-pna">
                                                     <rect key="frame" x="300" y="0.0" width="1" height="60"/>
                                                     <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                                                     <constraints>
                                                         <constraint firstAttribute="width" constant="1" id="SjV-Um-8Ch"/>
                                                     </constraints>
                                                 </view>
-                                                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="De0-3g-JGd">
+                                                <view hidden="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="De0-3g-JGd">
                                                     <rect key="frame" x="311" y="0.0" width="284" height="60"/>
                                                     <subviews>
-                                                        <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="GlQ-ls-13R">
-                                                            <rect key="frame" x="35" y="0.0" width="249" height="60"/>
-                                                            <state key="normal" title="Download audio">
-                                                                <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                                                                <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
-                                                            </state>
-                                                            <connections>
-                                                                <action selector="downloadMp3:" destination="u1u-kg-waZ" eventType="touchUpInside" id="NLg-ol-5bV"/>
-                                                            </connections>
-                                                        </button>
                                                         <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="apN-0U-BqF" customClass="ddProgressBtn">
                                                             <rect key="frame" x="5" y="20" width="20" height="20"/>
                                                             <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
@@ -454,15 +444,11 @@
                                                     </subviews>
                                                     <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                                                     <constraints>
-                                                        <constraint firstAttribute="right" secondItem="GlQ-ls-13R" secondAttribute="right" id="8o7-jo-KFD"/>
-                                                        <constraint firstItem="GlQ-ls-13R" firstAttribute="left" secondItem="apN-0U-BqF" secondAttribute="right" constant="10" id="EDg-Rz-Ioe"/>
                                                         <constraint firstAttribute="centerY" secondItem="apN-0U-BqF" secondAttribute="centerY" id="EFD-56-WXp"/>
                                                         <constraint firstItem="apN-0U-BqF" firstAttribute="left" secondItem="De0-3g-JGd" secondAttribute="left" constant="5" id="EeK-QT-xwN"/>
                                                         <constraint firstItem="apN-0U-BqF" firstAttribute="left" secondItem="De0-3g-JGd" secondAttribute="left" constant="10" id="NJc-Os-UpI"/>
                                                         <constraint firstAttribute="centerY" secondItem="apN-0U-BqF" secondAttribute="centerY" id="O5a-Bx-xnE"/>
                                                         <constraint firstItem="apN-0U-BqF" firstAttribute="top" secondItem="De0-3g-JGd" secondAttribute="top" constant="12" id="js4-fe-t9v"/>
-                                                        <constraint firstAttribute="bottom" secondItem="GlQ-ls-13R" secondAttribute="bottom" id="twi-Kf-s3n"/>
-                                                        <constraint firstItem="GlQ-ls-13R" firstAttribute="top" secondItem="De0-3g-JGd" secondAttribute="top" id="wGa-vS-edP"/>
                                                     </constraints>
                                                     <variation key="default">
                                                         <mask key="constraints">
@@ -472,20 +458,46 @@
                                                         </mask>
                                                     </variation>
                                                 </view>
+                                                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="GlQ-ls-13R">
+                                                    <rect key="frame" x="244" y="0.0" width="112" height="60"/>
+                                                    <state key="normal" title="Download audio">
+                                                        <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                                        <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                                                    </state>
+                                                    <connections>
+                                                        <action selector="downloadMp3:" destination="u1u-kg-waZ" eventType="touchUpInside" id="NLg-ol-5bV"/>
+                                                    </connections>
+                                                </button>
+                                                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="ZKk-RY-aX4" customClass="ddProgressBtn">
+                                                    <rect key="frame" x="214" y="20" width="20" height="20"/>
+                                                    <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+                                                    <constraints>
+                                                        <constraint firstAttribute="width" constant="20" id="gQX-cI-Sip"/>
+                                                        <constraint firstAttribute="height" constant="20" id="niD-bE-NUJ"/>
+                                                    </constraints>
+                                                    <connections>
+                                                        <action selector="downloadMp3:" destination="u1u-kg-waZ" eventType="touchUpInside" id="rx9-rc-keA"/>
+                                                    </connections>
+                                                </view>
                                             </subviews>
                                             <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                                             <constraints>
-                                                <constraint firstAttribute="right" secondItem="De0-3g-JGd" secondAttribute="right" constant="5" id="9RL-0y-94m"/>
+                                                <constraint firstAttribute="trailing" secondItem="De0-3g-JGd" secondAttribute="trailing" constant="5" id="9RL-0y-94m"/>
                                                 <constraint firstItem="pPZ-ly-pna" firstAttribute="top" secondItem="DZm-yJ-jJb" secondAttribute="top" id="Aq1-uX-zFF"/>
-                                                <constraint firstItem="Vkx-ha-3VI" firstAttribute="left" secondItem="DZm-yJ-jJb" secondAttribute="left" constant="5" id="BFM-oV-Hrd"/>
-                                                <constraint firstItem="De0-3g-JGd" firstAttribute="left" secondItem="pPZ-ly-pna" secondAttribute="right" constant="10" id="BxT-iy-YNg"/>
-                                                <constraint firstItem="pPZ-ly-pna" firstAttribute="left" secondItem="Vkx-ha-3VI" secondAttribute="right" constant="10" id="EKA-Cb-uf2"/>
+                                                <constraint firstItem="Vkx-ha-3VI" firstAttribute="leading" secondItem="DZm-yJ-jJb" secondAttribute="leading" constant="5" id="BFM-oV-Hrd"/>
+                                                <constraint firstItem="De0-3g-JGd" firstAttribute="leading" secondItem="pPZ-ly-pna" secondAttribute="trailing" constant="10" id="BxT-iy-YNg"/>
+                                                <constraint firstItem="GlQ-ls-13R" firstAttribute="left" secondItem="ZKk-RY-aX4" secondAttribute="right" constant="10" id="Dcl-w7-UJ9"/>
+                                                <constraint firstItem="pPZ-ly-pna" firstAttribute="leading" secondItem="Vkx-ha-3VI" secondAttribute="trailing" constant="10" id="EKA-Cb-uf2"/>
                                                 <constraint firstAttribute="bottom" secondItem="De0-3g-JGd" secondAttribute="bottom" id="IPp-Er-MfW"/>
-                                                <constraint firstItem="De0-3g-JGd" firstAttribute="left" secondItem="Vkx-ha-3VI" secondAttribute="right" id="IQN-LW-1XR"/>
+                                                <constraint firstItem="De0-3g-JGd" firstAttribute="leading" secondItem="Vkx-ha-3VI" secondAttribute="trailing" id="IQN-LW-1XR"/>
                                                 <constraint firstItem="Vkx-ha-3VI" firstAttribute="top" secondItem="DZm-yJ-jJb" secondAttribute="top" id="Isg-X5-Kud"/>
                                                 <constraint firstAttribute="bottom" secondItem="Vkx-ha-3VI" secondAttribute="bottom" id="RJ0-GY-tRz"/>
                                                 <constraint firstItem="De0-3g-JGd" firstAttribute="top" secondItem="DZm-yJ-jJb" secondAttribute="top" id="VNO-hf-KW0"/>
+                                                <constraint firstAttribute="bottom" secondItem="GlQ-ls-13R" secondAttribute="bottom" id="ZyE-Jd-4ya"/>
                                                 <constraint firstAttribute="bottom" secondItem="pPZ-ly-pna" secondAttribute="bottom" id="cKQ-Qr-uEQ"/>
+                                                <constraint firstAttribute="centerY" secondItem="ZKk-RY-aX4" secondAttribute="centerY" id="iRv-eT-z8T"/>
+                                                <constraint firstAttribute="centerX" secondItem="GlQ-ls-13R" secondAttribute="centerX" id="jTM-HU-vz9"/>
+                                                <constraint firstItem="GlQ-ls-13R" firstAttribute="top" secondItem="DZm-yJ-jJb" secondAttribute="top" id="uJx-7M-KBQ"/>
                                                 <constraint firstAttribute="centerX" secondItem="pPZ-ly-pna" secondAttribute="centerX" id="zFH-8y-QEe"/>
                                             </constraints>
                                             <variation key="default">
@@ -537,9 +549,9 @@
                     <connections>
                         <outlet property="btnAvi" destination="20m-wF-UWb" id="cu1-1T-cgV"/>
                         <outlet property="btnListen" destination="j1i-jB-11I" id="lz0-Xu-F8e"/>
-                        <outlet property="btnMp3" destination="GlQ-ls-13R" id="B69-Hk-WUg"/>
+                        <outlet property="btnMp3" destination="GlQ-ls-13R" id="hAN-BD-Dfl"/>
                         <outlet property="btnVBPAvi" destination="Heg-YZ-kOf" id="wBQ-zt-nES"/>
-                        <outlet property="btnVBPMp3" destination="apN-0U-BqF" id="pSb-we-BhP"/>
+                        <outlet property="btnVBPMp3" destination="ZKk-RY-aX4" id="YCe-5l-EpE"/>
                         <outlet property="btnYoutube" destination="6JY-le-GXB" id="SZI-mC-Aau"/>
                         <outlet property="laEpsoideTitle" destination="eJA-x7-I9t" id="4BC-zF-BFa"/>
                     </connections>
