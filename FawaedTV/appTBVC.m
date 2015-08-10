@@ -12,9 +12,10 @@
 #import "audioPlayerVC.h"
 #import "downloadManager.h"
 #import "AFSoundManager.h"
+#import "serverManager.h"
 
 @interface appTBVC ()
-
+@property (nonatomic,strong) UIViewController *vcDownloadVC;
 @end
 
 @implementation appTBVC
@@ -29,6 +30,12 @@
 }
 - (void)viewWillAppear:(BOOL)animated{
     [super viewWillAppear:animated];
+    if (![serverManager sharedServerObj].displayDownloadBtn) {
+        NSMutableArray *newTabs = [NSMutableArray arrayWithArray:self.viewControllers];
+        self.vcDownloadVC = newTabs[2];
+        [newTabs removeObjectAtIndex: 2];
+        [self setViewControllers:newTabs];
+    }
 }
 -(void)viewDidAppear:(BOOL)animated{
     [super viewDidAppear:animated];
@@ -64,22 +71,32 @@
     }
     [self setPlayerTabWithVc:playerVC];
 }
-
 -(void)setPlayerTabWithVc:(UIViewController *)vc{
     if (![self.viewControllers containsObject:vc]) {
         NSMutableArray *controllers = self.viewControllers.mutableCopy;
-        if (self.viewControllers.count > 3) {
-            [controllers removeObjectAtIndex:3];
+
+        // delete player object if found, first search for it and get it's index if found
+        __block NSUInteger playerIndx = NSNotFound;
+        [self.viewControllers enumerateObjectsUsingBlock:^(UIViewController *vc, NSUInteger idx, BOOL *stop) {
+            if ([vc isKindOfClass:[audioPlayerVC class]]) {
+                playerIndx = idx;
+            }
+        }];
+        /// delete player controller if we have it's index
+        if (playerIndx != NSNotFound ) {
+            [controllers removeObjectAtIndex:playerIndx];
         }
+        
         [controllers addObject:vc];
         [self setViewControllers:controllers animated:YES];
         NSMutableArray *array = self.tabBar.items.mutableCopy;
-        UITabBarItem *newItem = [array objectAtIndex:3];
-        newItem.image = [UIImage imageNamed:@"tabs-player"];
-        newItem.title = NSLocalizedString(@"Player", Nil);
+        UITabBarItem *newItem = [array objectAtIndex:(array.count-1)];
+        newItem.image         = [UIImage imageNamed:@"tabs-player"];
+        newItem.title         = NSLocalizedString(@"Player", Nil);
     }
     [self setSelectedViewController:vc];
 }
+
 #pragma mark - download object
 /// called by notification center when downloadObject get new data from interenet.
 -(void)updateProgressTab{

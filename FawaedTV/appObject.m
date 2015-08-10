@@ -14,12 +14,10 @@
     @property (nonatomic,strong)            NSTimer         *backwardTimer;
 @end
 @implementation appObject
-- (BOOL)canBecomeFirstResponder
-{
+
+- (BOOL)canBecomeFirstResponder{
     return YES;
 }
-
-
 - (void)remoteControlReceivedWithEvent:(UIEvent *)event {
     AFSoundManagerStatus playerStatus =  [[AFSoundManager sharedManager] status];
     switch (event.subtype) {

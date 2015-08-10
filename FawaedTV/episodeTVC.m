@@ -177,6 +177,11 @@
     self.btnMp3.titleLabel.adjustsFontSizeToFitWidth = YES;
     self.btnAvi.titleLabel.minimumScaleFactor = .8;
     self.btnMp3.titleLabel.minimumScaleFactor = .8;
+
+    if (![serverManager sharedServerObj].displayDownloadBtn) {
+        self.btnMp3.alpha    = 0;
+        self.btnVBPMp3.alpha = 0;
+    }
 }
 
 #pragma mark - bookmarks

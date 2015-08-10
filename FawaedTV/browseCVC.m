@@ -486,7 +486,10 @@ minimumInteritemSpacingForSectionAtIndex:(NSInteger)section{
     // but we'll not do that any more... it made problems
     // it's better to set self.searchBarActive = YES when user typed something
     [self.searchBar setShowsCancelButton:YES animated:YES];
-    self.collectionView.contentInset = UIEdgeInsetsMake(self.collectionView.contentInset.top, self.collectionView.contentInset.left, self.collectionView.contentInset.bottom + 210, self.collectionView.contentInset.right);
+    self.collectionView.contentInset = UIEdgeInsetsMake(self.collectionView.contentInset.top,
+                                                        self.collectionView.contentInset.left,
+                                                        self.collectionView.contentInset.bottom + 210,
+                                                        self.collectionView.contentInset.right);
 }
 - (void)searchBarTextDidEndEditing:(UISearchBar *)searchBar{
     // this method is being called when search btn in the keyboard tapped
@@ -494,7 +497,10 @@ minimumInteritemSpacingForSectionAtIndex:(NSInteger)section{
     // but no need to reloadCollectionView
     self.searchBarActive = NO;
     [self.searchBar setShowsCancelButton:NO animated:YES];
-        self.collectionView.contentInset = UIEdgeInsetsMake(self.collectionView.contentInset.top, self.collectionView.contentInset.left, self.collectionView.contentInset.bottom - 210, self.collectionView.contentInset.right);
+        self.collectionView.contentInset = UIEdgeInsetsMake(self.collectionView.contentInset.top,
+                                                            self.collectionView.contentInset.left,
+                                                            self.collectionView.contentInset.bottom - 210,
+                                                            self.collectionView.contentInset.right);
 }
 -(void)cancelSearching{
     self.searchBarActive = NO;

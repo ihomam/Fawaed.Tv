@@ -16,6 +16,8 @@
 
 @interface serverManager : AFHTTPSessionManager
 +(instancetype)sharedServerObj;
+@property (nonatomic) BOOL displayDownloadBtn;
+
 -(void)getWholeSchemaObjectWithCompleation:(void(^)(BOOL finishedSuccessfully, NSMutableArray *resultOfSeries,NSMutableArray *resultOfCategories,NSMutableArray *resultOfYears,NSMutableArray *resultOfLecturers))compleation;
 -(void)getAllSeriesWithCompleation:(void(^)(NSMutableArray *resultOfSeries))compleation;
 -(void)getAllYearsWithCompleation:(void(^)(NSMutableArray *resultOfYears))compleation;

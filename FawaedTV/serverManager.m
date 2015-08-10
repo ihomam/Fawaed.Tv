@@ -29,8 +29,37 @@
     
     return _sharedServerObj;
 }
+
 #pragma mark -
--(void)getWholeSchemaObjectWithCompleation:(void(^)(BOOL finishedSuccessfully, NSMutableArray *resultOfSeries,NSMutableArray *resultOfCategories,NSMutableArray *resultOfYears,NSMutableArray *resultOfLecturers))compleation{
+-(BOOL)displayDownloadBtn{
+    if (!_displayDownloadBtn) {
+        [self getDownloadBtnEnabled];
+    }
+    return _displayDownloadBtn;
+}
+-(void)getDownloadBtnEnabled{
+    // prepare request link
+    NSString *link = linkWebSiteDomain;
+    
+    // send request
+    [self GET:link
+   parameters:Nil
+      success:^(NSURLSessionDataTask *task, id responseObject) {
+          
+          /// response
+          NSError *errorXmlParser;
+          TBXML *xmlResponse = [TBXML newTBXMLWithXMLData:responseObject error:&errorXmlParser];
+          if (!errorXmlParser) {
+              self.displayDownloadBtn = [self proccessXMLFromConfigRequest:xmlResponse];
+          }
+          
+      } failure:Nil];
+}
+-(void)getWholeSchemaObjectWithCompleation:(void(^)(BOOL finishedSuccessfully,
+                                                    NSMutableArray *resultOfSeries,
+                                                    NSMutableArray *resultOfCategories,
+                                                    NSMutableArray *resultOfYears,
+                                                    NSMutableArray *resultOfLecturers))compleation{
     // prepare request link
     NSString *link = linkWebSiteDomain;
     
@@ -43,6 +72,8 @@
             NSMutableArray *allYears    = [yearObject proccessXMLFromAllYearsRequest:xmlResponse];
             NSMutableArray *allCategorie= [categoryObject proccessXMLFromAllCategoriesRequest:xmlResponse];
             NSMutableArray *allLecturers= [lecturerObject proccessXMLFromAlllecturersRequest:xmlResponse];
+            self.displayDownloadBtn     = [self proccessXMLFromConfigRequest:xmlResponse];
+            
             if (compleation) {
                 compleation(YES,allSeries,allCategorie,allYears,allLecturers);
             }
@@ -220,5 +251,15 @@
             completion(Nil);
         }
     }];
+}
+#pragma mark - XML
+-(BOOL)proccessXMLFromConfigRequest:(TBXML *)xmlObject{
+    __block BOOL shouldDisplayBtn = NO;
+    // .1 get channel obj then the title
+    TBXMLElement *elmConfig   = [TBXML childElementNamed:@"config" parentElement:xmlObject.rootXMLElement];
+    TBXMLElement *elmDownload = [TBXML childElementNamed:@"download" parentElement:elmConfig];
+    NSString *value           = [TBXML valueOfAttributeNamed:@"enabled" forElement:elmDownload];
+    shouldDisplayBtn          = value.boolValue;
+    return shouldDisplayBtn;
 }
 @end
