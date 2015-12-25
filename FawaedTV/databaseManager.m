@@ -7,9 +7,10 @@
 //
 
 #import "databaseManager.h"
-#import "FMDB.h"
-#import "FMDatabaseQueue.h"
-#import "FCFileManager.h"
+#import <FMDB/FMDB.h>
+#import <FMDB/FMDatabaseQueue.h>
+#import <FCFileManager/FCFileManager.h>
+#import "FCFileManager+addons.h"
 
 @interface databaseManager()
     @property (nonatomic,strong) FMDatabaseQueue *dbQeue;

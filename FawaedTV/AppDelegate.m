@@ -11,9 +11,7 @@
 #import "downloadManager.h"
 #import "episodsManager.h"
 #import "AFSoundManager.h"
-
-#import <Fabric/Fabric.h>
-#import <Crashlytics/Crashlytics.h>
+#import <FlightRecorder/FlightRecorder.h>
 
 @interface AppDelegate ()
 @property (nonatomic,strong) databaseManager *dbObj;
@@ -30,9 +28,11 @@
     self.downloadManager    = [downloadManager sharedDownloadObj];
     self.epManager          = [episodsManager new];
 
-    [Fabric with:@[CrashlyticsKit]];
 
-
+    [[FlightRecorder sharedInstance] setAccessKey:@"773f41eb-c13b-4c0d-b42e-7aa6250e7845"
+                                        secretKey:@"e5e0b566-ce14-4ae9-b18d-2e9fbba6e403"];
+    [[FlightRecorder sharedInstance] startFlight];
+    
     return YES;
 }
 

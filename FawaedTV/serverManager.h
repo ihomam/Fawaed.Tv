@@ -7,7 +7,7 @@
 //
 
 #import <Foundation/Foundation.h>
-#import "AFNetworking.h"
+#import <AFNetworking/AFNetworking.h>
 #import "seriesObject.h"
 #import "lecturerObject.h"
 #import "categoryObject.h"

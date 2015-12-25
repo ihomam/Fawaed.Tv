@@ -293,22 +293,22 @@ minimumInteritemSpacingForSectionAtIndex:(NSInteger)section{
     if (self.dataSourceType == dataSourceTypePrograms) {
         episodesCVC *vc = [self.storyboard instantiateViewControllerWithIdentifier:@"episodesCVC"];
         vc.selObjSeries = [currentDataSource objectAtIndex:indexPath.row];
-        [self searchBarCancelButtonClicked:Nil];
+        [self searchBarCancelButtonClicked:self.searchBar];
         [self.navigationController pushViewController:vc animated:YES];
     }else if (self.dataSourceType == dataSourceTypeCategories){
         categoriesCVC *vc   = [self.storyboard instantiateViewControllerWithIdentifier:@"categoriesCVC"];
         vc.selCatObj        = [currentDataSource objectAtIndex:indexPath.row];
-        [self searchBarCancelButtonClicked:Nil];
+        [self searchBarCancelButtonClicked:self.searchBar];
         [self.navigationController pushViewController:vc animated:YES];
     }else if (self.dataSourceType == dataSourceTypeLecturers){
         lecturersCVC *vc    = [self.storyboard instantiateViewControllerWithIdentifier:@"lecturersCVC"];
         vc.selLecObj        = [currentDataSource objectAtIndex:indexPath.row];
-        [self searchBarCancelButtonClicked:Nil];
+        [self searchBarCancelButtonClicked:self.searchBar];
         [self.navigationController pushViewController:vc animated:YES];
     }else{
         yearsCVC *vc        = [self.storyboard instantiateViewControllerWithIdentifier:@"yearsCVC"];
         vc.selYeObj         = [currentDataSource objectAtIndex:indexPath.row];
-        [self searchBarCancelButtonClicked:Nil];
+        [self searchBarCancelButtonClicked:self.searchBar];
         [self.navigationController pushViewController:vc animated:YES];
     }
 }
@@ -545,7 +545,7 @@ minimumInteritemSpacingForSectionAtIndex:(NSInteger)section{
         // handel btn touch
         __weak browseCVC *weakSelf = self;
         self.vcBrowseMenu.cellClickedCompletion = ^(cellName cellType, UIImage *imgTypeIcon){
-            [weakSelf searchBarCancelButtonClicked:Nil];
+            [weakSelf searchBarCancelButtonClicked:weakSelf.searchBar];
             
             // change the datasource
             switch (cellType) {

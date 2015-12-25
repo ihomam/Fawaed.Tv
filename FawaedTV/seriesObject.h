@@ -7,7 +7,7 @@
 //
 
 #import <Foundation/Foundation.h>
-#import "TBXML.h"
+#import <TBXML/TBXML.h>
 
 @interface seriesObject : NSObject
 

@@ -7,7 +7,7 @@
 //
 
 #import <Foundation/Foundation.h>
-#import "TBXML.h"
+#import <TBXML/TBXML.h>
 
 @interface categoryObject : NSObject
     @property (nonatomic)        int            categoryID;

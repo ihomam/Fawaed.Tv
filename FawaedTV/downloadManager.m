@@ -120,7 +120,9 @@
         NSURLRequest *request   = [[NSURLRequest alloc]initWithURL:urlDownload];
 
         NSURLSessionDownloadTask *dt = [self.downloadManager downloadTaskWithRequest:request
-                                                                            progress:&progress
+                                                                            progress:^(NSProgress * _Nonnull downloadProgress) {
+                                                                                
+                                                                            }
                                                                          destination:^NSURL *(NSURL *targetPath, NSURLResponse *response){
                                                                              return [self.urlDocs URLByAppendingPathComponent:fileName];}
                                                                    completionHandler:^(NSURLResponse *response, NSURL *filePath, NSError *error){

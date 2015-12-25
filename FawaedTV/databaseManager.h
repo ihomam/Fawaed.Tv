@@ -7,7 +7,8 @@
 //
 
 #import <Foundation/Foundation.h>
-#import "FMResultSet.h"
+#import <FMDB/FMResultSet.h>
+
 @interface databaseManager : NSObject
 +(instancetype)sharedDatabaseObj;
 

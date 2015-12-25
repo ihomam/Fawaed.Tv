@@ -11,6 +11,7 @@
 #import "fileObject.h"
 #import "FCFileManager.h"
 #import "serverManager.h"
+#import "FCFileManager+addons.h"
 
 @implementation episodsManager
 +(void)episodeDownloaded:(episodeObject *)epObj type:(episodeDownloadedFileType)epType{

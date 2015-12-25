@@ -1,0 +1,43 @@
+PODS:
+  - AFNetworking (3.0.4):
+    - AFNetworking/NSURLSession (= 3.0.4)
+    - AFNetworking/Reachability (= 3.0.4)
+    - AFNetworking/Security (= 3.0.4)
+    - AFNetworking/Serialization (= 3.0.4)
+    - AFNetworking/UIKit (= 3.0.4)
+  - AFNetworking/NSURLSession (3.0.4):
+    - AFNetworking/Reachability
+    - AFNetworking/Security
+    - AFNetworking/Serialization
+  - AFNetworking/Reachability (3.0.4)
+  - AFNetworking/Security (3.0.4)
+  - AFNetworking/Serialization (3.0.4)
+  - AFNetworking/UIKit (3.0.4):
+    - AFNetworking/NSURLSession
+  - FCFileManager (1.0.17)
+  - FFCircularProgressView (0.5)
+  - FlightRecorder (1.9.2)
+  - FMDB (2.5):
+    - FMDB/standard (= 2.5)
+  - FMDB/common (2.5)
+  - FMDB/standard (2.5):
+    - FMDB/common
+  - TBXML (1.5)
+
+DEPENDENCIES:
+  - AFNetworking
+  - FCFileManager
+  - FFCircularProgressView
+  - FlightRecorder
+  - FMDB
+  - TBXML
+
+SPEC CHECKSUMS:
+  AFNetworking: a0075feb321559dc78d9d85b55d11caa19eabb93
+  FCFileManager: 8bfc931ce2a6223676147e9baf0e8a65c691eca6
+  FFCircularProgressView: 683a4ab1e1bd613246a3dffa61503ffdebcde8d8
+  FlightRecorder: e33acd5cffeb803b6bc042e9cc0bee244203f053
+  FMDB: 96e8f1bcc1329e269330f99770ad4285d9003e52
+  TBXML: 9f9dadb239f2f2af1dadb87fe43a0ce6e479379a
+
+COCOAPODS: 0.39.0

@@ -7,7 +7,7 @@
 //
 
 #import <Foundation/Foundation.h>
-#import "TBXML.h"
+#import <TBXML/TBXML.h>
 
 @interface yearObject : NSObject
     @property (nonatomic)        int            yearID;

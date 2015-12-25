@@ -31,6 +31,7 @@
 #import "fileObject.h"
 #import "episodeObject.h"
 #import "episodsManager.h"
+#import "FCFileManager+addons.h"
 
 typedef NS_ENUM(NSUInteger, libraryFilterType) {
     libraryFilterTypeSeries,
