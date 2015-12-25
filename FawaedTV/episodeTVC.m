@@ -64,6 +64,34 @@
 -(void)watchYoutube{
     if (self.selEpiObj.episodeLinkWatch.length > 0){
         NSRange vRange = [self.selEpiObj.episodeLinkWatch rangeOfString:@"?v="];
+        
+        if (vRange.location){
+            NSString *msg   = [NSString stringWithFormat:@"%@ %@",
+                                          NSLocalizedString(@"youtube link is wrong", Nil),
+                                          self.selEpiObj.episodeLinkWatch];
+            NSString *title = NSLocalizedString(@"youtube error!", Nil);
+            NSString *cancel= NSLocalizedString(@"ok", Nil);
+            if ([UIAlertController class]) {
+                UIAlertController *vcError = [UIAlertController alertControllerWithTitle:title
+                                                                                 message:msg
+                                                                          preferredStyle:UIAlertControllerStyleAlert];
+                UIAlertAction *action      = [UIAlertAction actionWithTitle:cancel
+                                                                      style:UIAlertActionStyleCancel
+                                                                    handler:^(UIAlertAction * _Nonnull action) {
+                                                                        [self dismissViewControllerAnimated:YES completion:Nil];
+                                                                    }];
+                [vcError addAction:action];
+                [self presentViewController:vcError animated:YES completion:nil];
+            }else{
+                [[[UIAlertView alloc]initWithTitle:title
+                                           message:msg
+                                          delegate:Nil
+                                 cancelButtonTitle:cancel
+                                 otherButtonTitles:nil]show];
+            }
+            return;
+        }
+        
         NSString *viID = [self.selEpiObj.episodeLinkWatch substringFromIndex:vRange.location+vRange.length];
         [((appTBVC *)self.tabBarController) buildFilePlayerForObject:viID forType:playerTypeVideoOnline];
     }
