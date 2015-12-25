@@ -30,12 +30,8 @@
 }
 - (void)viewWillAppear:(BOOL)animated{
     [super viewWillAppear:animated];
-    if (![serverManager sharedServerObj].displayDownloadBtn) {
-        NSMutableArray *newTabs = [NSMutableArray arrayWithArray:self.viewControllers];
-        self.vcDownloadVC = newTabs[2];
-        [newTabs removeObjectAtIndex: 2];
-        [self setViewControllers:newTabs];
-    }
+    [[NSNotificationCenter defaultCenter]addObserver:self selector:@selector(downloadStateChanged) name:@"displayDownloadBtnStateChanged" object:Nil];
+    [self downloadStateChanged];
 }
 -(void)viewDidAppear:(BOOL)animated{
     [super viewDidAppear:animated];
@@ -127,5 +123,18 @@
     NSString *imgName   = [NSString stringWithFormat:@"tab-downloads-%.0f.png",progress*100];
     item.image          = [[UIImage imageNamed:imgName]imageWithRenderingMode:UIImageRenderingModeAlwaysOriginal];
     item.selectedImage  = [[UIImage imageNamed:imgName]imageWithRenderingMode:UIImageRenderingModeAlwaysOriginal];
+}
+#pragma mark - 
+-(void)downloadStateChanged{
+    if (![serverManager sharedServerObj].displayDownloadBtn) {
+        NSMutableArray *newTabs = [NSMutableArray arrayWithArray:self.viewControllers];
+        self.vcDownloadVC = newTabs[2];
+        [newTabs removeObjectAtIndex: 2];
+        [self setViewControllers:newTabs];
+    }else{
+        NSMutableArray *newTabs = [NSMutableArray arrayWithArray:self.viewControllers];
+        [newTabs insertObject:self.vcDownloadVC atIndex:2];
+        [self setViewControllers:newTabs];
+    }
 }
 @end

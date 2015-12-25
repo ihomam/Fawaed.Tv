@@ -51,6 +51,7 @@
           TBXML *xmlResponse = [TBXML newTBXMLWithXMLData:responseObject error:&errorXmlParser];
           if (!errorXmlParser) {
               self.displayDownloadBtn = [self proccessXMLFromConfigRequest:xmlResponse];
+              [[NSNotificationCenter defaultCenter]postNotificationName:@"displayDownloadBtnStateChanged" object:Nil];
           }
           
       } failure:Nil];
