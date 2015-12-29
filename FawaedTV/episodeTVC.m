@@ -17,23 +17,23 @@
 #import "appTBVC.h"
 #import "bookmarkObj.h"
 #import "downloadManager.h"
-#import "ddProgressBtn.h"
 
 #import "episodsManager.h"
 #import "UIImage+BlurredFrame.h"
+
+#import <FFCircularProgressView/FFCircularProgressView.h>
+#import "downloadBtn.h"
 
 @interface episodeTVC (){
     CGFloat cellImgSize;
 }
 
-    @property (weak, nonatomic) IBOutlet UIButton           *btnYoutube;
-    @property (weak, nonatomic) IBOutlet UIButton           *btnAvi;
-    @property (weak, nonatomic) IBOutlet UIButton           *btnListen;
-    @property (weak, nonatomic) IBOutlet UIButton           *btnMp3;
-    @property (weak, nonatomic) IBOutlet ddProgressBtn      *btnVBPMp3;
-    @property (weak, nonatomic) IBOutlet ddProgressBtn      *btnVBPAvi;
-    @property (weak, nonatomic) IBOutlet UILabel            *laEpsoideTitle;
-    @property (nonatomic,strong) bookmarkObj                *bookmarkObject;
+@property (weak, nonatomic ) IBOutlet UIButton    *btnYoutube;
+@property (weak, nonatomic ) IBOutlet UIButton    *btnListen;
+@property (weak, nonatomic ) IBOutlet downloadBtn *btnDownloadMp3;
+@property (weak, nonatomic ) IBOutlet UILabel     *laEpsoideTitle;
+@property (nonatomic,strong) bookmarkObj          *bookmarkObject;
+
 @end
 
 @implementation episodeTVC
@@ -113,21 +113,26 @@
 //        }
 //    }
 }
-- (IBAction)downloadMp3:(id)sender {
+- (IBAction)downloadMp3:(UIButton *)sender {
     // @TODO check this code
-    if (self.btnVBPMp3.currentButtonType == buttonRightTriangleType ) {
+    if (self.btnDownloadMp3.selected) {
         // means we should play the file not download
         [((appTBVC *)self.tabBarController) buildFilePlayerForObject:self.selEpiObj forType:playerTypeAudioLocal];
-        [self.btnVBPMp3 animateToType:buttonSquareType];
         return;
     }
     
-    if (self.selEpiObj.episodeLinkMp3.length > 0){
+    if (self.selEpiObj.episodeLinkMp3.length > 0){        
         __weak __block episodeDownloadObject *epDownObj;
+        __weak typeof(self) weakself = self;
         epDownObj  = [[downloadManager sharedDownloadObj]downloadThisEpisode:self.selEpiObj soundFile:YES];
         if(epDownObj){
-            [self.btnVBPMp3 handelEpDownObj:epDownObj];
-            epDownObj.episodeDownloadBlock = ^(){[self handleBtnDownloadProgress:self.btnVBPMp3 andEpDownObja:epDownObj];};
+            dispatch_async(dispatch_get_main_queue(), ^{
+                [sender setHighlighted:YES];
+            });
+            [self.btnDownloadMp3 handleBtnDownloadProgressForEpDownObja:epDownObj];
+            epDownObj.episodeDownloadBlock = ^(){
+                [weakself.btnDownloadMp3 handleBtnDownloadProgressForEpDownObja:epDownObj];
+            };
         } 
     }
 }
@@ -174,41 +179,33 @@
                                                                  andDetail:self.selEpiObj.episodeLecturer];
     self.laEpsoideTitle.text = self.selEpiObj.episodeTitle;
 }
--(void)prepareBtns{
-    self.btnVBPMp3.tintColor = [UIColor whiteColor];
-    self.btnVBPAvi.tintColor = [UIColor whiteColor];
+-(void)prepareBtns{    
+    self.btnDownloadMp3.titleLabel.adjustsFontSizeToFitWidth = YES;
+    self.btnDownloadMp3.titleLabel.minimumScaleFactor        = .8;
+    
+    [self.btnDownloadMp3 setTitle:NSLocalizedString(@"Download Audio", Nil) forState:UIControlStateNormal];
+    [self.btnDownloadMp3 setTitle:NSLocalizedString(@"Play Audio", Nil) forState:UIControlStateSelected];
+    [self.btnDownloadMp3 setTitle:@"" forState:UIControlStateHighlighted];
     
     if (self.selEpiObj.episodeLinkMp3.length == 0){
-        self.btnMp3.alpha       = .3;
-        self.btnVBPMp3.alpha    = .3;
+        self.btnDownloadMp3.alpha   = .3;
+        self.btnDownloadMp3.enabled = NO;
     }
-//    if (self.selEpiObj.episodeLinkAvi.length == 0){
-        self.btnAvi.alpha       = .3;
-        self.btnVBPAvi.alpha    = .3;
-//    }
     if (self.selEpiObj.episodeLinkListen.length == 0){
-        self.btnListen.alpha    = .3;
+        self.btnListen.alpha        = .3;
+        self.btnListen.enabled      = NO;
     }
     if (self.selEpiObj.episodeLinkWatch.length == 0){
-        self.btnYoutube.alpha   = .3;
+        self.btnYoutube.alpha       = .3;
+        self.btnYoutube.enabled     = NO;
     }
-    
-    if ([self.selEpiObj checkIfMp3FileInLocalFolder]){
-        [self.btnMp3 setTitle:NSLocalizedString(@" Play audio", Nil) forState:UIControlStateNormal];
-    }
-    
-    if ([self.selEpiObj checkIfAviFileInLocalFolder]){
-        [self.btnAvi setTitle:NSLocalizedString(@" Play video", Nil) forState:UIControlStateNormal];
-    }
-    
-    self.btnAvi.titleLabel.adjustsFontSizeToFitWidth = YES;
-    self.btnMp3.titleLabel.adjustsFontSizeToFitWidth = YES;
-    self.btnAvi.titleLabel.minimumScaleFactor = .8;
-    self.btnMp3.titleLabel.minimumScaleFactor = .8;
 
-    if (![serverManager sharedServerObj].displayDownloadBtn) {
-        self.btnMp3.alpha    = 0;
-        self.btnVBPMp3.alpha = 0;
+    if ([self.selEpiObj checkIfMp3FileInLocalFolder]){
+        [self.btnDownloadMp3 setSelected:YES];
+        self.btnDownloadMp3.alpha   = 1;
+    }else if (![serverManager sharedServerObj].displayDownloadBtn){
+        self.btnDownloadMp3.alpha   = .3;
+        self.btnDownloadMp3.enabled = NO;
     }
 }
 
@@ -253,45 +250,41 @@
     if ([self.selEpiObj checkIfMp3FileInLocalFolder]){
         [episodsManager episodeDownloaded:self.selEpiObj type:episodeDownloadedFileAudio];
         [self buildBookmarkBtnWithEmptyState:NO];
-        [self.btnVBPMp3 setCurrentButtonType:buttonRightTriangleType];
+        [self.btnDownloadMp3 setSelected:YES];
     }else{
         // @TODO document here
         // @TODO change btn name to play sound instead of download sound
         __weak __block episodeDownloadObject *epDownObj;
+        __weak typeof(self) weakself = self;
         epDownObj = [downloadManager sharedDownloadObj].listOfDownloadedObjs[self.selEpiObj.episodeLinkMp3];
         if (epDownObj){
-            [self handleBtnDownloadProgress:self.btnVBPMp3 andEpDownObja:epDownObj];
+            [self.btnDownloadMp3 handleBtnDownloadProgressForEpDownObja:epDownObj];
             epDownObj.episodeDownloadBlock  = ^(){
-                [self handleBtnDownloadProgress:self.btnVBPMp3 andEpDownObja:epDownObj];
+                [weakself.btnDownloadMp3 handleBtnDownloadProgressForEpDownObja:epDownObj];
             };
         }else{
-            [self handleBtnDownloadProgress:self.btnVBPMp3 andEpDownObja:Nil];
+            [self.btnDownloadMp3 handleBtnDownloadProgressForEpDownObja:Nil];
         }
     }
     
-    if ([self.selEpiObj checkIfAviFileInLocalFolder]) {
-        [episodsManager episodeDownloaded:self.selEpiObj type:episodeDownloadedFileVideo];
-        [self buildBookmarkBtnWithEmptyState:NO];
-        [self.btnVBPAvi setCurrentButtonType:buttonRightTriangleType];
-    }else{
-        __weak __block episodeDownloadObject *epDownObj;
-        epDownObj = [downloadManager sharedDownloadObj].listOfDownloadedObjs[self.selEpiObj.episodeLinkAvi];
-        if (epDownObj){
-            [self handleBtnDownloadProgress:self.btnVBPAvi andEpDownObja:epDownObj];
-            epDownObj.episodeDownloadBlock  = ^(){
-                [self handleBtnDownloadProgress:self.btnVBPAvi andEpDownObja:epDownObj];
-            };
-        }else{
-            [self handleBtnDownloadProgress:self.btnVBPAvi andEpDownObja:Nil];
-        }
-    }
+//    if ([self.selEpiObj checkIfAviFileInLocalFolder]) {
+//        [episodsManager episodeDownloaded:self.selEpiObj type:episodeDownloadedFileVideo];
+//        [self buildBookmarkBtnWithEmptyState:NO];
+//        [self.btnVBPAvi setCurrentButtonType:buttonRightTriangleType];
+//    }else{
+//        __weak __block episodeDownloadObject *epDownObj;
+//        epDownObj = [downloadManager sharedDownloadObj].listOfDownloadedObjs[self.selEpiObj.episodeLinkAvi];
+//        if (epDownObj){
+//            [self handleBtnDownloadProgress:self.btnVBPAvi andEpDownObja:epDownObj];
+//            epDownObj.episodeDownloadBlock  = ^(){
+//                [self handleBtnDownloadProgress:self.btnVBPAvi andEpDownObja:epDownObj];
+//            };
+//        }else{
+//            [self handleBtnDownloadProgress:self.btnVBPAvi andEpDownObja:Nil];
+//        }
+//    }
 }
--(void)handleBtnDownloadProgress:(ddProgressBtn *)btn andEpDownObja:(episodeDownloadObject *)epDownObja{
-    [btn handelEpDownObj:epDownObja];
-    if (epDownObja.episodeDownloadCurrentStatus == downloadStatusFinished) {
-        [self buildBookmarkBtnWithEmptyState:NO];
-    }
-}
+
 #pragma mark - bookmarks
 -(void)toggleBookmark{
     if (self.bookmarkObject.bookmarkID > 0){

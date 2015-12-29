@@ -106,11 +106,13 @@
 -(void)updateDownloadTabProgressWith:(float)progress currentDownloads:(NSUInteger)numDownloads{
     dispatch_async(dispatch_get_main_queue(), ^{
         [self setDownloadTabBadge:numDownloads];
-        [self setDownloadTabImgProgress:progress];
+//        [self setDownloadTabImgProgress:progress];
     });
 }
 -(void)setDownloadTabBadge:(NSUInteger)badgeValue{
     UITabBarItem *item  = self.tabBar.items[2];
+    if (item.badgeValue.integerValue == badgeValue) return;
+    
     [item setBadgeValue:[NSString stringWithFormat:@"%d",(int)badgeValue]];
     if (badgeValue <= 0)
         [item setBadgeValue:Nil];
@@ -123,8 +125,11 @@
     NSString *imgName   = [NSString stringWithFormat:@"tab-downloads-%.0f.png",progress*100];
     item.image          = [[UIImage imageNamed:imgName]imageWithRenderingMode:UIImageRenderingModeAlwaysOriginal];
     item.selectedImage  = [[UIImage imageNamed:imgName]imageWithRenderingMode:UIImageRenderingModeAlwaysOriginal];
+    
+
+
 }
-#pragma mark - 
+#pragma mark -
 -(void)downloadStateChanged{
     if (![serverManager sharedServerObj].displayDownloadBtn) {
         NSMutableArray *newTabs = [NSMutableArray arrayWithArray:self.viewControllers];

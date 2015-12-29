@@ -7,9 +7,9 @@
 //
 
 #import <UIKit/UIKit.h>
-@class ddProgressBtn;
+@class downloadBtn;
 @interface downloadsTVCCell : UITableViewCell
-    @property (weak, nonatomic) IBOutlet UILabel         *laTitle;
-    @property (weak, nonatomic) IBOutlet ddProgressBtn   *btnDownloadControl;
-    @property (weak, nonatomic) IBOutlet UILabel         *laDownloadDetails;
+    @property (weak, nonatomic) IBOutlet UILabel     *laTitle;
+    @property (weak, nonatomic) IBOutlet downloadBtn *btnDownloadControl;
+    @property (weak, nonatomic) IBOutlet UILabel     *laDownloadDetails;
 @end

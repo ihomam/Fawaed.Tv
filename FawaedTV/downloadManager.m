@@ -90,6 +90,7 @@
     }else{
         fileName = [NSString stringWithFormat:@"%d.avi",epObj.episodeID];
     }
+    
     /// @TODO
     // 2. check if the file is already been downloading ... then we needs to stop operation
     episodeDownloadObject *epDObjOld;
@@ -110,59 +111,62 @@
     }else{
         self.listOfDownloadedObjs[epDownObj.episodeObj.episodeLinkAvi] = epDownObj;
     }
+    
     dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
-        NSProgress *progress    = Nil;
+
         NSURL *urlDownload;
         (isSoundFile) ?
         (urlDownload = [NSURL URLWithString:epDownObj.episodeObj.episodeLinkMp3]) :
         (urlDownload = [NSURL URLWithString:epDownObj.episodeObj.episodeLinkAvi]);
         
-        NSURLRequest *request   = [[NSURLRequest alloc]initWithURL:urlDownload];
+        NSURLRequest *request               = [[NSURLRequest alloc]initWithURL:urlDownload];
+        
+        void (^blockProgress)(NSProgress *) = ^(NSProgress *downloadProgress) {
+            if (!epDownObj.episodeDownloadStartTime)
+                epDownObj.episodeDownloadStartTime     = [[NSDate date]timeIntervalSince1970];
+            dispatch_async(dispatch_get_main_queue(), ^{
+                epDownObj.episodeDownloadCurrentStatus = downloadStatusDownloading;
+                epDownObj.episodeDownloadProgress      = downloadProgress;
+                if (epDownObj.episodeDownloadBlock)
+                    epDownObj.episodeDownloadBlock();
+                [self sendAppGlobalNotification];
+            });
+        };
 
+        NSURL *(^blockDestination)(NSURL *, NSURLResponse *) = ^NSURL *(NSURL *targetPath, NSURLResponse *response){
+            return [self.urlDocs URLByAppendingPathComponent:fileName];
+        };
+        
+        void (^blockCompletion)(NSURLResponse *, NSURL *, NSError *) = ^(NSURLResponse *response, NSURL *filePath, NSError *error){
+            [self.listQueue removeObject:epDownObj];
+            dispatch_async(dispatch_get_main_queue(), ^{
+                if (!error) {
+                    // :)
+                    epDownObj.episodeDownloadCurrentStatus = downloadStatusFinished;
+                    episodeDownloadedFileType EDFType;
+                    isSoundFile ? (EDFType = episodeDownloadedFileAudio):(EDFType = episodeDownloadedFileVideo);
+                    [episodsManager episodeDownloaded:epObj type:EDFType];
+                }else{
+                    (isSoundFile) ?
+                    ([self.listOfDownloadedObjs removeObjectForKey:epDownObj.episodeObj.episodeLinkMp3]):
+                    ([self.listOfDownloadedObjs removeObjectForKey:epDownObj.episodeObj.episodeLinkAvi]);
+                    epDownObj.episodeDownloadCurrentStatus = downloadStatusCanceled;
+                    epDownObj.episodeDownloadError = error;
+                }
+                if (epDownObj.episodeDownloadBlock)
+                    epDownObj.episodeDownloadBlock();
+                [self anObjectIsfinishedDownloadingShouldWeEmptyOurDataSource:epDownObj];
+                [self sendAppGlobalNotification];
+            });
+
+        };
+        
         NSURLSessionDownloadTask *dt = [self.downloadManager downloadTaskWithRequest:request
-                                                                            progress:^(NSProgress * _Nonnull downloadProgress) {
-                                                                                
-                                                                            }
-                                                                         destination:^NSURL *(NSURL *targetPath, NSURLResponse *response){
-                                                                             return [self.urlDocs URLByAppendingPathComponent:fileName];}
-                                                                   completionHandler:^(NSURLResponse *response, NSURL *filePath, NSError *error){
-                                                                       [self.listQueue removeObject:epDownObj];
-                                                                       dispatch_async(dispatch_get_main_queue(), ^{
-                                                                           if (!error) {
-                                                                               // :)
-                                                                               epDownObj.episodeDownloadCurrentStatus = downloadStatusFinished;
-                                                                               episodeDownloadedFileType EDFType;
-                                                                               isSoundFile ? (EDFType = episodeDownloadedFileAudio):(EDFType = episodeDownloadedFileVideo);
-                                                                               [episodsManager episodeDownloaded:epObj type:EDFType];
-                                                                           }else{
-                                                                               (isSoundFile) ?
-                                                                               ([self.listOfDownloadedObjs removeObjectForKey:epDownObj.episodeObj.episodeLinkMp3]):
-                                                                               ([self.listOfDownloadedObjs removeObjectForKey:epDownObj.episodeObj.episodeLinkAvi]);
-                                                                               epDownObj.episodeDownloadCurrentStatus = downloadStatusCanceled;
-                                                                               epDownObj.episodeDownloadError = error;
-                                                                           }
-                                                                           if (epDownObj.episodeDownloadBlock)
-                                                                               epDownObj.episodeDownloadBlock();
-                                                                           [self anObjectIsfinishedDownloadingShouldWeEmptyOurDataSource:epDownObj];
-                                                                           [self sendAppGlobalNotification];
-                                                                       });
-                                                                   }];
+                                                                            progress:blockProgress
+                                                                         destination:blockDestination
+                                                                   completionHandler:blockCompletion];
         
         epDownObj.episodeDownloadTask = dt;
-        [self.KVOController observe:progress
-                            keyPath:NSStringFromSelector(@selector(fractionCompleted))
-                            options:NSKeyValueObservingOptionNew
-                              block:^(id observer, id object, NSDictionary *change) {
-                                  if (!epDownObj.episodeDownloadStartTime)
-                                      epDownObj.episodeDownloadStartTime = [[NSDate date]timeIntervalSince1970];
-                                  dispatch_async(dispatch_get_main_queue(), ^{
-                                      epDownObj.episodeDownloadCurrentStatus = downloadStatusDownloading;
-                                      epDownObj.episodeDownloadProgress      = (NSProgress *)object;
-                                      if (epDownObj.episodeDownloadBlock)
-                                          epDownObj.episodeDownloadBlock();
-                                      [self sendAppGlobalNotification];
-                                  });
-                              }];
         [self.listQueue addObject:epDownObj];
     });
     return epDownObj;

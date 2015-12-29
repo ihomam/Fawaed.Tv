@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="7531" systemVersion="14D136" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" initialViewController="JgA-Nd-pOf">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="9531" systemVersion="15C50" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" initialViewController="JgA-Nd-pOf">
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="7520"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="9529"/>
         <capability name="Constraints to layout margins" minToolsVersion="6.0"/>
         <capability name="Constraints with non-1.0 multipliers" minToolsVersion="5.1"/>
     </dependencies>
@@ -38,8 +38,10 @@
                         <color key="sectionIndexBackgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                         <prototypes>
                             <tableViewCell contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="Cell" rowHeight="44" id="qhh-GV-fF8" customClass="browseMenuTVCCell">
+                                <rect key="frame" x="0.0" y="22" width="600" height="44"/>
                                 <autoresizingMask key="autoresizingMask"/>
                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="qhh-GV-fF8" id="DVZ-Os-tbZ">
+                                    <rect key="frame" x="0.0" y="0.0" width="600" height="44"/>
                                     <autoresizingMask key="autoresizingMask"/>
                                     <subviews>
                                         <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="menu-tv" translatesAutoresizingMaskIntoConstraints="NO" id="MAr-w9-pkw">
@@ -104,7 +106,7 @@
                         </collectionViewFlowLayout>
                         <cells>
                             <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" reuseIdentifier="cellImgTxt" id="c1H-zL-wVQ" customClass="generalCVCCell">
-                                <rect key="frame" x="0.0" y="0.0" width="50" height="50"/>
+                                <rect key="frame" x="0.0" y="64" width="200" height="200"/>
                                 <autoresizingMask key="autoresizingMask"/>
                                 <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center">
                                     <rect key="frame" x="0.0" y="0.0" width="200" height="200"/>
@@ -150,7 +152,7 @@
                                 </connections>
                             </collectionViewCell>
                             <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" reuseIdentifier="cellTxt" id="Z8V-S3-xpc" customClass="generalCVCCell">
-                                <rect key="frame" x="0.0" y="0.0" width="50" height="50"/>
+                                <rect key="frame" x="400" y="64" width="200" height="200"/>
                                 <autoresizingMask key="autoresizingMask"/>
                                 <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center">
                                     <rect key="frame" x="0.0" y="0.0" width="200" height="200"/>
@@ -178,7 +180,7 @@
                                 </connections>
                             </collectionViewCell>
                             <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" reuseIdentifier="cellImg" id="QeO-zU-QH7" customClass="generalCVCCell">
-                                <rect key="frame" x="0.0" y="0.0" width="50" height="50"/>
+                                <rect key="frame" x="0.0" y="274" width="200" height="200"/>
                                 <autoresizingMask key="autoresizingMask"/>
                                 <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center">
                                     <rect key="frame" x="0.0" y="0.0" width="200" height="200"/>
@@ -245,7 +247,7 @@
                         </collectionViewFlowLayout>
                         <cells>
                             <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" reuseIdentifier="cellImgTxt" id="aUP-Fw-FGE" customClass="generalCVCCell">
-                                <rect key="frame" x="0.0" y="0.0" width="50" height="50"/>
+                                <rect key="frame" x="0.0" y="64" width="200" height="200"/>
                                 <autoresizingMask key="autoresizingMask"/>
                                 <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center">
                                     <rect key="frame" x="0.0" y="0.0" width="200" height="200"/>
@@ -319,8 +321,10 @@
                             <tableViewSection id="dYl-vE-l6S">
                                 <cells>
                                     <tableViewCell contentMode="scaleToFill" selectionStyle="none" indentationWidth="10" rowHeight="70" id="gUX-n6-Fnu">
+                                        <rect key="frame" x="0.0" y="0.0" width="600" height="70"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="gUX-n6-Fnu" id="exf-BP-kwA">
+                                            <rect key="frame" x="0.0" y="0.0" width="600" height="70"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" minimumFontSize="16" preferredMaxLayoutWidth="600" translatesAutoresizingMaskIntoConstraints="NO" id="eJA-x7-I9t">
@@ -341,16 +345,20 @@
                                         <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                                     </tableViewCell>
                                     <tableViewCell contentMode="scaleToFill" selectionStyle="none" indentationWidth="10" rowHeight="40" id="wqE-xJ-0Ty">
+                                        <rect key="frame" x="0.0" y="70" width="600" height="40"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="wqE-xJ-0Ty" id="Xv6-he-EN5">
+                                            <rect key="frame" x="0.0" y="0.0" width="600" height="40"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                                         </tableViewCellContentView>
                                         <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                                     </tableViewCell>
                                     <tableViewCell contentMode="scaleToFill" selectionStyle="none" indentationWidth="10" id="0pN-zf-enE">
+                                        <rect key="frame" x="0.0" y="110" width="600" height="44"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="0pN-zf-enE" id="h8t-OM-cU3">
+                                            <rect key="frame" x="0.0" y="0.0" width="600" height="44"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
                                                 <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="tailTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="6JY-le-GXB">
@@ -377,142 +385,48 @@
                                         <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                                     </tableViewCell>
                                     <tableViewCell contentMode="scaleToFill" selectionStyle="none" indentationWidth="10" rowHeight="60" id="Dnz-UQ-ETO">
+                                        <rect key="frame" x="0.0" y="154" width="600" height="60"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="Dnz-UQ-ETO" id="DZm-yJ-jJb">
+                                            <rect key="frame" x="0.0" y="0.0" width="600" height="60"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
-                                                <view hidden="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Vkx-ha-3VI">
-                                                    <rect key="frame" x="5" y="0.0" width="285" height="60"/>
-                                                    <subviews>
-                                                        <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="right" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="20m-wF-UWb">
-                                                            <rect key="frame" x="0.0" y="0.0" width="250" height="60"/>
-                                                            <state key="normal" title="Download video">
-                                                                <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                                                                <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
-                                                            </state>
-                                                            <connections>
-                                                                <action selector="downloadAVI:" destination="u1u-kg-waZ" eventType="touchUpInside" id="iin-MF-IcG"/>
-                                                            </connections>
-                                                        </button>
-                                                        <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Heg-YZ-kOf" customClass="ddProgressBtn">
-                                                            <rect key="frame" x="260" y="20" width="20" height="20"/>
-                                                            <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
-                                                            <constraints>
-                                                                <constraint firstAttribute="width" constant="20" id="Uh9-6k-UDj"/>
-                                                                <constraint firstAttribute="height" constant="20" id="ZhT-WI-7JK"/>
-                                                            </constraints>
-                                                            <connections>
-                                                                <action selector="downloadAVI:" destination="u1u-kg-waZ" eventType="touchUpInside" id="pHS-5Q-qqr"/>
-                                                            </connections>
-                                                        </view>
-                                                    </subviews>
-                                                    <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+                                                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Ahu-rl-WLa" customClass="downloadBtn">
+                                                    <rect key="frame" x="200" y="15" width="200" height="30"/>
                                                     <constraints>
-                                                        <constraint firstAttribute="bottom" secondItem="20m-wF-UWb" secondAttribute="bottom" id="7yi-g5-Daw"/>
-                                                        <constraint firstAttribute="right" secondItem="20m-wF-UWb" secondAttribute="right" constant="5" id="MxY-ib-B7W"/>
-                                                        <constraint firstItem="20m-wF-UWb" firstAttribute="top" secondItem="Vkx-ha-3VI" secondAttribute="top" id="apS-HX-qwL"/>
-                                                        <constraint firstItem="Heg-YZ-kOf" firstAttribute="left" secondItem="20m-wF-UWb" secondAttribute="right" constant="10" id="dFv-68-rBu"/>
-                                                        <constraint firstAttribute="right" secondItem="Heg-YZ-kOf" secondAttribute="right" constant="5" id="fT9-ur-ffa"/>
-                                                        <constraint firstAttribute="centerY" secondItem="Heg-YZ-kOf" secondAttribute="centerY" id="nxs-sK-h3e"/>
-                                                        <constraint firstItem="20m-wF-UWb" firstAttribute="left" secondItem="Vkx-ha-3VI" secondAttribute="left" id="ujx-z8-59o"/>
+                                                        <constraint firstAttribute="width" constant="200" id="RkL-L4-mpH"/>
                                                     </constraints>
-                                                    <variation key="default">
-                                                        <mask key="constraints">
-                                                            <exclude reference="MxY-ib-B7W"/>
-                                                        </mask>
-                                                    </variation>
-                                                </view>
-                                                <view hidden="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="pPZ-ly-pna">
-                                                    <rect key="frame" x="300" y="0.0" width="1" height="60"/>
-                                                    <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
-                                                    <constraints>
-                                                        <constraint firstAttribute="width" constant="1" id="SjV-Um-8Ch"/>
-                                                    </constraints>
-                                                </view>
-                                                <view hidden="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="De0-3g-JGd">
-                                                    <rect key="frame" x="311" y="0.0" width="284" height="60"/>
-                                                    <subviews>
-                                                        <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="apN-0U-BqF" customClass="ddProgressBtn">
-                                                            <rect key="frame" x="5" y="20" width="20" height="20"/>
-                                                            <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
-                                                            <constraints>
-                                                                <constraint firstAttribute="width" constant="20" id="Mtb-R5-cSv"/>
-                                                                <constraint firstAttribute="height" constant="20" id="wAj-Fp-30e"/>
-                                                            </constraints>
-                                                            <connections>
-                                                                <action selector="downloadMp3:" destination="u1u-kg-waZ" eventType="touchUpInside" id="5gI-QZ-jEE"/>
-                                                            </connections>
-                                                        </view>
-                                                    </subviews>
-                                                    <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
-                                                    <constraints>
-                                                        <constraint firstAttribute="centerY" secondItem="apN-0U-BqF" secondAttribute="centerY" id="EFD-56-WXp"/>
-                                                        <constraint firstItem="apN-0U-BqF" firstAttribute="left" secondItem="De0-3g-JGd" secondAttribute="left" constant="5" id="EeK-QT-xwN"/>
-                                                        <constraint firstItem="apN-0U-BqF" firstAttribute="left" secondItem="De0-3g-JGd" secondAttribute="left" constant="10" id="NJc-Os-UpI"/>
-                                                        <constraint firstAttribute="centerY" secondItem="apN-0U-BqF" secondAttribute="centerY" id="O5a-Bx-xnE"/>
-                                                        <constraint firstItem="apN-0U-BqF" firstAttribute="top" secondItem="De0-3g-JGd" secondAttribute="top" constant="12" id="js4-fe-t9v"/>
-                                                    </constraints>
-                                                    <variation key="default">
-                                                        <mask key="constraints">
-                                                            <exclude reference="NJc-Os-UpI"/>
-                                                            <exclude reference="O5a-Bx-xnE"/>
-                                                            <exclude reference="js4-fe-t9v"/>
-                                                        </mask>
-                                                    </variation>
-                                                </view>
-                                                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="GlQ-ls-13R">
-                                                    <rect key="frame" x="244" y="0.0" width="112" height="60"/>
+                                                    <fontDescription key="fontDescription" type="system" pointSize="15"/>
+                                                    <inset key="imageEdgeInsets" minX="-10" minY="0.0" maxX="0.0" maxY="0.0"/>
                                                     <state key="normal" title="Download audio">
                                                         <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                                         <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                                                     </state>
                                                     <connections>
-                                                        <action selector="downloadMp3:" destination="u1u-kg-waZ" eventType="touchUpInside" id="NLg-ol-5bV"/>
+                                                        <action selector="downloadMp3:" destination="u1u-kg-waZ" eventType="touchUpInside" id="Ubv-Rk-H7W"/>
                                                     </connections>
                                                 </button>
-                                                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="ZKk-RY-aX4" customClass="ddProgressBtn">
-                                                    <rect key="frame" x="214" y="20" width="20" height="20"/>
-                                                    <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
-                                                    <constraints>
-                                                        <constraint firstAttribute="width" constant="20" id="gQX-cI-Sip"/>
-                                                        <constraint firstAttribute="height" constant="20" id="niD-bE-NUJ"/>
-                                                    </constraints>
-                                                    <connections>
-                                                        <action selector="downloadMp3:" destination="u1u-kg-waZ" eventType="touchUpInside" id="rx9-rc-keA"/>
-                                                    </connections>
-                                                </view>
                                             </subviews>
                                             <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                                             <constraints>
-                                                <constraint firstAttribute="trailing" secondItem="De0-3g-JGd" secondAttribute="trailing" constant="5" id="9RL-0y-94m"/>
-                                                <constraint firstItem="pPZ-ly-pna" firstAttribute="top" secondItem="DZm-yJ-jJb" secondAttribute="top" id="Aq1-uX-zFF"/>
-                                                <constraint firstItem="Vkx-ha-3VI" firstAttribute="leading" secondItem="DZm-yJ-jJb" secondAttribute="leading" constant="5" id="BFM-oV-Hrd"/>
-                                                <constraint firstItem="De0-3g-JGd" firstAttribute="leading" secondItem="pPZ-ly-pna" secondAttribute="trailing" constant="10" id="BxT-iy-YNg"/>
-                                                <constraint firstItem="GlQ-ls-13R" firstAttribute="left" secondItem="ZKk-RY-aX4" secondAttribute="right" constant="10" id="Dcl-w7-UJ9"/>
-                                                <constraint firstItem="pPZ-ly-pna" firstAttribute="leading" secondItem="Vkx-ha-3VI" secondAttribute="trailing" constant="10" id="EKA-Cb-uf2"/>
-                                                <constraint firstAttribute="bottom" secondItem="De0-3g-JGd" secondAttribute="bottom" id="IPp-Er-MfW"/>
-                                                <constraint firstItem="De0-3g-JGd" firstAttribute="leading" secondItem="Vkx-ha-3VI" secondAttribute="trailing" id="IQN-LW-1XR"/>
-                                                <constraint firstItem="Vkx-ha-3VI" firstAttribute="top" secondItem="DZm-yJ-jJb" secondAttribute="top" id="Isg-X5-Kud"/>
-                                                <constraint firstAttribute="bottom" secondItem="Vkx-ha-3VI" secondAttribute="bottom" id="RJ0-GY-tRz"/>
-                                                <constraint firstItem="De0-3g-JGd" firstAttribute="top" secondItem="DZm-yJ-jJb" secondAttribute="top" id="VNO-hf-KW0"/>
-                                                <constraint firstAttribute="bottom" secondItem="GlQ-ls-13R" secondAttribute="bottom" id="ZyE-Jd-4ya"/>
-                                                <constraint firstAttribute="bottom" secondItem="pPZ-ly-pna" secondAttribute="bottom" id="cKQ-Qr-uEQ"/>
-                                                <constraint firstAttribute="centerY" secondItem="ZKk-RY-aX4" secondAttribute="centerY" id="iRv-eT-z8T"/>
-                                                <constraint firstAttribute="centerX" secondItem="GlQ-ls-13R" secondAttribute="centerX" id="jTM-HU-vz9"/>
-                                                <constraint firstItem="GlQ-ls-13R" firstAttribute="top" secondItem="DZm-yJ-jJb" secondAttribute="top" id="uJx-7M-KBQ"/>
-                                                <constraint firstAttribute="centerX" secondItem="pPZ-ly-pna" secondAttribute="centerX" id="zFH-8y-QEe"/>
+                                                <constraint firstAttribute="bottom" secondItem="Ahu-rl-WLa" secondAttribute="bottom" constant="15" id="WAN-R0-Xsb"/>
+                                                <constraint firstItem="Ahu-rl-WLa" firstAttribute="centerX" secondItem="DZm-yJ-jJb" secondAttribute="centerX" id="h3E-Ym-KIX"/>
+                                                <constraint firstItem="Ahu-rl-WLa" firstAttribute="centerY" secondItem="DZm-yJ-jJb" secondAttribute="centerY" id="iMc-ar-qDZ"/>
+                                                <constraint firstItem="Ahu-rl-WLa" firstAttribute="top" secondItem="DZm-yJ-jJb" secondAttribute="top" constant="15" id="zmT-Qn-elJ"/>
                                             </constraints>
                                             <variation key="default">
                                                 <mask key="constraints">
-                                                    <exclude reference="IQN-LW-1XR"/>
+                                                    <exclude reference="iMc-ar-qDZ"/>
                                                 </mask>
                                             </variation>
                                         </tableViewCellContentView>
                                         <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                                     </tableViewCell>
                                     <tableViewCell contentMode="scaleToFill" selectionStyle="none" indentationWidth="10" id="XY0-9e-5VG">
+                                        <rect key="frame" x="0.0" y="214" width="600" height="44"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="XY0-9e-5VG" id="gbf-vw-b6X">
+                                            <rect key="frame" x="0.0" y="0.0" width="600" height="44"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
                                                 <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="j1i-jB-11I">
@@ -549,11 +463,8 @@
                     <navigationItem key="navigationItem" id="ldI-V1-34A"/>
                     <nil key="simulatedTopBarMetrics"/>
                     <connections>
-                        <outlet property="btnAvi" destination="20m-wF-UWb" id="cu1-1T-cgV"/>
+                        <outlet property="btnDownloadMp3" destination="Ahu-rl-WLa" id="59u-g3-4pG"/>
                         <outlet property="btnListen" destination="j1i-jB-11I" id="lz0-Xu-F8e"/>
-                        <outlet property="btnMp3" destination="GlQ-ls-13R" id="hAN-BD-Dfl"/>
-                        <outlet property="btnVBPAvi" destination="Heg-YZ-kOf" id="wBQ-zt-nES"/>
-                        <outlet property="btnVBPMp3" destination="ZKk-RY-aX4" id="YCe-5l-EpE"/>
                         <outlet property="btnYoutube" destination="6JY-le-GXB" id="SZI-mC-Aau"/>
                         <outlet property="laEpsoideTitle" destination="eJA-x7-I9t" id="4BC-zF-BFa"/>
                     </connections>
@@ -747,7 +658,7 @@
                         </collectionViewFlowLayout>
                         <cells>
                             <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" reuseIdentifier="cellLocalFile" id="ny4-X8-nfd" customClass="generalCVCCell">
-                                <rect key="frame" x="0.0" y="0.0" width="50" height="50"/>
+                                <rect key="frame" x="0.0" y="64" width="600" height="80"/>
                                 <autoresizingMask key="autoresizingMask"/>
                                 <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center">
                                     <rect key="frame" x="0.0" y="0.0" width="600" height="80"/>
@@ -853,7 +764,7 @@
                                 </connections>
                             </collectionViewCell>
                             <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" reuseIdentifier="cellImgTxt" id="dYV-Pf-MJY" customClass="generalCVCCell">
-                                <rect key="frame" x="0.0" y="0.0" width="50" height="50"/>
+                                <rect key="frame" x="0.0" y="154" width="200" height="200"/>
                                 <autoresizingMask key="autoresizingMask"/>
                                 <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center">
                                     <rect key="frame" x="0.0" y="0.0" width="200" height="200"/>
@@ -899,7 +810,7 @@
                                 </connections>
                             </collectionViewCell>
                             <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" reuseIdentifier="cellTxt" id="ty1-cp-QQ9" customClass="generalCVCCell">
-                                <rect key="frame" x="0.0" y="0.0" width="50" height="50"/>
+                                <rect key="frame" x="400" y="154" width="200" height="200"/>
                                 <autoresizingMask key="autoresizingMask"/>
                                 <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center">
                                     <rect key="frame" x="0.0" y="0.0" width="200" height="200"/>
@@ -927,7 +838,7 @@
                                 </connections>
                             </collectionViewCell>
                             <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" reuseIdentifier="cellImg" id="pB4-Va-7AP" customClass="generalCVCCell">
-                                <rect key="frame" x="0.0" y="0.0" width="50" height="50"/>
+                                <rect key="frame" x="0.0" y="364" width="200" height="200"/>
                                 <autoresizingMask key="autoresizingMask"/>
                                 <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center">
                                     <rect key="frame" x="0.0" y="0.0" width="200" height="200"/>
@@ -1001,12 +912,14 @@
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <prototypes>
                             <tableViewCell contentMode="scaleToFill" selectionStyle="none" indentationWidth="10" reuseIdentifier="Cell" rowHeight="90" id="E9m-pf-ANe" customClass="downloadsTVCCell">
+                                <rect key="frame" x="0.0" y="86" width="600" height="90"/>
                                 <autoresizingMask key="autoresizingMask"/>
                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="E9m-pf-ANe" id="9d2-iL-kGJ">
+                                    <rect key="frame" x="0.0" y="0.0" width="600" height="90"/>
                                     <autoresizingMask key="autoresizingMask"/>
                                     <subviews>
                                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="GGR-JW-rI1">
-                                            <rect key="frame" x="15" y="11" width="530" height="21"/>
+                                            <rect key="frame" x="15" y="11" width="500" height="21"/>
                                             <constraints>
                                                 <constraint firstAttribute="height" relation="greaterThanOrEqual" constant="21" id="AoB-Fj-naE"/>
                                             </constraints>
@@ -1014,11 +927,11 @@
                                             <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                             <nil key="highlightedColor"/>
                                         </label>
-                                        <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="RN1-vu-aOh" customClass="ddProgressBtn">
-                                            <rect key="frame" x="565" y="35" width="20" height="20"/>
+                                        <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="RN1-vu-aOh" customClass="downloadBtn">
+                                            <rect key="frame" x="535" y="20" width="50" height="50"/>
                                             <constraints>
-                                                <constraint firstAttribute="width" constant="20" id="0Bt-vY-clx"/>
-                                                <constraint firstAttribute="height" constant="20" id="bH5-5Y-jMK"/>
+                                                <constraint firstAttribute="width" constant="50" id="0Bt-vY-clx"/>
+                                                <constraint firstAttribute="height" constant="50" id="bH5-5Y-jMK"/>
                                             </constraints>
                                             <state key="normal">
                                                 <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
@@ -1028,7 +941,7 @@
                                             </connections>
                                         </button>
                                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="TY7-uq-psc">
-                                            <rect key="frame" x="15" y="37" width="530" height="12"/>
+                                            <rect key="frame" x="15" y="37" width="500" height="12"/>
                                             <constraints>
                                                 <constraint firstAttribute="height" constant="12" id="vRD-bO-L6A"/>
                                             </constraints>
@@ -1101,7 +1014,7 @@
                         </collectionViewFlowLayout>
                         <cells>
                             <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" reuseIdentifier="cellImgTxt" id="p4n-YX-MK8" customClass="generalCVCCell">
-                                <rect key="frame" x="0.0" y="0.0" width="50" height="50"/>
+                                <rect key="frame" x="0.0" y="0.0" width="200" height="200"/>
                                 <autoresizingMask key="autoresizingMask"/>
                                 <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center">
                                     <rect key="frame" x="0.0" y="0.0" width="200" height="200"/>
@@ -1174,7 +1087,7 @@
                         </collectionViewFlowLayout>
                         <cells>
                             <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" reuseIdentifier="cellImgTxt" id="tA9-vg-LtG" customClass="generalCVCCell">
-                                <rect key="frame" x="0.0" y="0.0" width="50" height="50"/>
+                                <rect key="frame" x="0.0" y="0.0" width="200" height="200"/>
                                 <autoresizingMask key="autoresizingMask"/>
                                 <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center">
                                     <rect key="frame" x="0.0" y="0.0" width="200" height="200"/>
@@ -1247,7 +1160,7 @@
                         </collectionViewFlowLayout>
                         <cells>
                             <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" reuseIdentifier="cellImgTxt" id="W7b-0M-lVx" customClass="generalCVCCell">
-                                <rect key="frame" x="0.0" y="0.0" width="50" height="50"/>
+                                <rect key="frame" x="0.0" y="0.0" width="200" height="200"/>
                                 <autoresizingMask key="autoresizingMask"/>
                                 <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center">
                                     <rect key="frame" x="0.0" y="0.0" width="200" height="200"/>

@@ -10,11 +10,12 @@
 #import "downloadsTVCCell.h"
 #import "episodeObject.h"
 #import "downloadManager.h"
-#import "ddProgressBtn.h"
 #import "appTBVC.h"
+#import <FFCircularProgressView/FFCircularProgressView.h>
+#import "downloadBtn.h"
 
 @interface downloadsTVC ()
-@property (nonatomic,strong) NSMutableDictionary *dataSource;
+    @property (nonatomic,strong) NSMutableDictionary *dataSource;
     @property (nonatomic,weak)  IBOutlet UIBarButtonItem *btnCancel;
 @end
 
@@ -25,7 +26,9 @@
 }
 - (void)viewWillAppear:(BOOL)animated{
     [super viewWillAppear:animated];
-    self.dataSource = [downloadManager sharedDownloadObj].listOfDownloadedObjs.mutableCopy;
+    self.dataSource        = [downloadManager sharedDownloadObj].listOfDownloadedObjs.mutableCopy;
+    self.btnCancel.enabled = YES;
+    
     if (self.dataSource.count == 0)  self.btnCancel.enabled = NO;
     [self.tableView reloadData];
 }
@@ -47,8 +50,8 @@
     self.dataSource = Nil;
     [self.tableView deleteRowsAtIndexPaths:indexPathes withRowAnimation:UITableViewRowAnimationFade];
 }
-- (IBAction)dPBtnTapped:(ddProgressBtn *)sender {
-    if(sender.currentButtonType == buttonOkType)
+- (IBAction)dPBtnTapped:(downloadBtn *)sender {
+    if(sender.selected)
         return;
     
     // 1. get cell object
@@ -56,6 +59,7 @@
     while (![cell isKindOfClass:[downloadsTVCCell class]]) {
             cell = (downloadsTVCCell *)cell.superview;
     }
+    
     // 2. get episodeDownloadObject
     NSIndexPath *indexpath          = [self.tableView indexPathForCell:cell];
     NSString *key                   = [[self.dataSource allKeys]objectAtIndex:indexpath.row];
@@ -88,6 +92,7 @@
     __weak episodeDownloadObject *epDObj= [[self.dataSource allValues]objectAtIndex:indexPath.row];
     cell.laTitle.text                   = epDObj.episodeObj.episodeTitle;
     cell.laDownloadDetails.text         = Nil;
+    [cell.btnDownloadControl setProgressTintColorios7Blue];
     // handel btn
     [self handleBtn:cell.btnDownloadControl withEDObj:epDObj];
 
@@ -102,13 +107,13 @@
         [self handleBtn:cell.btnDownloadControl withEDObj:epDObj];
     };
 }
--(void)handleBtn:(ddProgressBtn *)btn withEDObj:(episodeDownloadObject *)epDObj{
-    [btn handelEpDownObj:epDObj];
-    if (epDObj.episodeDownloadCurrentStatus == downloadStatusFinished) {
-
-        dispatch_async(dispatch_get_main_queue(), ^{
-            [btn setCheckmark];
-        });
-    }
+-(void)handleBtn:(downloadBtn *)btn withEDObj:(episodeDownloadObject *)epDObj{
+    [btn handleBtnDownloadProgressForEpDownObja:epDObj];
+//    if (epDObj.episodeDownloadCurrentStatus == downloadStatusFinished) {
+//
+//        dispatch_async(dispatch_get_main_queue(), ^{
+//            [btn setCheckmark];
+//        });
+//    }
 }
 @end
