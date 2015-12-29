@@ -9,7 +9,6 @@
 #import "downloadManager.h"
 #import "AFURLSessionManager.h"
 #import "episodeObject.h"
-#import "NSObject+FBKVOController.h"
 #import "episodsManager.h"
 
 @interface downloadTasksQueue()
