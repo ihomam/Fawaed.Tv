@@ -32,13 +32,7 @@
 }
 
 #pragma mark -
--(BOOL)displayDownloadBtn{
-    if (!_displayDownloadBtn) {
-        [self getDownloadBtnEnabled];
-    }
-    return _displayDownloadBtn;
-}
--(void)getDownloadBtnEnabled{
+-(void)getDownloadBtnEnabled:(void(^)(BOOL displayBtn))completion{
     // prepare request link
     NSString *link = linkWebSiteDomain;
     
@@ -48,11 +42,13 @@
                 if (!error) {
                     /// response
                     NSError *errorXmlParser;
-                    TBXML *xmlResponse = [TBXML tbxmlWithXMLData:responseObject error:&errorXmlParser];
-                    if (!errorXmlParser) {
-                        self.displayDownloadBtn = [self proccessXMLFromConfigRequest:xmlResponse];
-                        [[NSNotificationCenter defaultCenter]postNotificationName:@"displayDownloadBtnStateChanged" object:Nil];
-                    }
+                    TBXML *xmlResponse      = [TBXML tbxmlWithXMLData:responseObject error:&errorXmlParser];
+                    BOOL downloadAvailable  = [self proccessXMLFromConfigRequest:xmlResponse];
+                    self.displayDownloadBtn = downloadAvailable;
+                    
+                    if (completion)
+                        completion (!errorXmlParser && downloadAvailable);
+                    
                 }
             }]resume];
     
@@ -72,12 +68,11 @@
                     NSError *errorXmlParser;
                     TBXML *xmlResponse = [TBXML tbxmlWithXMLData:responseObject error:&errorXmlParser];
                     if (!errorXmlParser) {
-                        NSMutableArray *allSeries   = [seriesObject proccessXMLFromAllSerieceRequest:xmlResponse];
-                        NSMutableArray *allYears    = [yearObject proccessXMLFromAllYearsRequest:xmlResponse];
-                        NSMutableArray *allCategorie= [categoryObject proccessXMLFromAllCategoriesRequest:xmlResponse];
-                        NSMutableArray *allLecturers= [lecturerObject proccessXMLFromAlllecturersRequest:xmlResponse];
-                        self.displayDownloadBtn     = [self proccessXMLFromConfigRequest:xmlResponse];
-                        
+                        NSMutableArray *allSeries    = [seriesObject proccessXMLFromAllSerieceRequest:xmlResponse];
+                        NSMutableArray *allYears     = [yearObject proccessXMLFromAllYearsRequest:xmlResponse];
+                        NSMutableArray *allCategorie = [categoryObject proccessXMLFromAllCategoriesRequest:xmlResponse];
+                        NSMutableArray *allLecturers = [lecturerObject proccessXMLFromAlllecturersRequest:xmlResponse];
+                        self.displayDownloadBtn      = [self proccessXMLFromConfigRequest:xmlResponse];
                         if (compleation) {
                             compleation(YES,allSeries,allCategorie,allYears,allLecturers);
                         }

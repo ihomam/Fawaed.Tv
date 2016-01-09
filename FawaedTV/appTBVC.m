@@ -13,9 +13,11 @@
 #import "downloadManager.h"
 #import "AFSoundManager.h"
 #import "serverManager.h"
+#import "downloadsTVC.h"
 
 @interface appTBVC ()
-@property (nonatomic,strong) UIViewController *vcDownloadVC;
+    @property (nonatomic,strong) NSArray *tabControllersDefault;
+    @property (nonatomic,strong) NSArray *tabControllersCustomized;
 @end
 
 @implementation appTBVC
@@ -27,6 +29,18 @@
                                             selector:@selector(updateProgressTab)
                                                 name:@"updateProgressTab"
                                               object:Nil];
+    
+    self.tabControllersDefault = [NSArray arrayWithArray:self.viewControllers];
+    
+    NSMutableArray *ar = [NSMutableArray arrayWithArray:self.viewControllers];
+    for (UIViewController *vc in ar) {
+        if ([vc isKindOfClass:[UINavigationController class]] &&
+            [((UINavigationController *)vc).topViewController isKindOfClass:[downloadsTVC class]] ) {
+            [ar removeObject:vc];
+        }
+    }
+    self.tabControllersCustomized = ar;
+    [self setViewControllers:self.tabControllersCustomized];
 }
 - (void)viewWillAppear:(BOOL)animated{
     [super viewWillAppear:animated];
@@ -131,15 +145,18 @@
 }
 #pragma mark -
 -(void)downloadStateChanged{
-    if (![serverManager sharedServerObj].displayDownloadBtn) {
-        NSMutableArray *newTabs = [NSMutableArray arrayWithArray:self.viewControllers];
-        self.vcDownloadVC = newTabs[2];
-        [newTabs removeObjectAtIndex: 2];
-        [self setViewControllers:newTabs];
-    }else{
-        NSMutableArray *newTabs = [NSMutableArray arrayWithArray:self.viewControllers];
-        [newTabs insertObject:self.vcDownloadVC atIndex:2];
-        [self setViewControllers:newTabs];
-    }
+    
+    [[serverManager sharedServerObj]getDownloadBtnEnabled:^(BOOL displayBtn) {
+        if (displayBtn) {
+            [self setViewControllers:self.tabControllersDefault];
+        }else{
+            [self setViewControllers:self.tabControllersCustomized];
+        }
+    }];
+//    if (![serverManager sharedServerObj].displayDownloadBtn) {
+//        [self setViewControllers:self.tabControllersCustomized];
+//    }else{
+//        [self setViewControllers:self.tabControllersDefault];
+//    }
 }
 @end

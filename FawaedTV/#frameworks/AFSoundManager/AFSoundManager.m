@@ -107,8 +107,9 @@ typedef NS_ENUM(int, AFSoundManagerType) {
         __block int percentage = 0;
         
         _timer = [NSTimer scheduledTimerWithTimeInterval:1 block:^{
-            
-            if ((CMTimeGetSeconds(_player.currentItem.duration) - CMTimeGetSeconds(_player.currentItem.currentTime)) != 0) {
+            NSUInteger dur = CMTimeGetSeconds(_player.currentItem.duration);
+            NSUInteger cur = CMTimeGetSeconds(_player.currentItem.currentTime);
+            if ((dur - cur) != 0) {
                 self.duration =CMTimeGetSeconds(_player.currentItem.duration);
                 self.currentTime = CMTimeGetSeconds(_player.currentItem.currentTime);
                 
