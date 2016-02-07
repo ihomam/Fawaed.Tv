@@ -65,7 +65,8 @@
     if (self.selEpiObj.episodeLinkWatch.length > 0){
         NSRange vRange = [self.selEpiObj.episodeLinkWatch rangeOfString:@"?v="];
         
-        if (vRange.location){
+        if (vRange.location == NSNotFound ||
+            (vRange.location + vRange.length == self.selEpiObj.episodeLinkWatch.length)){
             NSString *msg   = [NSString stringWithFormat:@"%@ %@",
                                           NSLocalizedString(@"youtube link is wrong", Nil),
                                           self.selEpiObj.episodeLinkWatch];

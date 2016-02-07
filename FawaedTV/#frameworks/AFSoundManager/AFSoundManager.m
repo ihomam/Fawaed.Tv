@@ -120,7 +120,7 @@ typedef NS_ENUM(int, AFSoundManagerType) {
                 if (block) {
                     block(percentage, CMTimeGetSeconds(_player.currentItem.currentTime), timeRemaining, error, NO);
                 }
-            } else {
+            } else if (dur && cur){
                 
                 int timeRemaining = CMTimeGetSeconds(_player.currentItem.duration) - CMTimeGetSeconds(_player.currentItem.currentTime);
 
@@ -219,13 +219,13 @@ typedef NS_ENUM(int, AFSoundManagerType) {
 
 -(void)startRecordingAudioWithFileName:(NSString *)name andExtension:(NSString *)extension shouldStopAtSecond:(NSTimeInterval)second {
     
-    _recorder = [[AVAudioRecorder alloc]initWithURL:[NSURL fileURLWithPath:[NSString stringWithFormat:@"%@/%@.%@", [NSHomeDirectory() stringByAppendingString:@"/Documents"], name, extension]] settings:nil error:nil];
-    
-    if (second == 0 && !second) {
-        [_recorder record];
-    } else {
-        [_recorder recordForDuration:second];
-    }
+//    _recorder = [[AVAudioRecorder alloc]initWithURL:[NSURL fileURLWithPath:[NSString stringWithFormat:@"%@/%@.%@", [NSHomeDirectory() stringByAppendingString:@"/Documents"], name, extension]] settings:nil error:nil];
+//    
+//    if (second == 0 && !second) {
+//        [_recorder record];
+//    } else {
+//        [_recorder recordForDuration:second];
+//    }
 }
 
 -(void)pauseRecording {
